@@ -1,0 +1,12 @@
+body {
+    margin: auto;
+    font: 300 1rem "Helvetica Neue", "sans-serif";
+    color: black;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,37 @@
+.exercise-item {
+    border: .25em solid black;
+    border-radius: .5em;
+    margin: 1rem;
+    padding: .25rem;
+    h1 {
+
+    }
+
+    .category-info {
+        text-align: left;
+    }
+
+    .weight-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .checkbox-container {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-right: 0.5rem;
+    }
+
+
+    .checkbox-container .checkmark {
+        border-radius: 50%;
+    }
+
+    &.checked {
+        border-color: green;
+    }
+}
