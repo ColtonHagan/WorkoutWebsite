@@ -8,4 +8,5 @@ const pool = createPool({
   port: process.env.DB_PORT,
   connectionLimit: 10
 });
-module.exports = pool;
+
+module.exports = pool.promise();

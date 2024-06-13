@@ -1,11 +1,16 @@
 require("dotenv").config();
-const express = require("express");
+const express = require('express');
+const logger = require("./config/logger")
+const userRoutes = require("./api/users/userRoutes")
+const workoutRoutes = require('./api/workouts/workoutRoutes');
+
 const app = express();
-const userRouter = require("./api/users/user.router")
-
 app.use(express.json());
-app.use("/api/users", userRouter);
 
-app.listen(process.env.APP_PORT, () => {
-    console.log("server running on :", process.env.APP_PORT);
+app.use('/api/users', userRoutes);
+app.use('/api/workouts', workoutRoutes);
+
+const PORT = process.env.APP_PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
