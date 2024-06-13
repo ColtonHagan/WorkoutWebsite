@@ -1,0 +1,25 @@
+.nav-bar {
+    z-index: 3;
+    font-size: 2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: beige;
+
+    .logo {
+        text-decoration: none;
+    }
+    nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 90%;
+        a {
+            text-decoration: none;
+            color: black;
+            border-bottom: .2em solid black;
+        }
+    }
+}
