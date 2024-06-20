@@ -1,30 +1,37 @@
-const workoutModel = require('./workoutModel');
+const {createWorkout, addWorkoutDates, getWorkoutsById} = require('./workoutModel');
 
 const addWorkout = async (req, res) => {
-    const { name, reps, sets, date } = req.body;
+    const { name, reps, sets, dates, plan_id, weight} = req.body;
     const user_id = req.user.userId;
 
     try {
         const workout = {
             user_id,
+            plan_id,
             name,
             reps,
             sets,
-            date
+            weight
         };
-        await workoutModel.addWorkout(workout);
+        const workoutId = await createWorkout(workout);
+
+        if (dates && dates.length > 0) {
+            await addWorkoutDates(workoutId, dates);
+        }
+        
         res.status(201).json({ message: 'Workout added successfully' });
     } catch (error) {
-        console.error("Error during adding workout:", error);
+        console.error("Error during creating workout:", error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 const getWorkouts = async (req, res) => {
-    const user_id = req.user.userId;
+    const userId = req.user.userId;
+    const { planId } = req.params;
 
     try {
-        const workouts = await workoutModel.getWorkoutsByUserId(user_id);
+        const workouts = await getWorkoutsById(userId, planId);
         res.status(200).json(workouts);
     } catch (error) {
         console.error("Error during fetching workout:", error);
