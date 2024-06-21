@@ -7,7 +7,7 @@
     justify-content: space-between;
     background-color: beige;
 
-    .logo {
+    .logo, .profile {
         text-decoration: none;
     }
     nav {
@@ -21,5 +21,9 @@
             color: black;
             border-bottom: .2em solid black;
         }
+    }
+    .profile {
+        display: flex;
+        flex-direction: column;
     }
 }

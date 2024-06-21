@@ -1,5 +1,5 @@
 const express = require('express');
-const { addWorkout, getWorkouts} = require('./workoutController');
+const { addWorkout, getWorkouts } = require('./workoutController');
 const authenticateToken = require('../../middleware/auth/token_validation');
 
 const router = express.Router();

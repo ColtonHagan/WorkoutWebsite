@@ -1,10 +1,10 @@
 const db = require('../../config/dbConfig');
-
+const { decodeDays } = require('./util/dayEncoder');
 
 const createWorkout = async (workout) => {
     const [result] = await db.execute(
-        'INSERT INTO workouts (user_id, plan_id, name, reps, sets, weight) VALUES (?, ?, ?, ?, ?, ?)',
-        [workout.user_id, workout.plan_id, workout.name, workout.reps, workout.sets, workout.weight]
+        'INSERT INTO workouts (user_id, plan_id, name, reps, sets, weight, days) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [workout.user_id, workout.plan_id, workout.name, workout.reps, workout.sets, workout.weight, workout.days]
     );
     return result.insertId;
 };
@@ -18,7 +18,7 @@ const addWorkoutDates = async (workoutId, dates) => {
 
 const getWorkoutsById = async (user_id, plan_id) => {
     const [result] = await db.execute(
-        'SELECT w.name, w.reps, w.sets, w.weight, GROUP_CONCAT(wd.date) AS dates FROM workouts w LEFT JOIN workout_dates wd ON w.id = wd.workout_id WHERE w.user_id = ? AND w.plan_id = ? GROUP BY w.id',
+        'SELECT w.name, w.reps, w.sets, w.weight, w.days, GROUP_CONCAT(wd.date) AS dates FROM workouts w LEFT JOIN workout_dates wd ON w.id = wd.workout_id WHERE w.user_id = ? AND w.plan_id = ? GROUP BY w.id',
         [user_id, plan_id]
     );
 
@@ -27,7 +27,8 @@ const getWorkoutsById = async (user_id, plan_id) => {
         reps: row.reps,
         sets: row.sets,
         weight: parseFloat(row.weight),
-        dates: row.dates ? row.dates.split(',') : []
+        dates: row.dates ? row.dates.split(',') : [],
+        days: decodeDays(row.days)
     }));
 };
 module.exports = {

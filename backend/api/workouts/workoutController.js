@@ -1,7 +1,8 @@
-const {createWorkout, addWorkoutDates, getWorkoutsById} = require('./workoutModel');
+const { createWorkout, addWorkoutDates, getWorkoutsById } = require('./workoutModel');
+const { encodeDays } = require('./util/dayEncoder');
 
 const addWorkout = async (req, res) => {
-    const { name, reps, sets, dates, plan_id, weight} = req.body;
+    const { name, reps, sets, dates, plan_id, weight, days } = req.body;
     const user_id = req.user.userId;
 
     try {
@@ -11,14 +12,15 @@ const addWorkout = async (req, res) => {
             name,
             reps,
             sets,
-            weight
+            weight,
+            days: days ? encodeDays(days) : 0
         };
         const workoutId = await createWorkout(workout);
 
         if (dates && dates.length > 0) {
             await addWorkoutDates(workoutId, dates);
         }
-        
+
         res.status(201).json({ message: 'Workout added successfully' });
     } catch (error) {
         console.error("Error during creating workout:", error);

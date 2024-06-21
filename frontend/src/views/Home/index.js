@@ -81,7 +81,7 @@ const Home = () => {
         <Calendar value={dateState} onChange={changeDate} tileClassName={tileClassName} />
       </div>
       <div className="date-container">
-        <h1><DateHeading date={dateState}/>'s Workout</h1>
+        <h1><DateHeading date={dateState} />'s Workout</h1>
         <div className='card-container'>
           {filteredExercises.map((exercise, index) => (
             <ExcerciseCard
