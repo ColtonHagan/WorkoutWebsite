@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import "./index.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons'
@@ -20,7 +20,7 @@ const ExerciseCard = ({ exercise, onClick}) => {
                 <FontAwesomeIcon icon={faDumbbell} />
                 {exercise.weight}lbs
                 <label className="checkbox-container">
-                    <input type="checkbox" checked={isChecked} onClick={handleCheckboxChange} />
+                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
                     <span className="checkmark"></span>
                 </label>
             </div>

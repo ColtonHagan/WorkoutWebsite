@@ -1,24 +1,29 @@
 import React from 'react';
-import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 
 import Home from './views/Home';
-import Signup from './views/Signup'
-import Login from './views/Login'
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
+import Exercise from './views/Exercise';
+import Signup from './views/Signup';
+import Login from './views/Login';
+import RequireAuth from './util/RequireAuth';
+import PersistLogin from './util/PersistLogin';
+import Layout from './components/Layout';
 
 const App = () => {
   return (
-    <div>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      
+      <Route path="/" element={<Layout />}>
+        <Route element={<PersistLogin />}> {/** Combine this and required auth into a single file AuthHandler */}
+          <Route element={<RequireAuth />}>
+            <Route index element={<Home />} />
+            <Route path="/exercises" element={<Exercise />} />
+          </Route>
+        </Route>
+      </Route>
+    </Routes>
   );
 };
 

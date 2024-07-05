@@ -1,39 +1,16 @@
-import axios from 'axios';
+import axios from './axios';
 
-const BASE_URL = 'http://localhost:5000/api/';
+const USER_URL = 'users/';
 
 const users = {
-    registerUser: (signupData) => {
-        return new Promise((resolve, reject) => {
-            axios
-                .post(BASE_URL + "users/register", signupData)
-                .then((response) => {
-                    if (response.status === 201) {
-                        resolve(response.data);
-                    } else {
-                        reject(response);
-                    }
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
+    register: (signupData) => {
+      return axios.post(USER_URL + 'register', signupData);
     },
-    loginUser: (loginData) => {
-        return new Promise((resolve, reject) => {
-            axios
-                .post(BASE_URL + "users/login", loginData)
-                .then((response) => {
-                    if (response.status === 200) {
-                        resolve(response.data);
-                    } else {
-                        reject(response);
-                    }
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
-    }
-};
+    login: (loginData) => {
+      return axios.post(USER_URL + 'login', loginData, {withCredentials: true});
+    },
+    refresh: () => {
+      return axios.get(USER_URL + 'refresh', {withCredentials: true});
+    },
+  };
 export default users;

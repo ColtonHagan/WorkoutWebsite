@@ -1,8 +1,11 @@
 import React from 'react';
 import './index.scss';
 import { Link, NavLink } from "react-router-dom";
+import useLogout from '../../hooks/useLogout';
 
 const NavBar = () => {
+  const logout = useLogout();
+
   return (
     <div className="nav-bar">
       <div className='logo'>
@@ -20,8 +23,7 @@ const NavBar = () => {
         </NavLink>
       </nav>
       <div className='profile'>
-          <Link to='/login'>Login</Link>
-          <Link to='/signup'>Signup</Link>
+          <button onClick={logout}>Logout</button>
       </div>
     </div>
   )

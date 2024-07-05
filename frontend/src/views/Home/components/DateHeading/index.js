@@ -1,4 +1,3 @@
-import React from 'react';
 import moment from 'moment';
 const DateHeading = ({ date }) => {
     const today = moment().startOf('day');

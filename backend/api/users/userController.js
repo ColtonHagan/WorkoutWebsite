@@ -1,6 +1,7 @@
 const { hash, compare } = require('bcryptjs');
-const { sign } = require('jsonwebtoken');
-const { createUser, findUserByEmail, findUserByUsername } = require("./userModel");
+const { verify } = require('jsonwebtoken');
+const { generateAccessToken, generateRefreshToken } = require("./util/authHelpers")
+const { createUser, findUserByEmail, findUserByUsername, storeRefreshToken, getUserByRefreshToken, removeRefreshToken } = require("./userModel");
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -37,27 +38,35 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) return res.status(400).json({
+    error: 'Missing email or password'
+  });
 
   try {
     const user = await findUserByEmail(email);
-    if (!user) {
-      return res.status(400).json({
-        error: 'Invalid email or password'
-      });
-    }
-
     const isPasswordValid = await compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({
+
+    if (!isPasswordValid || !user) {
+      return res.status(401).json({
         error: 'Invalid email or password'
       });
     }
 
-    const jwtToken = sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const refreshToken = generateRefreshToken(user.id);
+    const accessToken = generateAccessToken(user.id);
+
+    await storeRefreshToken(user.id, refreshToken);
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 1 week
+    });
 
     res.status(200).json({
       message: "Login sucessful",
-      token: jwtToken
+      accessToken: accessToken
     });
   } catch (error) {
     console.error("Error during user login:", error);
@@ -67,7 +76,73 @@ const login = async (req, res) => {
   }
 };
 
+const refresh = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.refreshToken) {
+    console.error('Missing refresh token');
+    res.status(401).json({ error: 'Missing refresh token' });
+  }
+  const refreshToken = cookies.refreshToken;
+
+  const user = (await getUserByRefreshToken(refreshToken))?.userId;
+  if (!user) {
+    console.error('Expired refresh token');
+    res.status(403).json({ error: 'Expired refresh token' });
+  }
+
+  try {
+    const decoded = verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    if (decoded.userId !== user) {
+      console.error('Incorrect refresh token');
+      res.status(403).json({ error: 'Incorrect refresh token' });
+    }
+    const accessToken = generateAccessToken(user);
+    res.status(200).json({
+      message: "Access token refreshed",
+      accessToken: accessToken
+    });
+  } catch (err) {
+    console.error('Incorrect refresh token', err);
+    res.status(403).json({ error: 'Incorrect refresh token' });
+  }
+};
+
+const logout = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.refreshToken) {
+    console.log("Missing token in logout");
+    return res.status(204).json({ message: 'No content' }); // already logged out
+  }
+  const refreshToken = cookies.refreshToken;
+
+  try {
+    const user = await getUserByRefreshToken(refreshToken);
+    if (user) {
+      await removeRefreshToken(refreshToken);
+    } else {
+      console.log("no user found in logout"); //temp
+    }
+
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict'
+    });
+
+    res.status(200).json({
+      message: "Logout successful"
+    });
+  } catch (error) {
+    console.error("Error during logout:", error);
+    res.status(500).json({
+      error: 'Internal Server Error'
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
+  refresh,
+  logout
 };

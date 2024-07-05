@@ -1,5 +1,5 @@
 import './index.scss';
-import { React, useState } from 'react';
+import { useState } from 'react';
 import usersAPI from '../../APIs/users'
 
 function Signup() {
@@ -10,13 +10,13 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await usersAPI.registerUser({username, email, password});
+      await usersAPI.register({username, email, password});
       setUsername("");
       setEmail("");
       setPassword("");
       console.log("User signed up successfully");
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
