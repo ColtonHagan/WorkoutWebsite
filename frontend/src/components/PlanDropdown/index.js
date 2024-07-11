@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import "./index.scss";
 
-const PlanDropdown = ({ options, onSelect, onCreate}) => {
+const PlanDropdown = ({ options, onSelect }) => {
     const formattedOptions = options.map((option) => ({
         value: option.id,
         label: option.name,

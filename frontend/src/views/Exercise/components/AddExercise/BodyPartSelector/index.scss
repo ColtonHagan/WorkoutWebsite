@@ -1,0 +1,41 @@
+.bodyPartSelector {
+    display: flex;
+    align-items: center;
+    width: 80vw;
+
+    .bodyPartList {
+        display: flex;
+        overflow: hidden;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .scrollButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+
+        svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    .scrollButton.left {
+        margin-right: 1rem;
+    }
+
+    .scrollButton.right {
+        margin-left: 1rem;
+    }
+}
