@@ -5,15 +5,15 @@ import BodyPartSelector from './BodyPartSelector';
 import ExerciseList from './ExerciseList';
 import "./index.scss";
 
-const AddExercise = ({selectedPlan}) => {
+const AddExercise = ({addExercise}) => {
     const [exercises, setExercises] = useState([]);
     const [filteredExercises, setFilteredExercises] = useState([]);
     const [selectedBodyPart, setSelectedBodyPart] = useState();
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => { /*Since dataset is large and static I am fetching everything and then filtering*/
-        const limit = 12; //needs 1500+ to overwrite base limit 10
-        const offset = 0; //not need yet
+        const limit = 1600; //needs 1600+ to overwrite base limit 10
+        const offset = 0; //not using due to not limiting dataset
         async function fetchExercises() {
             try {
                 const response = await axiosExerciseDB.get(`/exercises?limit=${limit}&offset=${offset}`);
@@ -47,13 +47,12 @@ const AddExercise = ({selectedPlan}) => {
     };
 
     return (
-        <div className="testing">
+        <div>
             <SearchBar onSearch={handleSearch}/>{/* Search Bar */}
-            {setSelectedBodyPart && <h1>{selectedBodyPart}</h1>}
             <div className='BodyPartSelector'>
                 <BodyPartSelector selected= {selectedBodyPart} selectBodyPart={(bodyPart) => setSelectedBodyPart(bodyPart)}/> {/* Body Part Selector */}
             </div>
-            <ExerciseList exercises={filteredExercises}/> {/*add exercise list*/}
+            <ExerciseList exercises={filteredExercises} addExercise={(exercise) => addExercise(exercise)}/> {/*add exercise list*/}
         </div>
     );
 }

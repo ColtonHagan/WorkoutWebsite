@@ -1,37 +1,106 @@
+@use "../../../../util/variables" as v;
+
 .exercise-item {
-    border: .25em solid black;
     border-radius: .5em;
     margin: 1rem;
     padding: .25rem;
-    h1 {
+    width: 20vw;
+    height: 22vh;
+    position: relative;
+    background-color: v.$secondary-background-color;
+    border-left: 2em solid v.$secondary-background-color;
+    box-shadow: 0.325em 0.325em 1em v.$border-color;
+    box-sizing: border-box;
+    overflow: hidden;
 
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-    .category-info {
-        text-align: left;
-    }
-
-    .weight-info {
+    .tags {
         display: flex;
-        flex-direction: row;
         justify-content: center;
-        align-items: center;
-        position: relative;
+        flex-wrap: wrap;
+        gap: .25em;
+
+        p {
+            margin-bottom: 0;
+            padding: .125em;
+            background-color: #ddebfe;
+            color: v.$primary-blue;
+            font-weight: bold;
+            border-radius: 15%;
+        }
     }
+
+    h1 {
+        margin: 0;
+        font-size: 3em;
+    }
+
+        .exercise-count {
+            font-size: 1.1em;
+        }
+    
+        .weight-info {
+            margin-top: .25em;
+            font-size: 1.5em;
+    
+            .small-text {
+                font-size: .8em;
+            }
+        }
 
     .checkbox-container {
+        /* 
+           used the wonderful tutorail
+           https://moderncss.dev/pure-css-custom-checkbox-style/ 
+        */
         position: absolute;
-        bottom: 0;
         right: 0;
-        margin-right: 0.5rem;
-    }
+        bottom: 0;
+        margin: .25em;
 
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
 
-    .checkbox-container .checkmark {
-        border-radius: 50%;
+            font: inherit;
+            color: currentColor;
+            width: 1.6em;
+            height: 1.6em;
+            border: 0.15em solid v.$border-color;
+            border-radius: 50%;
+
+            display: grid;
+            place-content: center;
+
+            &::before {
+                content: "";
+                width: 0.8em;
+                height: 0.8em;
+                transform: scale(0);
+                transition: 120ms transform ease-in-out;
+                box-shadow: inset 1em 1em var(--form-control-color);
+                background-color: CanvasText;
+                transform-origin: bottom left;
+                clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+            }
+
+            &:checked {
+                background-color: v.$success-green;
+                border-color: v.$success-green;
+
+                &::before {
+                    transform: scale(1);
+                    background-color: v.$secondary-background-color;
+                }
+            }
+        }
     }
 
     &.checked {
-        border-color: green;
+        border-color: v.$success-green;
     }
 }

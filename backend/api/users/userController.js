@@ -80,30 +80,31 @@ const refresh = async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.refreshToken) {
     console.error('Missing refresh token');
-    res.status(401).json({ error: 'Missing refresh token' });
+    return res.status(401).json({ error: 'Missing refresh token' });
   }
+
   const refreshToken = cookies.refreshToken;
 
   const user = (await getUserByRefreshToken(refreshToken))?.userId;
   if (!user) {
     console.error('Expired refresh token');
-    res.status(403).json({ error: 'Expired refresh token' });
+    return res.status(403).json({ error: 'Expired refresh token' });
   }
 
   try {
     const decoded = verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     if (decoded.userId !== user) {
       console.error('Incorrect refresh token');
-      res.status(403).json({ error: 'Incorrect refresh token' });
+      return res.status(403).json({ error: 'Incorrect refresh token' });
     }
     const accessToken = generateAccessToken(user);
-    res.status(200).json({
+    return res.status(200).json({
       message: "Access token refreshed",
       accessToken: accessToken
     });
   } catch (err) {
     console.error('Incorrect refresh token', err);
-    res.status(403).json({ error: 'Incorrect refresh token' });
+    return res.status(403).json({ error: 'Incorrect refresh token' });
   }
 };
 

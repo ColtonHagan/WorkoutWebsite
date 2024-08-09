@@ -1,8 +1,8 @@
-import React from 'react'
+import "./index.scss";
 
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <footer>Create by Colton Hagan</footer>
   )
 }
 

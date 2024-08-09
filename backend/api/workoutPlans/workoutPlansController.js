@@ -3,6 +3,7 @@ const workoutPlanModel = require('./workoutPlansModel');
 const createWorkoutPlan = async (req, res) => {
     const { name, description } = req.body;
     const user_id = req.user.userId;
+    console.log("Creating plan: ", {name, description, user_id})
 
     try {
         const plan = {

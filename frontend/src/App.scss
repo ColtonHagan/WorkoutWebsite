@@ -1,12 +1,22 @@
-body {
-    margin: auto;
-    font: 300 1rem "Helvetica Neue", "sans-serif";
-    color: black;
-    background-color: white;
-    overflow: auto;
+@use "./util/variables" as v;
+
+body, html {
+    margin: 0;
+    font: 300 1em "Helvetica Neue", "sans-serif";
+    color: v.$text-color-dark;
+    background-color: v.$background-color;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+header, footer {
+    min-height: 2em;
+}
+
+main {
+    flex: 1;
 }

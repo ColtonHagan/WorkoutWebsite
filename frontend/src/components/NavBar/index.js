@@ -7,7 +7,7 @@ const NavBar = () => {
   const logout = useLogout();
 
   return (
-    <div className="nav-bar">
+    <header className="nav-bar">
       <div className='logo'>
         <Link to="/">Logo</Link>
       </div>
@@ -18,14 +18,14 @@ const NavBar = () => {
         <NavLink exact={+true} id="plan-link" to="/exercises">
           Create Workout
         </NavLink>
-        <NavLink exact={+true} id="stats-link" to="/stats">
-          Statistics
+        <NavLink exact={+true} id="public-link" to="/public">
+          Public Workouts
         </NavLink>
       </nav>
       <div className='profile'>
           <button onClick={logout}>Logout</button>
       </div>
-    </div>
+    </header>
   )
 }
 

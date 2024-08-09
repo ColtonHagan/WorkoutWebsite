@@ -5,28 +5,24 @@ import ExercisePopUp from '../ExercisePopUp';
 import DateHeading from './components/DateHeading';
 import Calendar from 'react-calendar';
 import moment from 'moment';
-import useGetWorkoutPlans from '../../hooks/useGetWorkoutPlans';
 import PlanDropdown from '../../components/PlanDropdown';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBed } from '@fortawesome/free-solid-svg-icons';
+import { TbZzz } from "react-icons/tb";
 
 const Home = () => {
-  const [workoutPlans] = useGetWorkoutPlans();
   const [exercises, setExercises] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState("");
-  const [selectedExercise, setSelectedExercise] = useState(null);
+  const [selectedExercise, setSelectedExercise] = useState();
   const [dateState, setDateState] = useState(new Date());
   const axiosPrivate = useAxiosPrivate();
-
-  useEffect(() => { //sets to first workPlan when page loads
-    if (workoutPlans.length > 0) {
-      setSelectedPlan(workoutPlans[0].id);
-    }
-  }, [workoutPlans]);
 
   useEffect(() => { 
     const fetchExercises = async (planId) => {
       try {
         const response = await axiosPrivate.get(`workouts/${planId}/workout`); /* should be moved to seperate api file */
+        console.log(response.data);
         setExercises(response.data);
       } catch (err) {
         console.error(err);
@@ -57,13 +53,13 @@ const Home = () => {
 
   return (
     <div className="exercise-page">
-      <div className='calendar'> {/* should be later moved into seperate file */}
-        <PlanDropdown options={workoutPlans} onSelect={(planId) => setSelectedPlan(planId)} selectedPlan={selectedPlan} />
-        <Calendar value={dateState} onChange={(date) => setDateState(date)} tileClassName={tileClassName} />
+      <div className='calendar-container'> {/* should be later moved into seperate file */}
+        <PlanDropdown onSelect={(planId) => setSelectedPlan(planId)} selectedValue={selectedPlan}/>
+        <Calendar className="calendar" value={dateState} onChange={(date) => setDateState(date)} tileClassName={tileClassName} />
       </div>
       <div className="date-container">
-        <h1> <DateHeading date={dateState} />'s Workout</h1> 
-        <div className='card-container'> {/* should be later moved into seperate file */}
+        <h1 className='date-heading'> <DateHeading date={dateState} />'s Workout</h1> 
+        <div className='card-container'> {/* should be later moved into seperate file??? */}
           {filteredExercises.length > 0 ? (
             filteredExercises.map((exercise, index) => (
               <ExcerciseCard
@@ -71,9 +67,13 @@ const Home = () => {
                 exercise={exercise}
                 onClick={() => setSelectedExercise(exercise)}
               />
-            ))
+            ))  
           ) : (
-            <p>Resting</p>
+            <div className='resting'>
+              <TbZzz/>
+              <FontAwesomeIcon icon={faBed} />
+              <p>Resting</p>
+            </div>
           )}
           {selectedExercise && (
             <ExercisePopUp

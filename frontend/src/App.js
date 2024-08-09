@@ -4,12 +4,14 @@ import './App.scss';
 
 import Home from './views/Home';
 import Exercise from './views/Exercise';
+import Public from './views/PublicPlans';
 import Signup from './views/Signup';
 import Login from './views/Login';
-import RequireAuth from './util/RequireAuth';
-import PersistLogin from './util/PersistLogin';
 import AuthHandler from './components/AuthHandler';
 import Layout from './components/Layout';
+import TempTesting from './TempTesting';
+import DropdownTest from './TempTesting/DropdownTest';
+import { WorkoutPlansProvider } from './context/WorkoutPlansProvider';
 
 const App = () => {
   return (
@@ -17,10 +19,18 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
-      <Route path="/" element={<Layout />}>
-        <Route element={<AuthHandler />}> {/** Combine this and required auth into a single file AuthHandler */}
+      <Route element={<AuthHandler />}>
+        <Route path="/"
+          element={
+            <WorkoutPlansProvider>
+              <Layout />
+            </WorkoutPlansProvider>
+          }
+        >
+          {/*auth handler used to be here*/}
           <Route index element={<Home />} />
           <Route path="/exercises" element={<Exercise />} />
+          <Route path="/public" element={<Public />} />
         </Route>
       </Route>
     </Routes>
