@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Select from 'react-select';
 import MultiDatePicker from 'react-multi-date-picker';
 import { axiosExerciseDB } from '../../APIs/axios';
+import CloseButton from '../../components/CloseButton';
 import './index.scss';
 
 const ExercisePopUp = ({ exercise, onClose }) => {
@@ -10,7 +11,7 @@ const ExercisePopUp = ({ exercise, onClose }) => {
     const [days, setDays] = useState(
         exercise.days.map(day => ({ value: day, label: day }))
     );
-    const [dates, setDates] = useState(exercise.dates.map(date => new Date(date)));
+    const [dates, setDates] = useState(exercise.dates ? exercise.dates.map(date => new Date(date)) : []);
     const [reps, setReps] = useState(exercise.reps);
     const [sets, setSets] = useState(exercise.sets);
     const [weight, setWeight] = useState(exercise.weight);
@@ -27,11 +28,13 @@ const ExercisePopUp = ({ exercise, onClose }) => {
     ].map(day => ({ value: day, label: day }));
 
     const hasChanges = () => {
+        const formatDate = (date) => date instanceof Date ? date.toISOString() : new Date(date).toISOString();
+
         return (
             days.map(day => day.value).sort().join(',') !== initialValues.days.sort().join(',') ||
-            dates.map(date => date.toISOString()).sort().join(',') !== initialValues.dates.map(date => new Date(date).toISOString()).sort().join(',') ||
-            reps !== initialValues.reps || 
-            sets !== initialValues.sets || 
+            dates.map(formatDate).sort().join(',') !== initialValues.dates.map(formatDate).sort().join(',') ||
+            reps !== initialValues.reps ||
+            sets !== initialValues.sets ||
             weight !== initialValues.weight
         );
     };
@@ -53,20 +56,11 @@ const ExercisePopUp = ({ exercise, onClose }) => {
         <>
             <div className='popup-overlay' />
             <div className='card-pop-up'>
+                <CloseButton onClick={onClose} />
                 <div className='pop-up-header'>
-                    <button
-                        className={`update-button ${hasChanges() ? 'active' : 'disabled'}`}
-                        disabled={!hasChanges()}
-                        onClick={() => {
-                            // Handle update logic here
-                        }}
-                    >
-                        Update
-                    </button>
-                    <button className='close-button' onClick={onClose}>Close</button>
+                    <h1 className='ellipsis'>{exercise.name}</h1>
                 </div>
                 <div className='pop-up-content'>
-                    <h1>{exercise.name}</h1>
                     <div className='exercise-info'>
                         <img className='exercise-gif' src={exerciseInfo.gifUrl} alt={exerciseInfo.name} />
                         <div className='exercise-details'>
@@ -112,10 +106,29 @@ const ExercisePopUp = ({ exercise, onClose }) => {
                                     <label htmlFor='dates'>Dates: </label>
                                     <MultiDatePicker
                                         value={dates}
-                                        onChange={(e) => setDates(e)}
+                                        onChange={(newDates) => {
+                                            if (newDates.isValid) return;
+
+                                            const dateObjects = newDates
+                                                .map(date => new Date(date))
+                                                .filter(date => !isNaN(date));
+
+                                            setDates(dateObjects);
+                                        }}
                                         placeholder="Select Dates"
                                     />
                                 </li>
+                                <div id='update-container'>
+                                    <button
+                                        className={`update-button ${hasChanges() ? 'active' : 'disabled'}`}
+                                        disabled={!hasChanges()}
+                                        onClick={() => {
+                                            // Handle update logic here
+                                        }}
+                                    >
+                                        Update
+                                    </button>
+                                </div>
                             </ul>
                         </div>
                     </div>

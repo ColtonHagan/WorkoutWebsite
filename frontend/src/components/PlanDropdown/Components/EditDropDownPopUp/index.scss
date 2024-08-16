@@ -1,0 +1,69 @@
+@use "../../../../util/variables" as v;
+
+.card-pop-up {
+    display: flex;
+    align-items: center;
+
+    #edit-plan-container {
+        width: 20vw;
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1em;
+            font-size: 2.5em;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin-bottom: 0.5rem;
+                font-weight: bold;
+                font-size: 1.1em;
+
+                input,
+                textarea {
+                    width: 100%;
+                    padding: 0.5em;
+                    margin-bottom: 1em;
+                    border: 1px solid #ccc;
+                }
+
+                textarea {
+                    height: 5vh;
+                }
+            }
+
+            #edit-buttons {
+                color: white;
+                display: flex;
+                justify-content: end;
+                gap: .25em;
+
+                button {
+                    padding: 0.5em 1em;
+                    border: none;
+                    border-radius: 10%;
+                }
+
+                #save-button {
+                    background-color: v.$success-green;
+
+                    &:hover {
+                        background-color: v.$success-green-hover;
+                    }
+                }
+
+                #delete-button {
+                    background-color: v.$error-red;
+
+                    &:hover {
+                        background-color: v.$error-red-hover;
+                    }
+                }
+            }
+        }
+    }
+}

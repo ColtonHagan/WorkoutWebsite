@@ -30,7 +30,7 @@ const App = () => {
           {/*auth handler used to be here*/}
           <Route index element={<Home />} />
           <Route path="/exercises" element={<Exercise />} />
-          <Route path="/public" element={<Public />} />
+          <Route path="/public" element={<DropdownTest />} />
         </Route>
       </Route>
     </Routes>

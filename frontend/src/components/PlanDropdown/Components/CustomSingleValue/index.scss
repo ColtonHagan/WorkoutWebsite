@@ -1,0 +1,12 @@
+@use "../../../../util/variables" as v;
+#singleValueDropdown {
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+
+    #editButton {
+        z-index: 2;
+        font-size: 1.2em;
+        color: v.$primary-blue;
+    }
+}

@@ -1,13 +1,4 @@
 .pop-up {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 3em;
-    z-index: 2;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
     width: 35vw;
 
     .exercise-form {
@@ -69,15 +60,4 @@
             }
         }
     }
-}
-
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    z-index: 1;
 }

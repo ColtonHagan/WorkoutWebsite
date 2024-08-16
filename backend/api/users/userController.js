@@ -114,10 +114,13 @@ const logout = async (req, res) => {
     console.log("Missing token in logout");
     return res.status(204).json({ message: 'No content' }); // already logged out
   }
+
   const refreshToken = cookies.refreshToken;
 
   try {
     const user = await getUserByRefreshToken(refreshToken);
+    console.log("user", user);
+
     if (user) {
       await removeRefreshToken(refreshToken);
     } else {

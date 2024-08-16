@@ -23,51 +23,21 @@ const useViewportWidth = () => {
 
 const ExerciseCard = ({ exercise, onClick }) => {
     const [isChecked, setIsChecked] = useState(false);
-    const viewportWidth = useViewportWidth();
+
+    console.log(exercise.nickname)
 
     const handleCheckboxChange = (e) => {
         e.stopPropagation();
         setIsChecked(e.target.checked);
     };
 
-    //temp using until I updated add exercise to db forcing capalization 
-    const capitalizeFirstLetter = (str) => {
-        return str
-            .split(' ') // Split the string into words
-            .map(word =>
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() // Capitalize the first letter and lowercase the rest
-            )
-            .join(' '); // Join the words back into a single string
-    };
-
-    const truncateName = (name) => {
-        //this I will update to change with height
-        const fontSizeEm = 2.5;
-        const containerWidthVw = 20;
-        const maxLines = 1;
-
-        const containerWidthPx = (containerWidthVw / 100) * viewportWidth;
-        const fontSizePx = fontSizeEm * 16;
-        const averageCharWidthPx = 0.6 * fontSizePx;
-        const maxLength = Math.floor(containerWidthPx / averageCharWidthPx) * maxLines;
-
-        if (name.length <= maxLength) return name;
-
-        const truncatedName = name.slice(0, maxLength);
-
-        const lastSpaceIndex = truncatedName.lastIndexOf(' ');
-        if (lastSpaceIndex === -1) return truncatedName + '...';
-
-        return truncatedName.slice(0, lastSpaceIndex) + '...';
-    };
-
     return (
         <div className={"exercise-item" + (isChecked ? " checked" : "")} onClick={onClick}>
             <div className='tags'>
-                <p>#{capitalizeFirstLetter(exercise.body_part)}</p>
-                <p>#{capitalizeFirstLetter(exercise.target_muscle)}</p>
+                <p>#{exercise.body_part}</p>
+                <p>#{exercise.target_muscle}</p>
             </div>
-            <h1>{truncateName(capitalizeFirstLetter(exercise.name))}</h1>
+            <h1 className='ellipsis'>{exercise.nickname}</h1>
             <div >
                 <div className='exercise-count'><strong>Count: </strong> {exercise.sets} Sets x {exercise.reps} Reps</div>
                 <div className='weight-info'>

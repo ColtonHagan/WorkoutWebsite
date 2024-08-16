@@ -32,6 +32,7 @@ const findRefreshToken = async (userId) => {
 };
 
 const getUserByRefreshToken = async (refreshToken) => {
+  console.log("getting refresh token", refreshToken);
   const [rows] = await db.execute('SELECT userId FROM refresh_tokens WHERE refreshToken = ?', [refreshToken]);
   return rows[0];
 };

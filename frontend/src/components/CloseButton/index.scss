@@ -1,0 +1,23 @@
+@use "../../util/variables" as v;
+
+.close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.5rem;
+    color: v.$error-red;
+    transition: color 0.3s ease, transform 0.3s ease;
+    margin: 0;
+    padding: 0;
+  
+    &:hover {
+      color: v.$error-red-hover;
+      transform: scale(1.1);
+    }
+  
+    &:focus {
+      outline: none;
+    }
+  }
+  

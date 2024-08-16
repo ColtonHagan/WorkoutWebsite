@@ -1,29 +1,11 @@
 @use "../../util/variables" as v;
-/*.dropdown-container {
+.dropdown-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  width: 100%;
-  label {
-    color: v.$primary-blue;
-    font-size: 1.5em;
-    width: 20vw;
-  }
 
   .dropdown {
-    width: 100%;
-    max-width: 300px;
-    margin: 10px 0;
-
-    .custom-single-value {
-      flex: 1;
-      background-color: red;
-
-      span {
-          margin-right: 4px;
-          color: pink;
-      }
-    }
+    max-width: 20vw;
   }
-}*/
+}

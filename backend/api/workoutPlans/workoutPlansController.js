@@ -43,8 +43,46 @@ const getWorkoutsByPlan = async (req, res) => {
     }
 };
 
+const editWorkoutPlan = async (req, res) => {
+    const { planId } = req.params;
+    const { name, description } = req.body;
+
+    try {
+        const updatedPlan = { name, description };
+        const result = await workoutPlanModel.updateWorkoutPlan(planId, updatedPlan);
+
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Workout plan updated successfully', id: planId});
+        } else {
+            res.status(404).json({ message: 'Workout plan not found' });
+        }
+    } catch (error) {
+        console.error("Error during editing workoutPlan:", error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const deleteWorkoutPlan = async (req, res) => {
+    const { planId } = req.params;
+
+    try {
+        const result = await workoutPlanModel.deleteWorkoutPlan(planId);
+
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Workout plan deleted successfully', id: planId});
+        } else {
+            res.status(404).json({ message: 'Workout plan not found' });
+        }
+    } catch (error) {
+        console.error("Error during deleting workoutPlan:", error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     createWorkoutPlan,
     getWorkoutPlans,
     getWorkoutsByPlan,
+    editWorkoutPlan,
+    deleteWorkoutPlan
 };

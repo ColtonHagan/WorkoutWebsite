@@ -3,8 +3,8 @@ const { decodeDays } = require('./util/dayEncoder');
 
 const createWorkout = async (workout) => {
     const [result] = await db.execute(
-        'INSERT INTO workouts (user_id, plan_id, external_workout_id, name, reps, sets, weight, days, body_part, target_muscle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [workout.user_id, workout.plan_id, workout.external_workout_id, workout.name, workout.reps, workout.sets, workout.weight, workout.days, workout.body_part, workout.target_muscle]
+        'INSERT INTO workouts (user_id, plan_id, external_workout_id, name, nickname, reps, sets, weight, days, body_part, target_muscle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [workout.user_id, workout.plan_id, workout.external_workout_id, workout.name, workout.nickname, workout.reps, workout.sets, workout.weight, workout.days, workout.body_part, workout.target_muscle]
     );
     return result.insertId;
 };
@@ -26,7 +26,7 @@ const deleteWorkoutDatesByWorkoutId = async (workoutId) => {
 
 const getWorkoutById = async (userId, workoutId) => {
     const [result] = await db.execute(
-        'SELECT w.id, external_workout_id, w.name, w.reps, w.sets, w.weight, w.days, w.body_part, w.target_muscle, GROUP_CONCAT(wd.date) AS dates FROM workouts w LEFT JOIN workout_dates wd ON w.id = wd.workout_id WHERE w.user_id = ? AND w.id = ? GROUP BY w.id',
+        'SELECT w.id, external_workout_id, w.name, w.nickname, w.reps, w.sets, w.weight, w.days, w.body_part, w.target_muscle, GROUP_CONCAT(wd.date) AS dates FROM workouts w LEFT JOIN workout_dates wd ON w.id = wd.workout_id WHERE w.user_id = ? AND w.id = ? GROUP BY w.id',
         [userId, workoutId]
     );
 
@@ -40,6 +40,7 @@ const getWorkoutById = async (userId, workoutId) => {
         id: row.id,
         external_workout_id: row.external_workout_id.toString().padStart(4, '0'),
         name: row.name,
+        nickname: row.nickname,
         reps: row.reps,
         sets: row.sets,
         weight: parseFloat(row.weight),
@@ -52,7 +53,7 @@ const getWorkoutById = async (userId, workoutId) => {
 
 const getWorkoutsById = async (user_id, plan_id) => {
     const [result] = await db.execute(
-        'SELECT w.id, external_workout_id, w.name, w.reps, w.sets, w.weight, w.days, w.body_part, w.target_muscle, GROUP_CONCAT(wd.date) AS dates FROM workouts w LEFT JOIN workout_dates wd ON w.id = wd.workout_id WHERE w.user_id = ? AND w.plan_id = ? GROUP BY w.id',
+        'SELECT w.id, external_workout_id, w.name, w.nickname, w.reps, w.sets, w.weight, w.days, w.body_part, w.target_muscle, GROUP_CONCAT(wd.date) AS dates FROM workouts w LEFT JOIN workout_dates wd ON w.id = wd.workout_id WHERE w.user_id = ? AND w.plan_id = ? GROUP BY w.id',
         [user_id, plan_id]
     );
 
@@ -60,6 +61,7 @@ const getWorkoutsById = async (user_id, plan_id) => {
         id: row.id,
         external_workout_id: row.external_workout_id.toString().padStart(4, '0'),
         name: row.name,
+        nickname: row.nickname,
         reps: row.reps,
         sets: row.sets,
         weight: parseFloat(row.weight),

@@ -35,21 +35,21 @@
 
     h1 {
         margin: 0;
-        font-size: 3em;
+        font-size: 2.5em;
     }
 
-        .exercise-count {
-            font-size: 1.1em;
+    .exercise-count {
+        font-size: 1.1em;
+    }
+
+    .weight-info {
+        margin-top: .25em;
+        font-size: 1.5em;
+
+        .small-text {
+            font-size: .8em;
         }
-    
-        .weight-info {
-            margin-top: .25em;
-            font-size: 1.5em;
-    
-            .small-text {
-                font-size: .8em;
-            }
-        }
+    }
 
     .checkbox-container {
         /* 

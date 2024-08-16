@@ -10,17 +10,32 @@ const createWorkoutPlan = async (plan) => {
 };
 
 const getWorkoutPlansByUserId = async (user_id) => {
-    const [rows] = await db.execute('SELECT * FROM workout_plans WHERE user_id = ?', [user_id]);
-    return rows;
+    const [result] = await db.execute('SELECT * FROM workout_plans WHERE user_id = ?', [user_id]);
+    return result;
 };
 
 const getWorkoutsByPlanId = async (plan_id) => {
-    const [rows] = await db.execute('SELECT * FROM workout_plans WHERE id = ?', [plan_id]);
-    return rows;
+    const [result] = await db.execute('SELECT * FROM workout_plans WHERE id = ?', [plan_id]);
+    return result;
+};
+
+const updateWorkoutPlan = async (planId, updatedPlan) => {
+    const [result] = await db.execute(
+        'UPDATE workout_plans SET name = ?, description = ? WHERE id = ?',
+        [updatedPlan.name, updatedPlan.description, planId]
+    );
+    return result;
+};
+
+const deleteWorkoutPlan = async (planId) => {
+    const [result] = await db.execute('DELETE FROM workout_plans WHERE id = ?', [planId]);
+    return result;
 };
 
 module.exports = {
     createWorkoutPlan,
     getWorkoutPlansByUserId,
     getWorkoutsByPlanId,
+    updateWorkoutPlan,
+    deleteWorkoutPlan,
 };

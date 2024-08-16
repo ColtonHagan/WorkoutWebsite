@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import MultiDatePicker from 'react-multi-date-picker';
 import Select from 'react-select';
+import { CapitalizeWords } from '../../../../../../../util/CapitalizeWords';
 import "./index.scss";
+import axios from 'axios';
 
 const AddExercisePopUp = ({ exercise, onClose, addExercise }) => {
     const [reps, setReps] = useState(0);
@@ -11,17 +13,56 @@ const AddExercisePopUp = ({ exercise, onClose, addExercise }) => {
     const [selectedDates, setSelectedDates] = useState([]);
     const [selectedDays, setSelectedDays] = useState([]);
 
+    //helps with some 
+    const removeTrailingPeriodAndTrim = (text) => {
+        if (typeof text !== 'string') return '';
+
+        let result = text.trim(); // Remove leading and trailing whitespace
+        if (result.endsWith('.')) {
+            result = result.slice(0, -1); // Remove the trailing period
+        }
+        return result;
+    }
+
+    //this should be moved into its own api file
+    const getNickname = async (exerciseName) => {
+        try {
+            const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+                model: 'gpt-3.5-turbo',
+                messages: [
+                    {
+                        role: 'user',
+                        content: `Just return your response, no explanation. Remove Provide shortest functional name for "${exerciseName}". Remove filler words like barbell or dumbbell. Limit 3 words (but use less if possible).`
+                    }
+                ],
+                max_tokens: 10
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${process.env.REACT_APP_CHATGPT_API_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const nickname = response.data.choices[0].message.content.trim();
+            return nickname;
+        } catch (error) {
+            console.error("Error fetching nickname from ChatGPT:", error);
+            return null;
+        }
+    };
+
     const handleSave = async () => {
         const payload = {
-            name: exercise.name,
+            name: CapitalizeWords(exercise.name),
+            nickname: CapitalizeWords(removeTrailingPeriodAndTrim(exercise.name.length > 15 ? await getNickname(exercise.name) : exercise.name)),
             external_workout_id: exercise.id,
             reps,
             sets,
             dates: selectedDates,
             weight,
             days: selectedDays,
-            body_part: exercise.bodyPart,
-            target_muscle: exercise.target
+            body_part: CapitalizeWords(exercise.bodyPart),
+            target_muscle: CapitalizeWords(exercise.target)
         };
         console.log(payload);
         await addExercise(payload);
