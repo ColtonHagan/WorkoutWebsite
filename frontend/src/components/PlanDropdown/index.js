@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import "./index.scss";
 import CustomSingleValue from "./Components/CustomSingleValue";
 import useWorkoutPlans from "../../hooks/useWorkoutPlans";
 import EditDropDownPopUp from "./Components/EditDropDownPopUp";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import PopUpContainer from "../PopUpContainer";
+import "./index.scss";
 
 const PlanDropdown = ({ onSelect, selectedValue }) => {
     const { workoutPlans, setWorkoutPlans } = useWorkoutPlans();
@@ -15,7 +16,6 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
 
     useEffect(() => {
         if (workoutPlans.length > 0 && !selectedValue) {
-            console.log("firing ", selectedValue);
             onSelect(formattedOptions[0]?.value);
         }
     }, [formattedOptions, workoutPlans, selectedValue]);
@@ -33,7 +33,6 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
         try {
             const result = await axiosPrivate.delete(`workouts/workoutPlans/${id}`);
             const deletedId = Number(result?.data?.id);
-            console.log(typeof deletedId);
             deletedId && setWorkoutPlans(prevPlans => prevPlans.filter(plan => plan.id !== deletedId));
             const firstValidOption = formattedOptions?.find(option => option.value !== deletedId);
             firstValidOption && onSelect(firstValidOption.value);
@@ -53,18 +52,20 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
                 value={formattedOptions.find(option => option.value === selectedValue)}
                 components={{
                     SingleValue: (props) => (
-                        <CustomSingleValue {...props} onEditClick={handleEditClick} formattedOptions={formattedOptions}/>
+                        <CustomSingleValue {...props} onEditClick={handleEditClick} formattedOptions={formattedOptions} />
                     )
                 }}
                 onChange={handleChange}
             />
-            {selectedPlan && (
+            <PopUpContainer display={selectedPlan} onClose={() => setSelectedPlan(null)}>
                 <EditDropDownPopUp
                     plan={selectedPlan}
                     onClose={() => setSelectedPlan(null)}
                     deletePlan={(id) => deletePlan(id)}
+                    handleSave={null}
+                    isEditing={true}
                 />
-            )}
+            </PopUpContainer>
         </div>
     );
 };

@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import AddExercise from "./components/AddExercise";
 import WeeklyDisplay from "./WeeklyDisplay";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import WorkoutPlans from "./components/WorkoutPlans";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import PopUpContainer from "../../components/PopUpContainer";
+import ExercisePopUp from "../ExercisePopUp";
 
 const Exercise = () => {
   const [selectedPlan, setSelectedPlan] = useState("");
+  const [selectedExercise, setSelectedExercise] = useState("");
   const [exercises, setExercises] = useState([]);
   const axiosPrivate = useAxiosPrivate();
 
@@ -25,10 +28,9 @@ const Exercise = () => {
 
   const addExercise = async (exercise) => {
     exercise.plan_id = selectedPlan;
-    //need validation
-    console.log()
     try {
       const response = await axiosPrivate.post("workouts/", exercise);
+      console.log(response.data);
       exercise.id = response.data;
       setExercises(prevExercises => [...prevExercises, exercise]);
       console.log("Workout added:", exercise);
@@ -53,8 +55,11 @@ const Exercise = () => {
     <div>
       <WorkoutPlans setSelectedPlan={(plan) => setSelectedPlan(plan)} selectedPlan={selectedPlan} />
       {/* add safty check here to check if it can conect to external workout db */}
-      <WeeklyDisplay exercises={exercises} deleteWorkout={(id) => deleteExercise(id)} /> {/*See brief editable overview of current exercises*/}
-      <AddExercise addExercise={(exercise) => addExercise(exercise)}  /> {/*Page to add new exercises*/}
+      <WeeklyDisplay exercises={exercises} deleteWorkout={(id) => deleteExercise(id)} onExerciseClick={(exercise) => setSelectedExercise(exercise)}/>
+      <AddExercise addExercise={(exercise) => addExercise(exercise)}  />
+      <PopUpContainer display={selectedExercise} onClose={() => setSelectedExercise(null)}>
+        <ExercisePopUp exercise={selectedExercise}/>
+      </PopUpContainer>
     </div>
   )
 }

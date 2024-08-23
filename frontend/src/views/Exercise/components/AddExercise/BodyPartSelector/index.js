@@ -1,16 +1,24 @@
 import { useState, useEffect, useRef } from 'react';
-import { axiosExerciseDB } from '../../../../../APIs/axios';
-import BodyPartCard from './components/BodyPartCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { axiosExerciseDB } from '../../../../../APIs/axios';
+import BodyPartCard from './components/BodyPartCard';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import './index.scss';
 
-const BodyPartSelector = ({selected, selectBodyPart}) => {
+const BodyPartSelector = ({ selected, selectBodyPart }) => {
     const [bodyParts, setBodyParts] = useState([]);
-    const listRef = useRef(null);
+    const sliderRef = useRef(null);
+
+    const tempExercises = [ // temp data
+        "back", "cardio", "chest", "lower arms", "lower legs",
+        "neck", "shoulders", "upper Arms", "upper Legs", "waist"
+    ];
 
     useEffect(() => {
-        async function fetchBodyParts() {
+        /*async function fetchBodyParts() {
             try {
                 const response = await axiosExerciseDB.get('/exercises/bodyPartList');
                 setBodyParts(response.data);
@@ -19,44 +27,48 @@ const BodyPartSelector = ({selected, selectBodyPart}) => {
             }
         }
 
-        fetchBodyParts();
+        fetchBodyParts();*/
+
+        setBodyParts(tempExercises); // Use temp data for now
     }, []);
 
-    const scrollLeft = () => {
-        if (listRef.current) {
-            const scrollAmount = (listRef.current.clientWidth / 3) + (2 * 1 /* gap */);
-            listRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        }
+    const settings = {
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        nextArrow: <div style={{ display: 'none' }} />, // Hide default arrows
+        prevArrow: <div style={{ display: 'none' }} />,
+        autoplay: false,
+        responsive: [
+            { breakpoint: 1024, settings: { slidesToShow: 2 } },
+            { breakpoint: 600, settings: { slidesToShow: 1 } },
+        ],
     };
-    
-    const scrollRight = () => {
-        if (listRef.current) {
-            const scrollAmount = (listRef.current.clientWidth / 3) + (2 * 1 /* gap */);
-            listRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    };
-    
 
     return (
         <div className="bodyPartSelector">
-            <div className="scrollButton left" onClick={scrollLeft}>
+            <div className="scrollButton left" onClick={() => sliderRef.current.slickPrev()}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </div>
-            <div className="bodyPartList" ref={listRef}> {/*maybe replace with react-horizonal-scroll-menu*/}
+            <>
+            <Slider ref={sliderRef} {...settings}>
                 {bodyParts.map((bodyPart, index) => (
-                    <BodyPartCard
-                        key={index}
-                        bodyPart={bodyPart}
-                        onClick={(bodyPart) => selectBodyPart(selected === bodyPart ? null : bodyPart)}
-                        isSelected={selected === bodyPart}
-                    />
+                    <div key={index}>
+                        <BodyPartCard
+                            bodyPart={bodyPart}
+                            onClick={() => selectBodyPart(selected === bodyPart ? null : bodyPart)}
+                            isSelected={selected === bodyPart}
+                        />
+                    </div>
                 ))}
-            </div>
-            <div className="scrollButton right" onClick={scrollRight}>
+            </Slider>
+            </>
+            <div className="scrollButton right" onClick={() => sliderRef.current.slickNext()}>
                 <FontAwesomeIcon icon={faChevronRight} />
             </div>
         </div>
     );
-}
+};
 
 export default BodyPartSelector;

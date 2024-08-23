@@ -1,22 +1,25 @@
+@use "../../../util/variables" as v;
 .weekly-display {
+    width: 100%;
     table {
         width: 100%;
         border-collapse: collapse;
+        table-layout: fixed;
 
         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            border: .1em solid v.$hover-effect-dark;
+            padding: .5em;
             text-align: left;
             vertical-align: top;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: v.$border-color-light;
             font-weight: bold;
         }
 
         td {
-            height: 150px;
+            min-height: 9.5em;
             overflow-y: auto;
         }
     }

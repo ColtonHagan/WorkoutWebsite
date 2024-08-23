@@ -1,0 +1,28 @@
+@use "../../../../util/variables" as v;
+
+#plan-pop-up {
+    width: 50vw;
+    height: 50%;
+    text-align: center;
+
+    #weekly-display-container {
+        margin-bottom: 1em;
+
+        #save-button {
+            margin-top: 1em;
+            color: v.$text-color-light;
+            padding: 0.7em 1em;
+            border: none;
+            border-radius: 8%;
+            background-color: v.$success-green;
+
+            &:hover {
+                background-color: v.$success-green-hover;
+            }
+        }
+
+        .close-button {
+            font-size: 1.2em;
+        }
+    }
+}

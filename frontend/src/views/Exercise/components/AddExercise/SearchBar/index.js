@@ -1,8 +1,10 @@
-import {useState} from 'react'
+import { useState } from 'react'
+import { FaTimes } from 'react-icons/fa';
 import './index.scss';
 
-const SearchBar = ({placeholder = 'Search...', onSearch}) => {
+const SearchBar = ({ placeholder = 'Search...', onSearch }) => {
   const [query, setQuery] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
@@ -13,9 +15,13 @@ const SearchBar = ({placeholder = 'Search...', onSearch}) => {
     setQuery('');
     onSearch('');
   };
-  
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
-    <div className="searchBar">
+    <div className="searchBar"> {/*maybe replace with react-select*/}
       <input
         type="text"
         value={query}
@@ -23,7 +29,11 @@ const SearchBar = ({placeholder = 'Search...', onSearch}) => {
         placeholder={placeholder}
         className="searchInput"
       />
-      {query && <button onClick={clearSearch} className="clearButton">X</button>} {/* Replace with icon */}
+      {query && (
+        <button onClick={clearSearch} className="clearButton">
+          <FaTimes />
+        </button>
+      )}
     </div>
   );
 }

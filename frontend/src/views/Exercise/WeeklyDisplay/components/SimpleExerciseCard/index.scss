@@ -1,23 +1,18 @@
+@use "../../../../../util/variables" as v;
+
 .exercise-container {
-    background-color: #f0f0f0;
-    border: .15rem solid #ddd;
+    background-color: v.$border-color-light;
+    border: .15rem solid v.$hover-effect-dark;
+    margin-top: .25em;
     padding-left: 1rem;
-    margin-bottom: .5rem;
+    padding-right:.25em;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    .delete-button {
-        color: #ff0000;
-        cursor: pointer;
-        font-size: 1.5rem;
-        transition: color 0.3s ease;
-        margin-right: .4rem;
-        border: none;
-
-        &:hover {
-            color: #cc0000;
-        }
+    .close-button {
+        position: relative;
+        font-size: 2em;
     }
 }

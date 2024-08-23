@@ -6,6 +6,7 @@ body, html {
     color: v.$text-color-dark;
     background-color: v.$background-color;
     overflow-x: hidden;
+    user-select: none;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -30,7 +31,7 @@ main {
     max-width: 80vw;
     overflow: auto;
     background-color: v.$secondary-background-color;
-    padding: 2rem;
+    padding: 0 2em 0 2rem;
     z-index: 5;
     border-radius: .5rem;
     box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.2);
@@ -46,7 +47,7 @@ main {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(.625em);
     z-index: 2;
 }
 
@@ -54,4 +55,20 @@ main {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .25em;
+
+    p {
+        margin-bottom: 0;
+        padding: .125em;
+        background-color: #ddebfe;
+        color: v.$primary-blue;
+        font-weight: bold;
+        border-radius: 15%;
+    }
 }

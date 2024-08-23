@@ -1,51 +1,71 @@
+@use "../../../../util/variables" as v;
+
 .public-plan-table {
+  width: 100%;
+  overflow-x: auto;
+
+  table {
     width: 100%;
-    overflow-x: auto;
-  
-    table {
-      width: 100%;
-      border-collapse: collapse;
-  
-      th {
-        position: relative;
-        padding: 1.5rem 2rem;
-        cursor: pointer;
-        background-color: #f2f2f2;
-        font-weight: bold;
-  
-        .sort-icon {
-          position: absolute;
-          right: 0.5rem;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 1.2rem;
-          color: #888;
-        }
-  
-        &.ascending .sort-icon::before { //REPLACE WITH FONT AWESOME IN .JS FILE
-          content: "▲"; 
-        }
-  
-        &.descending .sort-icon::before { //REPLACE WITH FONT AWESOME IN .JS FILE
-          content: "▼"; 
-        }
-  
-        &:hover {
-          background-color: #e0e0e0;
-        }
+    border-collapse: collapse;
+    font-size: 1.1em;
+
+    th {
+      position: relative;
+      padding: 1.5rem 2rem;
+      cursor: pointer;
+      background-color: v.$border-color-light; //#f2f2f2
+      font-weight: bold;
+
+      .sort-icon {
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        color: v.$border-color;
       }
-  
-      tr {
-        &:hover {
-          background-color: #f5f5f5;
-        }
+
+      &.ascending .sort-icon::before {
+        //REPLACE WITH FONT AWESOME IN .JS FILE
+        content: "▲";
       }
-  
-      td {
-        padding: 1.5rem;
-        text-align: left;
-        border-bottom: 0.1rem solid #ddd;
+
+      &.descending .sort-icon::before {
+        //REPLACE WITH FONT AWESOME IN .JS FILE
+        content: "▼";
+      }
+
+      &:hover {
+        background-color: v.$hover-effect-dark;
+      }
+    }
+
+    tr {
+      &:hover {
+        background-color: v.$hover-effect-dark;
+      }
+    }
+
+    th:nth-child(1), td:nth-child(1),
+    th:nth-child(2), td:nth-child(2) {
+      width: 35%;
+    }
+
+    th:nth-child(3), td:nth-child(3),
+    th:nth-child(4), td:nth-child(4) {
+      width: 15%;
+    }
+
+    td {
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 0.15em solid v.$hover-effect-dark;
+
+      #star-container {
+        align-self: center;
+        display: flex;
+        justify-content: center;
       }
     }
   }
-  
+}

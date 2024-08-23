@@ -29,26 +29,33 @@
     color: black;
 
     .pagination__link {
-      cursor: pointer;
-      margin: 0.2rem;
-      border: 0.08rem solid #ccc;
-      color: black;
-      padding: 0.5rem;
-      border-radius: 50%;
-      transition: background-color 0.3s ease;
-      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      &:hover {
-        background-color: #e0e0e0;
+      a {
+        cursor: pointer;
+        margin: 0.2rem;
+        border: 0.08rem solid #ccc;
+        color: black;
+        box-sizing: border-box;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+        background-color: #f0f0f0;
+
+        &:hover {
+          background-color: #e0e0e0;
+        }
       }
     }
 
-    .pagination__link--disabled {
+    .pagination__link--disabled a {
       cursor: not-allowed;
       opacity: 0.5;
     }
 
-    .pagination__link--active {
+    .pagination__link--active a {
       transition: background-color 0.3s ease;
       background-color: lightgray;
     }

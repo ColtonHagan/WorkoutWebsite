@@ -2,7 +2,7 @@ const { createWorkout, addWorkoutDates, getWorkoutsById, deleteWorkoutById, dele
 const { encodeDays } = require('./util/dayEncoder');
 
 const addWorkout = async (req, res) => {
-    const { name, nickname, reps, sets, dates, plan_id, external_workout_id, weight, days, body_part, target_muscle } = req.body;
+    const { name, nickname, reps, sets, dates, plan_id, external_workout_id, weight, days, body_part, target } = req.body;
     const user_id = req.user.userId;
 
     try {
@@ -17,7 +17,7 @@ const addWorkout = async (req, res) => {
             weight,
             days: days ? encodeDays(days) : 0,
             body_part,
-            target_muscle
+            target
         };
         
         const workoutId = await createWorkout(workout);
@@ -26,6 +26,7 @@ const addWorkout = async (req, res) => {
             await addWorkoutDates(workoutId, dates);
         }
 
+        console.log("Workout add:", workout);
         res.status(201).json({ message: 'Workout added successfully', id: workoutId });
     } catch (error) {
         console.error("Error during creating workout:", error);

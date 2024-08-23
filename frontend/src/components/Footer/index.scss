@@ -1,8 +1,9 @@
+@use "../../util/variables" as v;
 footer {
     height: 5vh;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1;
-    background-color: beige;
+    background-color: v.$accent-background-color;
 }

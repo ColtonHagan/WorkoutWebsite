@@ -13,7 +13,7 @@ const CustomSingleValue = (props) => {
         <components.SingleValue {...props}>
             <div id="singleValueDropdown">
                 {props.formattedOptions.length > 0 ? (
-                    <span>Workout Plan: {props.children}</span>
+                    <span className="ellipsis">Workout Plan: {props.children}</span>
                 ) : (
                     <span>Create a workout plan...</span>
                 )}

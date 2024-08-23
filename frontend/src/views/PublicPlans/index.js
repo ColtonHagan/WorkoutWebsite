@@ -36,8 +36,10 @@ const PublicPlans = () => {
 
     return (
         <div>
-            <PlanDropdown onSelect={(selected) => setSelectedPlan(selected)} selectedValue={selectedPlan} />
-            <button onClick={() => publishPlan(selectedPlan)}> Publish </button>
+            <div id="publish-plan">
+                <PlanDropdown onSelect={(selected) => setSelectedPlan(selected)} selectedValue={selectedPlan} />
+                <button id="publish-button" onClick={() => publishPlan(selectedPlan)}> Publish </button>
+            </div>
             <PublicPlanTable workoutPlans={publicPlans} />
         </div>
     )

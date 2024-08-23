@@ -24,7 +24,8 @@ const rateWorkoutPlan = async (userRating) => {
 const getPublicWorkoutPlans = async () => {
     const [rows] = await db.execute(
         `SELECT 
-            pwp.id, 
+            pwp.id,
+            pwp.plan_id,
             wp.name, 
             wp.description, 
             COALESCE(ROUND(AVG(ur.rating), 1), 0.0) AS average_rating, 

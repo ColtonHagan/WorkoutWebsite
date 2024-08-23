@@ -1,13 +1,68 @@
-.exercise {
-    border: .25rem solid black;
-    text-align: center;
-    margin: 1rem;
-    padding: 1rem;
-    box-sizing: border-box;
-    width: 25vw;
-    height: 25vw;
+@use "../../../../../../../util/variables" as v;
 
-    img {
-        height: 80%;
+.exercise {
+  width: 25vw;
+  height: 25vw;
+  text-align: center;
+  margin: 1rem;
+  padding: 1rem;
+  padding-top: 0;
+  box-sizing: border-box;
+  background-color: white;
+  position: relative;
+
+  border-bottom: .45em solid v.$secondary-blue;
+  box-shadow: 0.25em 0.25em .5em v.$border-color;
+  //border-top: .25em solid v.$primary-blue;
+  border-radius: .25em;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .25em;
+
+    p {
+      margin-bottom: 0;
+      padding: .25em;
+      background-color: #ddebfe;
+      color: v.$primary-blue;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 15%;
     }
+  }
+
+  img {
+    height: 80%;
+  }
+
+  .add-exercise-button {
+    z-index: 2;
+    position: absolute;
+    //bottom: 0;
+    top: .2em;
+    right: .2em;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: v.$secondary-blue;
+    transition: color 0.3s ease;
+    font-size: 2.8em;
+    margin: 0;
+
+    &:hover {
+      color: v.$primary-blue;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 }

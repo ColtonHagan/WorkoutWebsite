@@ -35,7 +35,7 @@ const ExerciseCard = ({ exercise, onClick }) => {
         <div className={"exercise-item" + (isChecked ? " checked" : "")} onClick={onClick}>
             <div className='tags'>
                 <p>#{exercise.body_part}</p>
-                <p>#{exercise.target_muscle}</p>
+                <p>#{exercise.target}</p>
             </div>
             <h1 className='ellipsis'>{exercise.nickname}</h1>
             <div >

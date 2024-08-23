@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import AddExerciseCard from './components/AddExerciseCard'
-import AddExercisePopUp from './components/AddExercisePopUp';
 import Paginate from 'react-paginate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import PopUpContainer from '../../../../../components/PopUpContainer';
+import ExercisePopUp from '../../../../ExercisePopUp';
 import "./index.scss";
 
-const ExerciseList = ({ exercises, addExercise}) => {
+const ExerciseList = ({ exercises, addExercise }) => {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -21,13 +22,12 @@ const ExerciseList = ({ exercises, addExercise}) => {
 
   return (
     <div className='addExerciseContainer'>
-      <h3>Exercises</h3>
       <div className='exerciseList'>
         {displayExercises.map(exercise => (
           <AddExerciseCard key={exercise.id} exercise={exercise} onClick={() => setSelectedExercise(exercise)} />
         ))}
       </div>
-      <Paginate
+      {exercises.length > exercisesPerPage && <Paginate
         previousLabel={<FontAwesomeIcon className="icon-custom" icon={faChevronLeft} />}
         nextLabel={<FontAwesomeIcon className="icon-custom" icon={faChevronRight} />}
         pageCount={pageCount}
@@ -38,14 +38,10 @@ const ExerciseList = ({ exercises, addExercise}) => {
         disabledClassName="pagination__link--disabled"
         activeClassName="pagination__link--active"
         pageClassName="pagination__link"
-      />
-      {selectedExercise && (
-        <AddExercisePopUp
-          exercise={selectedExercise}
-          onClose={() => setSelectedExercise(null)}
-          addExercise={(exercise) => addExercise(exercise)}
-        />
-      )}
+      />}
+      <PopUpContainer display={selectedExercise} onClose={() => setSelectedExercise(null)}>
+        <ExercisePopUp exercise={selectedExercise} isEditing={false} onClose={() => setSelectedExercise(null)} onSubmit={addExercise}/>
+      </PopUpContainer>
     </div>
   )
 }

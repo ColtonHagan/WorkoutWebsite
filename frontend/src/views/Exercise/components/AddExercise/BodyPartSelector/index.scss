@@ -1,19 +1,24 @@
 .bodyPartSelector {
-    display: flex;
-    align-items: center;
+    position: relative;
+    overflow: hidden;
     width: 80vw;
-
-    .bodyPartList {
-        display: flex;
-        overflow: hidden;
-        gap: 1rem;
-        padding: 1rem;
-    }
+    margin: 0;
+    padding: 0;
+    padding-right: 3vw;
+    padding-left: 3vw;
+    padding-top: 1em;
+    padding-bottom: 1em;
 
     .scrollButton {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+
         display: flex;
         align-items: center;
         justify-content: center;
+        
         width: 3rem;
         height: 3rem;
         background-color: #fff;
@@ -31,11 +36,12 @@
         }
     }
 
-    .scrollButton.left {
-        margin-right: 1rem;
+    .left {
+        left: 0;
     }
 
-    .scrollButton.right {
-        margin-left: 1rem;
+
+    .right {
+        right: 0;
     }
 }

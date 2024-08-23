@@ -5,7 +5,7 @@ import moment from 'moment';
 
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Misc"];
 
-const WeeklyDisplay = ({ exercises, deleteWorkout }) => {
+const WeeklyDisplay = ({ exercises, onExerciseClick, deleteWorkout }) => {
     const [workoutsByDay, setWorkoutsByDay] = useState({});
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const WeeklyDisplay = ({ exercises, deleteWorkout }) => {
                         {filteredDaysOfWeek.map(day => (
                             <td key={day}>
                                 {workoutsByDay[day].map((workout, index) => (
-                                    <SimpleExerciseCard key={index} exercise={workout} onDelete={(id) => deleteWorkout(id)} />
+                                    <SimpleExerciseCard key={index} exercise={workout} onDelete={(id) => deleteWorkout(id)} onExerciseClick={onExerciseClick} />
                                 ))}
                             </td>
                         ))}

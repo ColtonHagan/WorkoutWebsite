@@ -1,16 +1,13 @@
 @use "../../util/variables" as v;
 
-.card-pop-up {
-    .close-button {
-        position: absolute;
-        top: 0;
-        right: .2em;
-        font-size: 3em;
-    }
+#exercise-pop-up-container {
+    margin-top: 2em;
+    text-align: left;
 
     .pop-up-header {
         display: flex;
         justify-content: center;
+        margin-bottom: 1em;
 
         h1 {
             margin: 0;
@@ -52,12 +49,23 @@
                         input {
                             width: 20vw;
                             height: 2.5vh;
+                            box-sizing: border-box;
+                            border: .12em solid hsl(0, 0%, 80%);
+                            padding-top: .2em;
+                            padding-bottom: .2em;
+                            border-radius: .25em;
+
+                            &:focus {
+                                outline: none;
+                                border: .15em solid v.$primary-blue;
+                            }
                         }
                     }
 
                     #update-container {
                         display: flex;
                         justify-content: flex-end;
+
                         .update-button {
                             background-color: v.$success-green;
                             color: v.$text-color-light;
@@ -68,15 +76,15 @@
                             cursor: pointer;
                             font-size: 1rem;
                             transition: background-color 0.3s, opacity 0.3s;
-    
+
                             &.active {
                                 &:hover {
                                     background-color: v.$success-green-hover;
                                 }
                             }
-    
+
                             &.disabled {
-                                background-color: #ccc;
+                                background-color: v.$hover-effect-dark;
                                 cursor: not-allowed;
                                 opacity: 0.6;
                             }

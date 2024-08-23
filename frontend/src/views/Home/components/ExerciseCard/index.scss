@@ -17,22 +17,6 @@
     flex-direction: column;
     justify-content: space-between;
 
-    .tags {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: .25em;
-
-        p {
-            margin-bottom: 0;
-            padding: .125em;
-            background-color: #ddebfe;
-            color: v.$primary-blue;
-            font-weight: bold;
-            border-radius: 15%;
-        }
-    }
-
     h1 {
         margin: 0;
         font-size: 2.5em;

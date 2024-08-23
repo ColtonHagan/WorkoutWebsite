@@ -1,15 +1,19 @@
-import ReactDOM from 'react-dom';
-import CloseButton from '../../../CloseButton';
+//duel functionality
 import { useState } from 'react';
 import "./index.scss";
 
-const EditDropDownPopUp = ({ onClose, plan, handleSave, deletePlan }) => {
-    const [name, setName] = useState(plan?.name);
-    const [description, setDescription] = useState(plan?.description);
+const EditDropDownPopUp = ({ onClose, plan, handleSave, deletePlan, isEditing }) => {
+    const [name, setName] = useState(plan?.name || '');
+    const [description, setDescription] = useState(plan?.name || '');
 
     const handleSaveClick = () => {
-        handleSave(plan?.id);
-        //onClose();
+        //need to check if it is empty or not
+        if (isEditing) {
+            handleSave(/*need to implement*/);
+        } else {
+            handleSave(name, description); // Assumes ID is generated elsewhere
+        }
+        onClose();
     };
 
     const handleDeleteClick = () => {
@@ -17,37 +21,31 @@ const EditDropDownPopUp = ({ onClose, plan, handleSave, deletePlan }) => {
         onClose();
     };
 
-    return ReactDOM.createPortal(
-        <>
-            <div className='popup-overlay' />
-            <div className='card-pop-up'>
-                <div id="edit-plan-container">
-                    <CloseButton onClick={onClose} />
-                    <h1>Edit Workout Plan</h1>
-                    <ul>
-                        <li>
-                            <label> Name: </label>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </li>
-                        <li>
-                            <label> Description: </label>
-                            <textarea
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                        </li>
-                        <div id="edit-buttons">
-                            <button id="save-button" onClick={handleSaveClick}>Save</button>
-                            <button id="delete-button" onClick={handleDeleteClick}>Delete</button>
-                        </div>
-                    </ul>
+    return (
+        <div id="edit-plan-container">
+            <h1>{isEditing ? 'Edit Workout Plan' : 'Add Workout Plan'}</h1>
+            <ul>
+                <li>
+                    <label> Name: </label>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </li>
+                <li>
+                    <label> Description: </label>
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </li>
+                <div id="edit-buttons">
+                    <button id="save-button" onClick={handleSaveClick}>{isEditing ? 'Save' : 'Create'}</button>
+                    {isEditing && <button id="delete-button" onClick={handleDeleteClick}>Delete</button>}
                 </div>
-            </div>
-        </>, document.getElementById('portal')
+            </ul>
+        </div>
     );
 }
 

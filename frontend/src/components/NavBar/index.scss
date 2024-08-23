@@ -1,35 +1,74 @@
+@use "../../util/variables" as v;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 .nav-bar {
     z-index: 1;
-    font-size: 2em;
+    font-size: 1.8em;
+    max-height: 2em;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: beige;
+    background-color: v.$accent-background-color;
 
-    .logo, .profile {
+    .logo  {
+        display: flex;
+        align-items: center;
         text-decoration: none;
+        img {
+            height: 1.6em;
+        }
     }
     nav {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-evenly;
         align-items: center;
+        font-family: "Roboto", "sans-serif";
         width: 90%;
         a {
             text-decoration: none;
-            color: black;
-            border-bottom: .2em solid black;
+            color: v.$text-color-dark;
+            border-bottom: .1em solid v.$border-color;
+            transition: color 0.3s ease, transform 0.3s ease;
+
+            &:hover {
+                color: v.$secondary-blue;
+                border-bottom-color: v.$secondary-blue;
+                transform: scale(1.1);
+            }
+    
+            &.active {
+                color: v.$primary-blue;
+                border-bottom-color: v.$primary-blue;
+                transform: scale(1.1);
+            }
         }
     }
     .profile {
+        text-decoration: none;
         display: flex;
-        flex-direction: column;
-    }
+        flex-direction: row;
+        align-items: center;
+        margin-right: .25em;
 
-    button {
-        border: none;
-	    padding: 0;
-        background: none;
+        img {
+            height: 1.2em;
+            margin-right: .25em;
+            border-radius: 50%;
+        }
+
+        button {
+            border: none;
+            padding: 0;
+            background: none;
+            color: v.$primary-blue;
+            font-size: .9em;
+            display: flex;
+            flex-direction: row;
+            &:hover {
+                color: v.$secondary-blue;
+            }
+        }
     }
 }

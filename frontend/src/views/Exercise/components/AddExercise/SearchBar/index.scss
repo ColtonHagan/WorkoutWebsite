@@ -1,35 +1,39 @@
+@use "../../../../../util/variables" as v;
 .searchBar {
     display: flex;
     align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px;
-    max-width: 400px;
-    margin: 0 auto;
+    border: .1em solid v.$hover-effect-dark;
+    background-color: v.$secondary-background-color;
+    border-radius: .25em;
+    padding: .325em;
+    width: 25em;
+    margin: 0;
 
     &:focus-within {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        border-color: v.$primary-blue;
+        box-shadow: 0 0 .325em rgba(0, 123, 255, 0.25);
     }
-}
 
-.searchInput {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    padding: 5px;
-    font-size: 16px;
-}
+    .searchInput {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        padding: .325em;
+        font-size: 1em;
+    }
 
-.clearButton {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 5px;
-    margin-left: 5px;
+    .clearButton {
+        background: none;
+        border: none;
+        font-size: 1.25em;
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+        padding-right: .325em;
+        margin-left: .325em;
 
-    &:hover {
-        color: #007bff;
+        &:hover {
+            color: v.$secondary-blue;
+        }
     }
 }

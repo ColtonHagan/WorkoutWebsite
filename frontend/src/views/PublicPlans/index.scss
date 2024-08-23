@@ -1,0 +1,27 @@
+@use "../../util/variables" as v;
+
+#publish-plan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.3em;
+    margin-bottom: 1.3em;
+    gap: .5em;
+
+    #publish-button {
+        padding: .38em;
+        height: 100%;
+        font-size: 1.1em;
+        border: 0.12em solid v.$border-color;
+        border-radius: 10%;
+        color: v.$text-color-dark;
+        background-color: v.$accent-background-color;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: darken(v.$accent-background-color, 5%);
+            border-color: v.$primary-blue;
+        }
+    }
+}
