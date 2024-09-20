@@ -31,26 +31,25 @@ const ExercisePlanPopUp = ({ plan, exercises, onClose }) => {
 
     return (
         <PopUpContainer display={exercises} onClose={handleCloseClick}>
-            <div id="plan-pop-up">
-                {currentView === 'plan' ? (
-                    <div id="weekly-display-container">
-                        <h1>{plan?.name}</h1>
-                        <WeeklyDisplay
-                            exercises={exercises}
-                            onExerciseClick={handleExerciseClick}
-                        />
-                        <button id="save-button" onClick={onAdd}> Download Plan </button>
-                    </div>
-                ) : (
-                    <>
-                        <BackButton onClick={() => handleBackClick()} />
-                        <ExercisePopUp
-                            exercise={selectedExercise}
-                            onClose={onClose}
-                            onBackClick={handleBackClick} />
-                    </>
-                )}
-            </div>
+            {currentView === 'plan' ? (
+                <div className="weekly-display-container medium-pop-up"> {/** This should be its own file */}
+                    <h1>{plan?.name}</h1>
+                    <WeeklyDisplay
+                        exercises={exercises}
+                        onExerciseClick={handleExerciseClick}
+                        onDelete={null}
+                    />
+                    <button id="save-button" onClick={onAdd}> Download Plan </button>
+                </div>
+            ) : (
+                <div className="pop-up-plan-container">
+                    <BackButton onClick={() => handleBackClick()} />
+                    <ExercisePopUp
+                        exercise={selectedExercise}
+                        onClose={onClose}
+                        onBackClick={handleBackClick} />
+                </div>
+            )}
         </PopUpContainer >
     );
 };

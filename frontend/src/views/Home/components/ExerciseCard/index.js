@@ -33,12 +33,12 @@ const ExerciseCard = ({ exercise, onClick }) => {
 
     return (
         <div className={"exercise-item" + (isChecked ? " checked" : "")} onClick={onClick}>
-            <div className='tags'>
+            <div className='tags'> {/*THESE SHOULD BE OWN COMPONENT*/}
                 <p>#{exercise.body_part}</p>
                 <p>#{exercise.target}</p>
             </div>
             <h1 className='ellipsis'>{exercise.nickname}</h1>
-            <div >
+            <div id="cnt-container">
                 <div className='exercise-count'><strong>Count: </strong> {exercise.sets} Sets x {exercise.reps} Reps</div>
                 <div className='weight-info'>
                     <FontAwesomeIcon icon={faDumbbell} />

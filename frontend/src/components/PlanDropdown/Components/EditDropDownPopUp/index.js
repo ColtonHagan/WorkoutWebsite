@@ -7,9 +7,9 @@ const EditDropDownPopUp = ({ onClose, plan, handleSave, deletePlan, isEditing })
     const [description, setDescription] = useState(plan?.name || '');
 
     const handleSaveClick = () => {
-        //need to check if it is empty or not
+        //this can be combined into one line if slightly better formated
         if (isEditing) {
-            handleSave(/*need to implement*/);
+            handleSave(name, description);
         } else {
             handleSave(name, description); // Assumes ID is generated elsewhere
         }
@@ -22,7 +22,7 @@ const EditDropDownPopUp = ({ onClose, plan, handleSave, deletePlan, isEditing })
     };
 
     return (
-        <div id="edit-plan-container">
+        <div id="edit-plan-container" className='small-pop-up'>
             <h1>{isEditing ? 'Edit Workout Plan' : 'Add Workout Plan'}</h1>
             <ul>
                 <li>

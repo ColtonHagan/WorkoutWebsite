@@ -36,11 +36,22 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
             deletedId && setWorkoutPlans(prevPlans => prevPlans.filter(plan => plan.id !== deletedId));
             const firstValidOption = formattedOptions?.find(option => option.value !== deletedId);
             firstValidOption && onSelect(firstValidOption.value);
+        } catch (error) {
+            console.error("Error deleting plan:", error);
+        }
+    };
 
+    const handleSave = async (name, description) => {
+        console.log(selectedPlan.id);
+        try {
+            const result = await axiosPrivate.put(`workouts/workoutPlans/${selectedPlan.id}`, { name, description });
+            const newId = Number(result?.data?.id);
+            console.log(result);
+            newId && setWorkoutPlans(prevPlans => prevPlans.map(plan => plan.id === newId ? { ...plan, name, description } : plan));
         } catch (error) {
             console.error("Error sending data:", error);
         }
-    };
+    }
 
     return (
         <div className="dropdown-container">
@@ -61,8 +72,8 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
                 <EditDropDownPopUp
                     plan={selectedPlan}
                     onClose={() => setSelectedPlan(null)}
-                    deletePlan={(id) => deletePlan(id)}
-                    handleSave={null}
+                    deletePlan={deletePlan}
+                    handleSave={handleSave}
                     isEditing={true}
                 />
             </PopUpContainer>

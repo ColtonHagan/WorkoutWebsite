@@ -1,7 +1,6 @@
 @use "../../../../util/variables" as v;
 
 #edit-plan-container {
-    width: 20vw;
     margin-top: 1em;
     margin-bottom: 1em;
 
@@ -24,7 +23,7 @@
 
             input,
             textarea {
-                width: 100%;
+                width: 95%;
                 padding: 0.5em;
                 margin-bottom: 1em;
                 border: 1px solid #ccc;

@@ -1,0 +1,146 @@
+@use "../../util/variables" as v;
+
+.pop-up {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto !important;
+    background-color: v.$secondary-background-color;
+    padding: 0 2rem 0 2rem;
+    margin: 0;
+    z-index: 101;
+    border-radius: .5rem;
+    box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    h1 {
+        padding-right: 2.5rem;
+    }
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(.625em);
+    z-index: 100;
+}
+
+.no-scroll {
+    overflow: hidden;
+
+    &::-webkit-scrollbar {
+        width: 0px;
+    }
+}
+
+.big-pop-up {
+    height: 80vh;
+    width: 50vw;
+}
+
+.small-pop-up {
+    width: 30vw;
+    height: auto;
+}
+
+.medium-pop-up {
+    width: 50vw;
+    min-height: 35vh;
+    max-height: 50vh;
+}
+
+@media screen and (max-width: 1400px) {
+    .big-pop-up {
+        width: 60vw;
+    }
+
+    .small-pop-up {
+        width: 40vw;
+    }
+
+    .medium-pop-up {
+        width: 65vw;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .big-pop-up {
+        width: 80vw;
+    }
+
+    .small-pop-up {
+        width: 45vw;
+        font-size: 1.5em;
+    }
+
+    .medium-pop-up {
+        width: 70vw;
+        font-size: 1.4em;
+        min-height: 33vh;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .small-pop-up {
+        width: 50vw;
+        font-size: 1.8em;
+    }
+
+    .medium-pop-up {
+        width: 80vw;
+        h1 {
+            font-size: 3em;
+        }
+
+        .weekly-display table th {
+            font-size: 1.6em;
+            width: 20vw;
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    //makes room for back button
+    .pop-up .pop-up-plan-container .pop-up-header {
+        margin-left: 5em;
+    }
+
+    .big-pop-up {
+        width: 90vw;
+        height: 100vh;
+        border-radius: 0%;
+    }
+
+    .medium-pop-up {
+        width: 90vw;
+
+        .weekly-display table th {
+            font-size: 1.5em;
+            width: 15vw;
+        }
+    }
+
+    .small-pop-up {
+        width: 80vw;
+        font-size: 1.8em;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    .pop-up .pop-up-plan-container .pop-up-header {
+        padding-top: 6em;
+        margin-right: 0;
+        padding-right: 0;
+    }
+
+    .medium-pop-up .weekly-display table td {
+        font-size: .8em;
+    }
+}

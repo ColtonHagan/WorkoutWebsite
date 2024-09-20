@@ -1,4 +1,5 @@
 @use "../../../../../util/variables" as v;
+
 .searchBar {
     display: flex;
     align-items: center;
@@ -6,7 +7,7 @@
     background-color: v.$secondary-background-color;
     border-radius: .25em;
     padding: .325em;
-    width: 25em;
+    width: 25vw;
     margin: 0;
 
     &:focus-within {
@@ -35,5 +36,18 @@
         &:hover {
             color: v.$secondary-blue;
         }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .searchBar {
+        width: 35vw;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .searchBar {
+        width: 50vw;
+        font-size: 1.4em;
     }
 }

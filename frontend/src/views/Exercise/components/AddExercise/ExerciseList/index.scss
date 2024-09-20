@@ -1,4 +1,4 @@
-// index.scss
+@use "../../../../../util/variables" as v;
 
 .addExerciseContainer {
   display: flex;
@@ -19,61 +19,5 @@
     .addExerciseCard {
       margin: 0.625rem;
     }
-  }
-
-  .pagination {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    margin-top: 1rem;
-    color: black;
-
-    .pagination__link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      a {
-        cursor: pointer;
-        margin: 0.2rem;
-        border: 0.08rem solid #ccc;
-        color: black;
-        box-sizing: border-box;
-        padding: 0.5rem;
-        border-radius: 50%;
-        transition: background-color 0.3s ease;
-        background-color: #f0f0f0;
-
-        &:hover {
-          background-color: #e0e0e0;
-        }
-      }
-    }
-
-    .pagination__link--disabled a {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-
-    .pagination__link--active a {
-      transition: background-color 0.3s ease;
-      background-color: lightgray;
-    }
-
-    .pagination__arrow {
-      cursor: pointer;
-      font-size: 1.5rem;
-
-      &:hover {
-        background-color: #e0e0e0;
-      }
-    }
-  }
-
-  .icon-custom {
-    color: white;
-    background-color: black;
-    padding: 0.5rem;
-    border-radius: 50%;
   }
 }

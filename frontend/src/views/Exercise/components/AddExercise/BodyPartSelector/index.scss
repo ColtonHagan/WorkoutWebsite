@@ -3,11 +3,7 @@
     overflow: hidden;
     width: 80vw;
     margin: 0;
-    padding: 0;
-    padding-right: 3vw;
-    padding-left: 3vw;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding: 1em 3vw;
 
     .scrollButton {
         position: absolute;
@@ -18,11 +14,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
         width: 3rem;
         height: 3rem;
         background-color: #fff;
-        border: 1px solid #ccc;
+        border: .125em solid #ccc;
         border-radius: 50%;
         cursor: pointer;
 
@@ -45,3 +41,22 @@
         right: 0;
     }
 }
+@media screen and (max-width: 1600px) { .bodyPartSelector { padding: 1em 5vw;} }
+@media screen and (max-width: 1024px) { .bodyPartSelector { padding: 1em 7vw;} }
+@media screen and (max-width: 650px) { .bodyPartSelector { padding: 1em 9vw;} } 
+@media screen and (max-width: 500px) {
+    .bodyPartSelector {
+        width: 66vw;
+        padding: 1em 10vw;
+
+        .scrollButton {
+            width: 2.5rem;
+            height: 2.5rem;
+            svg {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+        }
+    }
+}
+@media screen and (max-width: 440px) { .bodyPartSelector { padding: 1em 11vw;} } 

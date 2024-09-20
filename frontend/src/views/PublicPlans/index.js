@@ -13,7 +13,7 @@ const PublicPlans = () => {
         try {
             const response = await axiosPrivate.get("publicPlans/");
             setPublicPlans(response.data);
-            console.log(response.data);
+            console.log("public plans", response.data);
         } catch (err) {
             console.error(err);
         }
@@ -40,7 +40,7 @@ const PublicPlans = () => {
                 <PlanDropdown onSelect={(selected) => setSelectedPlan(selected)} selectedValue={selectedPlan} />
                 <button id="publish-button" onClick={() => publishPlan(selectedPlan)}> Publish </button>
             </div>
-            <PublicPlanTable workoutPlans={publicPlans} />
+            <PublicPlanTable workoutPlans={publicPlans} setWorkoutPlans={setPublicPlans}/>
         </div>
     )
 }

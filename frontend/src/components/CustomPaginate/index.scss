@@ -1,0 +1,63 @@
+@use "../../util/variables" as v;
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin-top: 1rem;
+
+    .pagination__link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      a {
+        cursor: pointer;
+        margin: 0.2em;
+        border: 0.08em solid v.$hover-effect-dark;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2em;
+        height: 2em;
+        color: v.$text-color-dark;
+        box-sizing: border-box;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+        background-color: v.$border-color-light;
+
+        &:hover {
+          background-color: #e0e0e0;
+        }
+      }
+    }
+
+    .pagination__link--disabled a {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .pagination__link--active a {
+      transition: background-color 0.3s ease;
+      background-color: lightgray;
+    }
+
+    .pagination__arrow {
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+  }
+
+  .icon-custom {
+    color: white;
+    background-color: black;
+    height: 1em;
+    width: 1em;
+    padding: 0.5rem;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: black; //put something else here
+    }
+  }

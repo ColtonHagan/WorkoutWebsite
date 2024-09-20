@@ -1,4 +1,5 @@
 @use "../../../util/variables" as v;
+
 .weekly-display {
     width: 100%;
     table {
@@ -6,7 +7,8 @@
         border-collapse: collapse;
         table-layout: fixed;
 
-        th, td {
+        th,
+        td {
             border: .1em solid v.$hover-effect-dark;
             padding: .5em;
             text-align: left;
@@ -21,6 +23,19 @@
         td {
             min-height: 9.5em;
             overflow-y: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .weekly-display {
+        overflow-x: auto;
+        table {
+            th {
+                font-size: 2em;
+                position: sticky;
+                width: 28vw;
+            }
         }
     }
 }

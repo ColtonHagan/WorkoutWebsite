@@ -16,10 +16,6 @@ const SearchBar = ({ placeholder = 'Search...', onSearch }) => {
     onSearch('');
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
   return (
     <div className="searchBar"> {/*maybe replace with react-select*/}
       <input

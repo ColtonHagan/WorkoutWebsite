@@ -42,7 +42,7 @@ const BodyPartSelector = ({ selected, selectBodyPart }) => {
         autoplay: false,
         responsive: [
             { breakpoint: 1024, settings: { slidesToShow: 2 } },
-            { breakpoint: 600, settings: { slidesToShow: 1 } },
+            { breakpoint: 500, settings: { slidesToShow: 1 } },
         ],
     };
 
@@ -52,7 +52,7 @@ const BodyPartSelector = ({ selected, selectBodyPart }) => {
                 <FontAwesomeIcon icon={faChevronLeft} />
             </div>
             <>
-            <Slider ref={sliderRef} {...settings}>
+            <Slider id="menu-slider" ref={sliderRef} {...settings}>
                 {bodyParts.map((bodyPart, index) => (
                     <div key={index}>
                         <BodyPartCard

@@ -1,66 +1,72 @@
-const { addPublicWorkoutPlan, removePublicWorkoutPlan, rateWorkoutPlan, getPublicWorkoutPlans } = require("./publicPlanModel");
+const { 
+    addPublicWorkoutPlan, 
+    removePublicWorkoutPlan, 
+    rateWorkoutPlan, 
+    getPublicWorkoutPlans, 
+    getPublicWorkoutPlansById 
+} = require("./publicPlanModel");
+const { getWorkoutsByPlanId } = require("../workoutPlans/workoutPlansModel");
+const { 
+    addPublicPlanValidation, 
+    removePublicPlanValidation, 
+    ratePlanValidation 
+} = require('./publicPlanValidation');
+const { asyncHandler, createApiError } = require('../../middleware/errorHandler');
+const validate = require('../../middleware/validationMiddleware');
 
-const addPublicPlan = async (req, res) => {
+// Add a public plan
+const addPublicPlan = asyncHandler(async (req, res) => {
     const { plan_id } = req.body;
     const user_id = req.user.userId;
 
-    console.log({plan_id, user_id})
-
-    try {
-        const publicPlan = {
-            plan_id,
-            user_id
-        };
-        await addPublicWorkoutPlan(publicPlan);
-        res.status(201).json({ message: 'Workout plan added to public successfully' });
-    } catch (error) {
-        console.error("Error adding public workout plan:", error);
-        res.status(500).json({ error: 'Adding workout plans' });
+    const result = await getWorkoutsByPlanId(plan_id, user_id);
+    if (!result || result.length === 0) {
+        throw createApiError('Workout plan not found', 404);
     }
-};
 
-const removePublicPlan = async (req, res) => {
+    const publicPlan = { plan_id, user_id };
+    await addPublicWorkoutPlan(publicPlan);
+    res.status(201).json({ message: 'Workout plan added to public database successfully', id: plan_id });
+});
+
+// Remove a public plan
+const removePublicPlan = asyncHandler(async (req, res) => {
     const { id } = req.params;
 
-    try {
-        await removePublicWorkoutPlan(id);
-        res.status(200).json({ message: 'Workout plan removed from public successfully' });
-    } catch (error) {
-        console.error("Error removing public workout plan:", error);
-        res.status(500).json({ error: 'Removing workout plans' });
+    const result = await removePublicWorkoutPlan(id);
+    if (result.affectedRows === 0) {
+        throw createApiError('Workout plan not found', 404);
     }
-};
 
-const ratePlan = async (req, res) => {
+    return res.status(200).json({ message: 'Workout plan removed successfully', id: id });
+});
+
+// Rate a public plan
+const ratePlan = asyncHandler(async (req, res) => {
     const { public_id, rating } = req.body;
     const user_id = req.user.userId;
 
-    try {
-        const userRating = {
-            public_id,
-            user_id,
-            rating
-        };
-        await rateWorkoutPlan(userRating);
-        res.status(201).json({ message: 'Workout plan rated successfully' });
-    } catch (error) {
-        console.error("Error rating workout plan:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    const result = await getPublicWorkoutPlansById(user_id, public_id);
+    if (!result || result.length === 0) {
+        throw createApiError('Workout plan not found', 404);
     }
-};
-const getPublicPlans = async (req, res) => {
-    try {
-        const plans = await getPublicWorkoutPlans();
-        res.status(200).json(plans);
-    } catch (error) {
-        console.error("Error getting public workout plans:", error);
-        res.status(500).json({ error: 'Getting public workout plans' });
-    }
-};
+
+    const userRating = { public_id, user_id, rating };
+    await rateWorkoutPlan(userRating);
+
+    return res.status(201).json({ message: 'Workout plan rated successfully', id: public_id });
+});
+
+// Gets all public plans
+const getPublicPlans = asyncHandler(async (req, res) => {
+    const user_id = req.user.userId;
+    const plans = await getPublicWorkoutPlans(user_id);
+    return res.status(200).json(plans);
+});
 
 module.exports = {
-    addPublicPlan,
-    removePublicPlan,
-    ratePlan,
+    addPublicPlan: [addPublicPlanValidation, validate, addPublicPlan],
+    removePublicPlan: [removePublicPlanValidation, validate, removePublicPlan],
+    ratePlan: [ratePlanValidation, validate, ratePlan],
     getPublicPlans
 };

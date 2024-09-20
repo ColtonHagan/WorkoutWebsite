@@ -28,6 +28,7 @@
       &.ascending .sort-icon::before {
         //REPLACE WITH FONT AWESOME IN .JS FILE
         content: "▲";
+        padding-left: 5em;
       }
 
       &.descending .sort-icon::before {
@@ -46,13 +47,17 @@
       }
     }
 
-    th:nth-child(1), td:nth-child(1),
-    th:nth-child(2), td:nth-child(2) {
+    th:nth-child(1),
+    td:nth-child(1),
+    th:nth-child(2),
+    td:nth-child(2) {
       width: 35%;
     }
 
-    th:nth-child(3), td:nth-child(3),
-    th:nth-child(4), td:nth-child(4) {
+    th:nth-child(3),
+    td:nth-child(3),
+    th:nth-child(4),
+    td:nth-child(4) {
       width: 15%;
     }
 
@@ -65,7 +70,77 @@
         align-self: center;
         display: flex;
         justify-content: center;
+
+        #star-container div div span {
+          font-size: 24px !important;
+        }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .public-plan-table {
+    font-size: 1.4em;
+
+    table {
+
+      th:nth-child(1),
+      td:nth-child(1),
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 30%;
+      }
+
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 25%;
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .public-plan-table table td #star-container #star-container div div span {
+    font-size: 20px !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .public-plan-table table td #star-container #star-container div div span {
+    font-size: 16px !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .public-plan-table table {
+    font-size: 1.8em;
+
+    th:nth-child(1),
+    td:nth-child(1),
+    th:nth-child(2),
+    td:nth-child(2) {
+      width: 30%;
+    }
+ 
+    th:nth-child(3),
+    td:nth-child(3) {
+      width: 30%;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4) {
+      width: 10%;
+    }
+
+    th {
+      padding-left: .5em;
+      padding-right: .5em;
+    }
+
+    td {
+      padding: 1em;
     }
   }
 }

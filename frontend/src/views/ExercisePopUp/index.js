@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import MultiDatePicker from 'react-multi-date-picker';
-import { axiosExerciseDB } from '../../APIs/axios';
+import { axiosExerciseDB, axiosExerciseGif } from '../../APIs/axios';
 import './index.scss';
 import axios from 'axios';
 import { CapitalizeWords } from '../../util/CapitalizeWords';
 
 const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
-    const [exerciseInfo, setExerciseInfo] = useState( isEditing ? {} : exercise ); //split into seperate consts for each use
+    const [exerciseInfo, setExerciseInfo] = useState(isEditing ? {} : exercise); //split into seperate consts for each use
     const [days, setDays] = useState(
         isEditing ? exercise.days.map(day => ({ value: day, label: day })) : []
     );
@@ -82,36 +82,45 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
 
     const handleSubmit = async () => {
         try {
+            let payload = {};
             if (isEditing) {
-                console.log("Updating ", exercise.name);
+                payload = { reps, sets, weight, dates, days: days.map(day => day.value) }
             } else {
-                console.log("days", days.map(day => day.value));
-                const payload = {
+                console.log(exercise);
+                payload = {
                     name: CapitalizeWords(exercise.name),
                     nickname: CapitalizeWords(removeTrailingPeriodAndTrim(exercise.name.length > 15 ? await getNickname(exercise.name) : exercise.name)),
-                    external_workout_id: exercise.id,
+                    gif: "https://exercise-gif-api-989b2a8bed95.herokuapp.com/exercises/gif/0001", //temp tmp console.log
                     reps,
                     sets,
                     dates: dates,
+                    instructions: exercise.instructions,
                     weight,
                     days: days.map(day => day.value),
                     body_part: CapitalizeWords(exercise.bodyPart),
                     target: CapitalizeWords(exercise.target)
                 };
-                onSubmit(payload);
-                onClose();
             }
+            onSubmit(payload);
             onClose();
         } catch (error) {
             console.error('Error saving exercise:', error);
         }
     };
 
-    useEffect(() => {
+    useEffect(() => { /*This should all be rolled into a single call*/
         async function fetchExercises() {
             try {
+                console.log("exercise", exercise);
                 const response = await axiosExerciseDB.get(`/exercises/exercise/${exercise.external_workout_id}`);
-                setExerciseInfo(response.data);
+
+                await setExerciseInfo({
+                    ...response.data,
+                    gifUrl: `https://exercise-gif-api-989b2a8bed95.herokuapp.com/exercises/gif/${exercise.external_workout_id}`
+                });
+
+                console.log(exerciseInfo);
+
             } catch (error) {
                 console.error('Error fetching exercises:', error);
             }
@@ -121,7 +130,7 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
     }, [exercise.external_workout_id]);
 
     return (
-        <div id="exercise-pop-up-container">
+        <div id="exercise-pop-up-container" className='big-pop-up'>
             <div className='pop-up-header'>
                 <h1 className='ellipsis'>{CapitalizeWords(exercise.name)}</h1>
             </div>
@@ -160,6 +169,7 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
                                     options={dayOptions}
                                     isMulti
                                     value={days}
+                                    className='react-select'
                                     onChange={(e) => setDays(e)}
                                     placeholder="Select Days" />
                             </li>

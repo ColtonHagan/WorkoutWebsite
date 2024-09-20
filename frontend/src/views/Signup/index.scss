@@ -1,51 +1,100 @@
+@use "../../util/variables" as v;
 .signup-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 100vh;
 
     .signup {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 2rem;
-        border-radius: .6rem;
-        box-shadow: 0 .25rem .6rem rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 20vw;
+        text-align: center;
+        padding: 2em;
+        border-radius: .6em;
+        box-shadow: 0 .25em .6em v.$border-color;
+        background-color: v.$secondary-background-color;
+        width: 25vw;
 
-        h3 {
-            margin-bottom: 1rem;
+        h2 {
+            margin: 0;
+            font-size: 2.4em;
         }
 
         label {
             align-self: flex-start;
-            margin-top: 1rem;
+            margin-top: 1em;
+            font-size: 1.4em;
         }
 
         input {
             width: 100%;
-            padding: 0.5rem;
-            margin-top: 0.5rem;
-            border: .05rem solid #ccc;
-            border-radius: .3rem;
+            padding: 0.6em;
+            margin-top: 0.5em;
+            font-size: 1em;
+            border: .05em solid v.$hover-effect-dark;
+            border-radius: .3em;
+
+            &:focus {
+                outline-color: v.$primary-blue;
+            }
         }
 
         button {
-            margin-top: 1.5rem;
-            padding: 0.75rem;
+            margin-top: 1.5em;
+            padding: 0.75em;
             width: 100%;
             border: none;
-            border-radius: .3rem;
-            background-color: black;
+            border-radius: .3em;
+            background-color: v.$primary-blue;
             color: white;
-            font-size: 1rem;
+            font-size: 1em;
             cursor: pointer;
+
+            &:hover {
+                background-color: v.$secondary-blue;
+            }
         }
 
-        button:hover {
-            background-color: darken(rgb(65, 58, 58), 10%);
+        .error {
+            color: v.$error-red;
+            font-weight: bold;
+            padding: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .loginInfo {
+            margin-top: 1em;
+            margin-bottom: 0;
+            font-size: 1.25em;
         }
     }
-
+}
+@media screen and (max-width: 1400px) {
+    .signup-container .signup {
+        width: 33vw;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .signup-container .signup {
+        width: 40vw;
+        font-size: 1.4em;
+    }
+}
+@media screen and (max-width: 900px) {
+    .signup-container .signup {
+        width: 50vw;
+        font-size: 1.8em;
+    }
+}
+@media screen and (max-width: 700px) {
+    .signup-container .signup {
+        width: 75vw;
+    }
+}
+@media screen and (max-width: 500px) {
+    .signup-container .signup {
+        width: 85vw;
+        font-size: 2em;
+    }
 }

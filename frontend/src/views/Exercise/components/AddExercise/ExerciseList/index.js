@@ -1,17 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AddExerciseCard from './components/AddExerciseCard'
-import Paginate from 'react-paginate';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import PopUpContainer from '../../../../../components/PopUpContainer';
 import ExercisePopUp from '../../../../ExercisePopUp';
 import "./index.scss";
+import CustomPaginate from '../../../../../components/CustomPaginate';
 
 const ExerciseList = ({ exercises, addExercise }) => {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth); //This should be a seperate hook
 
-  const exercisesPerPage = 9;
+  const getExercisesPerPage = () => {
+    if (width > 1250) return 9;  // Desktop
+    if (width > 600) return 6;   // Tablet
+    return 4;                    // Mobile
+  };
+
+  const exercisesPerPage = getExercisesPerPage();
   const pagesVisited = pageNumber * exercisesPerPage;
   const displayExercises = exercises.slice(pagesVisited, pagesVisited + exercisesPerPage);
   const pageCount = Math.ceil(exercises.length / exercisesPerPage);
@@ -20,6 +25,17 @@ const ExerciseList = ({ exercises, addExercise }) => {
     setPageNumber(selected);
   };
 
+  useEffect(() => { //should be in seperate hook
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className='addExerciseContainer'>
       <div className='exerciseList'>
@@ -27,20 +43,9 @@ const ExerciseList = ({ exercises, addExercise }) => {
           <AddExerciseCard key={exercise.id} exercise={exercise} onClick={() => setSelectedExercise(exercise)} />
         ))}
       </div>
-      {exercises.length > exercisesPerPage && <Paginate
-        previousLabel={<FontAwesomeIcon className="icon-custom" icon={faChevronLeft} />}
-        nextLabel={<FontAwesomeIcon className="icon-custom" icon={faChevronRight} />}
-        pageCount={pageCount}
-        onPageChange={changePage}
-        containerClassName="pagination"
-        previousClassName="pagination__arrow"
-        nextClassName="pagination__arrow"
-        disabledClassName="pagination__link--disabled"
-        activeClassName="pagination__link--active"
-        pageClassName="pagination__link"
-      />}
-      <PopUpContainer display={selectedExercise} onClose={() => setSelectedExercise(null)}>
-        <ExercisePopUp exercise={selectedExercise} isEditing={false} onClose={() => setSelectedExercise(null)} onSubmit={addExercise}/>
+      {exercises.length > exercisesPerPage && <CustomPaginate pageCount={pageCount} changePage={changePage}/>}
+      <PopUpContainer display={selectedExercise}  onClose={() => setSelectedExercise(null)}>
+        <ExercisePopUp exercise={selectedExercise} isEditing={false} onClose={() => setSelectedExercise(null)} onSubmit={addExercise} />
       </PopUpContainer>
     </div>
   )

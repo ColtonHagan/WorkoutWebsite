@@ -16,9 +16,13 @@ const WeeklyDisplay = ({ exercises, onExerciseClick, deleteWorkout }) => {
             return acc;
         }, {});
 
-        exercises.forEach(workout => {
-            if (workout.days.length > 0) {
-                workout.days.forEach(day => {
+        if(!exercises) return null;
+
+        //temp tmp handle the for each null check better
+        //if(!exercises) return null;
+        /*exercises?.forEach(workout => {
+            if (workout?.days?.length > 0) {
+                workout?.days?.forEach(day => {
                     if (!updatedWorkoutsByDay[day]) {
                         updatedWorkoutsByDay[day] = [];
                     }
@@ -29,7 +33,7 @@ const WeeklyDisplay = ({ exercises, onExerciseClick, deleteWorkout }) => {
             if (validDates.length > 0) {
                 updatedWorkoutsByDay['Misc'].push(workout);
             }
-        });
+        });*/
 
         setWorkoutsByDay(updatedWorkoutsByDay);
     }, [exercises]);
@@ -51,7 +55,7 @@ const WeeklyDisplay = ({ exercises, onExerciseClick, deleteWorkout }) => {
                         {filteredDaysOfWeek.map(day => (
                             <td key={day}>
                                 {workoutsByDay[day].map((workout, index) => (
-                                    <SimpleExerciseCard key={index} exercise={workout} onDelete={(id) => deleteWorkout(id)} onExerciseClick={onExerciseClick} />
+                                    <SimpleExerciseCard key={index} exercise={workout} onDelete={deleteWorkout} onExerciseClick={onExerciseClick} />
                                 ))}
                             </td>
                         ))}

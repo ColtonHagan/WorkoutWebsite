@@ -57,7 +57,7 @@ const Exercise = () => {
       {/* add safty check here to check if it can conect to external workout db */}
       <WeeklyDisplay exercises={exercises} deleteWorkout={(id) => deleteExercise(id)} onExerciseClick={(exercise) => setSelectedExercise(exercise)}/>
       <AddExercise addExercise={(exercise) => addExercise(exercise)}  />
-      <PopUpContainer display={selectedExercise} onClose={() => setSelectedExercise(null)}>
+      <PopUpContainer display={selectedExercise}  onClose={() => setSelectedExercise(null)}>
         <ExercisePopUp exercise={selectedExercise}/>
       </PopUpContainer>
     </div>

@@ -51,6 +51,19 @@ const Home = () => {
     return null;
   };
 
+  const updateExercise = async (exercise) => {
+    // exercise.plan_id = selectedExercise.id; Maybe should be this instead of passing in id
+    try {
+      const response = await axiosPrivate.put(`workouts/${selectedExercise.id}`, exercise);
+      console.log(response.data);
+      //exercise.id = response.data;
+      //setExercises(prevExercises => [...prevExercises, exercise]);
+      //console.log("Workout added:", exercise);
+
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
+  };
 
   return (
     <div className="exercise-page">
@@ -80,6 +93,7 @@ const Home = () => {
             <ExercisePopUp
               exercise={selectedExercise}
               onClose={() => setSelectedExercise(null)}
+              onSubmit={updateExercise}
             />
           </PopUpContainer >
         </div>

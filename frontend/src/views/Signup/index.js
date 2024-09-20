@@ -1,20 +1,18 @@
 import './index.scss';
 import { useState } from 'react';
 import usersAPI from '../../APIs/users'
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await usersAPI.register({username, email, password});
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      console.log("User signed up successfully");
+      await usersAPI.register({ email, password });
+      navigate('/login');
     } catch (err) {
       console.error(err);
     }
@@ -23,10 +21,7 @@ function Signup() {
   return (
     <div className="signup-container">
       <form className="signup" onSubmit={handleSubmit}>
-        <h3>Sign up</h3>
-
-        <label>Username</label>
-        <input type='text' onChange={(e) => setUsername(e.target.value)} value={username} />
+        <h2>Sign Up</h2>
 
         <label>Email</label>
         <input type='email' onChange={(e) => setEmail(e.target.value)} value={email} />
@@ -35,6 +30,11 @@ function Signup() {
         <input type='password' onChange={(e) => setPassword(e.target.value)} value={password} />
 
         <button> Sign Up </button>
+
+        <p className='loginInfo'>
+           Already have a Account? <br />
+          <Link to='/login'>Login</Link>
+        </p>
       </form>
     </div>
   );

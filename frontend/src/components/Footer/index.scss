@@ -7,3 +7,10 @@ footer {
     z-index: 1;
     background-color: v.$accent-background-color;
 }
+
+// When not on destop hides footer
+@media screen and (max-width: 1024px) {
+    footer {
+        display: none;
+    }
+}

@@ -1,19 +1,38 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import RatingStars from "react-rating-stars-component";
 import ExercisePlanPopUp from "../ExercisePlanPopUp";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
+import CustomPaginate from "../../../../components/CustomPaginate";
 import "./index.scss";
 
-const PublicPlanTable = ({ workoutPlans }) => {
+const PublicPlanTable = ({ workoutPlans, setWorkoutPlans }) => {
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [pageNumber, setPageNumber] = useState(0);
+  const itemsPerPage = 10;
+
   const axiosPrivate = useAxiosPrivate();
 
   const fetchExercises = async (planId) => {
     try {
-      const response = await axiosPrivate.get(`workouts/${planId}/workout`); /* should be moved to seperate api file */
+      const response = await axiosPrivate.get(`workouts/${planId}/workout`);
       setSelectedExercise(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const setRating = async (id, rating) => {
+    try {
+      const response = await axiosPrivate.post(`publicPlans/rate`, { public_id: id, rating });
+      console.log("new rating", response.data.id);
+      const newId = response?.data?.id;
+      setWorkoutPlans((prevPlans) =>
+        prevPlans.map((plan) =>
+          plan.id === newId ? { ...plan, average_rating: rating, user_rating: rating } : plan
+        )
+      );
     } catch (err) {
       console.error(err);
     }
@@ -27,6 +46,7 @@ const PublicPlanTable = ({ workoutPlans }) => {
     setSortConfig({ key, direction });
   };
 
+  //maybe should be a memo
   const sortedPlans = [...workoutPlans].sort((a, b) => {
     if (a[sortConfig.key] < b[sortConfig.key]) {
       return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -37,8 +57,18 @@ const PublicPlanTable = ({ workoutPlans }) => {
     return 0;
   });
 
-  const updateRating = (newRating) => {
-    //insert functionality later
+  //maybe memmo
+  const startIndex = pageNumber * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedPlans = sortedPlans.slice(startIndex, endIndex);
+  console.log({ pageNumber, startIndex, endIndex, paginatedPlans });
+
+  const updateRating = (id, newRating) => {
+    setRating(id, newRating);
+  };
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
   };
 
   return (
@@ -77,28 +107,21 @@ const PublicPlanTable = ({ workoutPlans }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedPlans.map((plan) => (
-            <tr key={plan.id} onClick={
-              () => {
-                fetchExercises(plan.plan_id);
-                setSelectedPlan(plan);
-              }
-            }>
+          {paginatedPlans.map((plan) => (
+            <tr key={plan.id} onClick={() => {
+              fetchExercises(plan.plan_id);
+              setSelectedPlan(plan);
+            }}>
               <td>{plan.name}</td>
               <td>{plan.description}</td>
               <td>
                 <div id="star-container">
-                  <div
-                    id="star-container"
-                    onClick={(e) => e.stopPropagation()}
-                  >
+                  <div id="star-container" onClick={(e) => e.stopPropagation()}>
                     <RatingStars
                       count={5}
-                      value={parseFloat(plan.average_rating)}
-                      onChange={(newRating) => console.log(`New rating for ${plan.name}: ${newRating}`)}
-                      size={24}
+                      value={parseFloat(plan.user_rating || plan.average_rating)}
+                      onChange={(newRating) => updateRating(plan.id, newRating)}
                       activeColor="#ffd700"
-                      id="rating-stars"
                       isHalf={true}
                     />
                   </div>
@@ -109,6 +132,10 @@ const PublicPlanTable = ({ workoutPlans }) => {
           ))}
         </tbody>
       </table>
+      {workoutPlans.length > itemsPerPage && <CustomPaginate
+        pageCount={Math.ceil(sortedPlans.length / itemsPerPage)}
+        changePage={changePage}
+      />}
       <ExercisePlanPopUp plan={selectedPlan} exercises={selectedExercise} onClose={() => setSelectedExercise(null)} />
     </div>
   );

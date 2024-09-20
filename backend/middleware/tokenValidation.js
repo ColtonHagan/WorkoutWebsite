@@ -1,11 +1,12 @@
 const { verify } = require('jsonwebtoken');
 
+// Middleware to validate the JWT token
 const tokenValidation = async (req, res, next) => {
   const token = req?.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {
     return res.status(401).json({
-      error: 'Access denied'
+      error: 'Access denied. No token provided.'
     });
   }
 
@@ -14,8 +15,8 @@ const tokenValidation = async (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(403).json({
-      error: 'Invalid token'
+    return res.status(403).json({
+      error: 'Invalid or expired token'
     });
   }
 };

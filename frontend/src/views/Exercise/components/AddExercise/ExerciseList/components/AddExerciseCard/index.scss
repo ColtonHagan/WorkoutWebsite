@@ -11,31 +11,19 @@
   background-color: white;
   position: relative;
 
-  border-bottom: .45em solid v.$secondary-blue;
-  box-shadow: 0.25em 0.25em .5em v.$border-color;
-  //border-top: .25em solid v.$primary-blue;
+  border-bottom: .45rem solid v.$secondary-blue;
+  box-shadow: 0.25rem 0.25rem .5rem v.$border-color;
   border-radius: .25em;
+  overflow: hidden;
 
   h1 {
     margin: 0;
     padding: 0;
+    font-size: 2.5em;
   }
 
   .tags {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: .25em;
-
-    p {
-      margin-bottom: 0;
-      padding: .25em;
-      background-color: #ddebfe;
-      color: v.$primary-blue;
-      font-size: 1.2em;
-      font-weight: bold;
-      border-radius: 15%;
-    }
+    font-size: 1.2em;
   }
 
   img {
@@ -43,19 +31,19 @@
   }
 
   .add-exercise-button {
-    z-index: 2;
     position: absolute;
-    //bottom: 0;
-    top: .2em;
-    right: .2em;
+    top: .25em;
+    right: .25em;
     background: none;
     border: none;
     padding: 0;
-    cursor: pointer;
-    color: v.$secondary-blue;
-    transition: color 0.3s ease;
-    font-size: 2.8em;
     margin: 0;
+
+    color: v.$secondary-blue;
+    font-size: 3rem;
+
+    transition: color 0.3s ease;
+    cursor: pointer;
 
     &:hover {
       color: v.$primary-blue;
@@ -64,5 +52,63 @@
     &:focus {
       outline: none;
     }
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .exercise img {
+    height: 75%;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .exercise {
+    width: 42vw;
+    height: 42vw;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .exercise {
+    .tags {
+      font-size: 1.8em;
+    }
+
+    h1 {
+      font-size: 5em;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .exercise {
+    width: 68vw;
+    height: 68vw;
+
+    h1 {
+      font-size: 7.5em;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .exercise {
+    width: 77vw;
+    height: 77vw;
+
+    .tags {
+      gap: .5em;
+      font-size: 2.25em;
+    }
+
+    h1 {
+      font-size: 9em;
+    }
+  }
+}
+
+@media screen and (max-width: 433px) {
+  .exercise h1 {
+    font-size: 8em;
   }
 }

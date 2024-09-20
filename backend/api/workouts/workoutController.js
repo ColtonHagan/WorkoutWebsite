@@ -1,78 +1,121 @@
-const { createWorkout, addWorkoutDates, getWorkoutsById, deleteWorkoutById, deleteWorkoutDatesByWorkoutId, getWorkoutById } = require('./workoutModel');
+const { 
+    createWorkout, 
+    addWorkoutDates, 
+    getWorkoutsById, 
+    deleteWorkoutById, 
+    getWorkoutById, 
+    deleteWorkoutDatesByWorkoutId, 
+    deleteWorkoutInstructionsByWorkoutId, 
+    updateWorkouts, 
+    addWorkoutInstructions 
+} = require('./workoutModel');
+const { 
+    addWorkoutValidation, 
+    updateWorkoutValidation, 
+    getWorkoutsValidation, 
+    deleteWorkoutValidation 
+} = require('./workoutValidation');
 const { encodeDays } = require('./util/dayEncoder');
+const { createApiError, asyncHandler } = require('../../middleware/errorHandler');
+const validate = require('../../middleware/validationMiddleware');
 
-const addWorkout = async (req, res) => {
-    const { name, nickname, reps, sets, dates, plan_id, external_workout_id, weight, days, body_part, target } = req.body;
+// Add a new workout
+const addWorkout = asyncHandler(async (req, res) => {
+    const { name, nickname, reps, sets, dates, plan_id, weight, days, body_part, target, gif, instructions } = req.body;
     const user_id = req.user.userId;
 
-    try {
-        const workout = {
-            user_id,
-            plan_id,
-            external_workout_id,
-            name,
-            nickname,
-            reps,
-            sets,
-            weight,
-            days: days ? encodeDays(days) : 0,
-            body_part,
-            target
-        };
-        
-        const workoutId = await createWorkout(workout);
+    const workout = {
+        user_id,
+        plan_id,
+        name,
+        nickname,
+        reps,
+        sets,
+        weight,
+        days: days ? encodeDays(days) : 0,
+        body_part,
+        target,
+        gif
+    };
 
-        if (dates && dates.length > 0) {
-            await addWorkoutDates(workoutId, dates);
-        }
+    const workoutId = await createWorkout(workout);
 
-        console.log("Workout add:", workout);
-        res.status(201).json({ message: 'Workout added successfully', id: workoutId });
-    } catch (error) {
-        console.error("Error during creating workout:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    if (!workoutId) {
+        throw createApiError('Could not add workout', 404);
     }
-};
 
-const getWorkouts = async (req, res) => {
+    // Adds dates assocated with workout
+    if (dates && dates.length > 0) {
+        await addWorkoutDates(workoutId, dates);
+    }
+
+    // Adds instructions assocated with workout
+    if (instructions && instructions.length > 0) {
+        await addWorkoutInstructions(workoutId, instructions);
+    }
+
+    res.status(201).json({ message: 'Workout added successfully', id: workoutId });
+});
+
+// Get workouts by plan ID
+const getWorkouts = asyncHandler(async (req, res) => {
     const userId = req.user.userId;
     const { planId } = req.params;
 
-    try {
-        const workouts = await getWorkoutsById(userId, planId);
-        res.status(200).json(workouts);
-    } catch (error) {
-        console.error("Error during fetching workouts:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
+    const result = await getWorkoutsById(userId, planId);
+    res.status(200).json(result);
+});
 
-const deleteWorkout = async (req, res) => {
+// Updates an existing workout
+const updateWorkout = asyncHandler(async (req, res) => {
+    const workoutId = req.params.id;
+    const { reps, sets, weight, days, dates } = req.body;
+    const user_id = req.user.userId;
+
+    const existingWorkout = await getWorkoutById(user_id, workoutId);
+    if (!existingWorkout) {
+        throw createApiError('Workout plan not found', 404);
+    }
+
+    const updates = {
+        reps,
+        sets,
+        weight,
+        days: days ? encodeDays(days) : encodeDays(existingWorkout.days) // Keep existing days if not provided
+    };
+
+    const result = await updateWorkouts(workoutId, updates);
+    if (!result || result.affectedRows === 0) {
+        throw createApiError('Workout plan not found', 404);
+    }
+
+
+    if (dates && dates.length > 0) {
+        await deleteWorkoutDatesByWorkoutId(workoutId);
+        await addWorkoutDates(workoutId, dates);
+    }
+
+    res.status(200).json({ message: 'Workout updated successfully', id: workoutId });
+});
+
+// Deletes a workout
+const deleteWorkout = asyncHandler(async (req, res) => {
     const workoutId = req.params.id;
     const userId = req.user.userId;
 
-    console.log("user_id " + userId);
-
-    try {
-        // Ensure the workout belongs to the user
-        const workout = await getWorkoutById(userId, workoutId);
-        if (!workout) {
-            console.log("No workout in db: ", workoutId);
-            return res.status(404).json({ error: 'Workout not found' });
-        }
-
-        await deleteWorkoutDatesByWorkoutId(workoutId); // delete dates 
-        await deleteWorkoutById(workoutId);
-
-        res.status(200).json({ message: 'Workout deleted successfully' });
-    } catch (error) {
-        console.error("Error during deleting workout:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    const result = await deleteWorkoutById(workoutId, userId);
+    if (!result || result.affectedRows === 0) {
+        throw createApiError('Workout plan not found', 404);
     }
-};
+    await deleteWorkoutDatesByWorkoutId(workoutId); // Deletes dates
+    await deleteWorkoutInstructionsByWorkoutId(workoutId); // Deletes instructions
+
+    res.status(200).json({ message: 'Workout deleted successfully' });
+});
 
 module.exports = {
-    addWorkout,
-    getWorkouts,
-    deleteWorkout
+    addWorkout: [addWorkoutValidation, validate, addWorkout],
+    getWorkouts: [getWorkoutsValidation, validate, getWorkouts],
+    deleteWorkout: [deleteWorkoutValidation, validate, deleteWorkout],
+    updateWorkout: [updateWorkoutValidation, validate, updateWorkout]
 };

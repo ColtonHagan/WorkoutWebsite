@@ -1,88 +1,72 @@
-const workoutPlanModel = require('./workoutPlansModel');
+const {
+    addWorkoutPlan,
+    getWorkoutPlansByUserId,
+    getWorkoutsByPlanId,
+    updateWorkoutPlan,
+    removeWorkoutPlan,
+} = require('./workoutPlansModel');
+const {
+    createWorkoutPlanValidation,
+    updateWorkoutPlanValidation,
+    getWorkoutsByPlanValidation,
+    deleteWorkoutPlanValidation
+} = require("./workoutPlanValidation");
+const { asyncHandler, createApiError } = require('../../middleware/errorHandler');
+const validate = require('../../middleware/validationMiddleware');
 
-const createWorkoutPlan = async (req, res) => {
+// Creates a workout plan
+const createWorkoutPlan = asyncHandler(async (req, res) => {
     const { name, description } = req.body;
     const user_id = req.user.userId;
-    console.log("Creating plan: ", {name, description, user_id})
 
-    try {
-        const plan = {
-            user_id,
-            name,
-            description,
-        };
-        const result = await workoutPlanModel.createWorkoutPlan(plan);
-        res.status(201).json({ message: 'Workout plan created successfully', planId: result.insertId });
-    } catch (error) {
-        console.error("Error during adding workoutPlan:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
+    const plan = { user_id, name, description };
+    const result = await addWorkoutPlan(plan);
+    return res.status(201).json({ message: 'Workout plan created successfully', planId: result.insertId });
+});
 
-const getWorkoutPlans = async (req, res) => {
+// Gets all workout plans
+const getWorkoutPlans = asyncHandler(async (req, res) => {
     const user_id = req.user.userId;
+    const plans = await getWorkoutPlansByUserId(user_id);
+    return res.status(200).json(plans);
+});
 
-    try {
-        const plans = await workoutPlanModel.getWorkoutPlansByUserId(user_id);
-        res.status(200).json(plans);
-    } catch (error) {
-        console.error("Error during getting workoutPlan:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-const getWorkoutsByPlan = async (req, res) => {
+// Gets all workouts from a plan
+const getWorkoutsByPlan = asyncHandler(async (req, res) => {
     const { planId } = req.params;
+    const workouts = await getWorkoutsByPlanId(planId);
+    return res.status(200).json(workouts);
+});
 
-    try {
-        const workouts = await workoutPlanModel.getWorkoutsByPlanId(planId);
-        res.status(200).json(workouts);
-    } catch (error) {
-        console.error("Error during getting workouts by plan:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
-const editWorkoutPlan = async (req, res) => {
+// Updates a workout plan
+const editWorkoutPlan = asyncHandler(async (req, res) => {
     const { planId } = req.params;
     const { name, description } = req.body;
 
-    try {
-        const updatedPlan = { name, description };
-        const result = await workoutPlanModel.updateWorkoutPlan(planId, updatedPlan);
+    const updatedPlan = { name, description };
+    const result = await updateWorkoutPlan(planId, updatedPlan);
 
-        if (result.affectedRows > 0) {
-            res.status(200).json({ message: 'Workout plan updated successfully', id: planId});
-        } else {
-            res.status(404).json({ message: 'Workout plan not found' });
-        }
-    } catch (error) {
-        console.error("Error during editing workoutPlan:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    if (!result || result.affectedRows === 0) {
+        throw createApiError('Workout plan not found', 404);
     }
-};
+    return res.status(200).json({ message: 'Workout plan updated successfully', id: planId });
+});
 
-const deleteWorkoutPlan = async (req, res) => {
+// Deletes a workout plan
+const deleteWorkoutPlan = asyncHandler(async (req, res) => {
     const { planId } = req.params;
+    const result = await removeWorkoutPlan(planId);
 
-    try {
-        const result = await workoutPlanModel.deleteWorkoutPlan(planId);
-
-        if (result.affectedRows > 0) {
-            res.status(200).json({ message: 'Workout plan deleted successfully', id: planId});
-        } else {
-            res.status(404).json({ message: 'Workout plan not found' });
-        }
-    } catch (error) {
-        console.error("Error during deleting workoutPlan:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    if (!result || result.affectedRows === 0) {
+        throw createApiError('Workout plan not found', 404);
     }
-};
+    return res.status(200).json({ message: 'Workout plan deleted successfully', id: planId });
+});
 
 module.exports = {
-    createWorkoutPlan,
+    createWorkoutPlan: [createWorkoutPlanValidation, validate, createWorkoutPlan],
     getWorkoutPlans,
-    getWorkoutsByPlan,
-    editWorkoutPlan,
-    deleteWorkoutPlan
+    getWorkoutsByPlan: [getWorkoutsByPlanValidation, validate, getWorkoutsByPlan],
+    editWorkoutPlan: [updateWorkoutPlanValidation, validate, editWorkoutPlan],
+    deleteWorkoutPlan: [deleteWorkoutPlanValidation, validate, deleteWorkoutPlan]
 };
