@@ -1,8 +1,14 @@
-import "./index.scss";
+import moment from 'moment';
+import './index.scss';
 
+/**
+ * Footer component.
+ * 
+ */
 const Footer = () => {
+  const currentYear = moment().year();
   return (
-    <footer>Create by Colton Hagan</footer>
+    <footer> {currentYear} &copy; Created by Colton Hagan</footer>
   )
 }
 

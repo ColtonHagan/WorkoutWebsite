@@ -8,7 +8,7 @@
   padding: 1rem;
   padding-top: 0;
   box-sizing: border-box;
-  background-color: white;
+  background-color: v.$secondary-background-color;
   position: relative;
 
   border-bottom: .45rem solid v.$secondary-blue;
@@ -108,7 +108,10 @@
 }
 
 @media screen and (max-width: 433px) {
-  .exercise h1 {
-    font-size: 8em;
+  .exercise {
+    padding-bottom: 1.5rem;
+    h1 {
+      font-size: 8em;
+    }
   }
 }

@@ -1,55 +1,94 @@
-import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import Select from "react-select";
 import CustomSingleValue from "./Components/CustomSingleValue";
 import useWorkoutPlans from "../../hooks/useWorkoutPlans";
-import EditDropDownPopUp from "./Components/EditDropDownPopUp";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import DropDownPopUp from "./Components/DropDownPopUp";
 import PopUpContainer from "../PopUpContainer";
+import useWorkoutPlanService from "../../services/useWorkoutPlanServices";
+import useWorkoutService from "../../services/useWorkoutService";
+import useWorkouts from "../../hooks/useWorkouts";
+import ErrorPage from "../../views/ErrorPage";
 import "./index.scss";
 
+/**
+ * Dropdown component for selecting and managing workout plans.
+ *
+ * @param {function} onSelect - Callback function to handle selection change.
+ * @param {number} selectedValue - Currently selected workout plan id.
+ * 
+ */
 const PlanDropdown = ({ onSelect, selectedValue }) => {
     const { workoutPlans, setWorkoutPlans } = useWorkoutPlans();
-    const [selectedPlan, setSelectedPlan] = useState(null);
-    const formattedOptions = workoutPlans?.map((plan) => ({ value: plan.id, label: plan.name }));
-    const axiosPrivate = useAxiosPrivate();
+    const [ selectedPlan, setSelectedPlan ] = useState(null);
+    const { setWorkouts } = useWorkouts();
+    const { fetchWorkouts } = useWorkoutService();
+    const { deletePlan, editPlan } = useWorkoutPlanService();
+
+    // Format options for the select component
+    const formattedOptions = workoutPlans?.map((plan) => ({
+        value: plan.id,
+        label: plan.name,
+    }));
 
     useEffect(() => {
-        if (workoutPlans.length > 0 && !selectedValue) {
-            onSelect(formattedOptions[0]?.value);
+        if (workoutPlans.length > 0 && selectedValue < 0) {
+            handleChange(formattedOptions[0]);
         }
     }, [formattedOptions, workoutPlans, selectedValue]);
 
-
-    const handleChange = (selectedOption) => {
-        onSelect(selectedOption?.value);
+    /**
+     * Handles when a workout plan is selected.
+     *
+     * @param {Object} selectedOption - The selected option from the dropdown.
+     */
+    const handleChange = async (selectedOption) => {
+        const fetchWorkoutData = async () => {
+            try {
+                const response = await fetchWorkouts(selectedOption.value);
+                setWorkouts(response);
+            } catch (err) {
+                console.error("Error changing plan", err);
+            }
+        };
+        await fetchWorkoutData(workoutPlans[0].id);
+        onSelect(selectedOption.value);
     };
 
     const handleEditClick = (value) => {
         setSelectedPlan(workoutPlans?.find(plan => plan?.id === value));
     };
 
-    const deletePlan = async (id) => {
+    /**
+     * Removes a workout plan and updates the state.
+     *
+     * @param {number} id - The ID of the workout plan to remove.
+     */
+    const removePlan = async (id) => {
         try {
-            const result = await axiosPrivate.delete(`workouts/workoutPlans/${id}`);
-            const deletedId = Number(result?.data?.id);
-            deletedId && setWorkoutPlans(prevPlans => prevPlans.filter(plan => plan.id !== deletedId));
+            const result = await deletePlan(id);
+            const deletedId = result.id;
+            setWorkoutPlans(prevPlans => prevPlans.filter(plan => plan.id !== deletedId));
             const firstValidOption = formattedOptions?.find(option => option.value !== deletedId);
             firstValidOption && onSelect(firstValidOption.value);
-        } catch (error) {
-            console.error("Error deleting plan:", error);
+        } catch (err) {
+            console.error("Error deleting plan:", err);
         }
     };
 
-    const handleSave = async (name, description) => {
-        console.log(selectedPlan.id);
+    /**
+     * Edits a workout plan and updates the state.
+     *
+     * @param {string} name - The new name of the workout plan.
+     * @param {string} description - The new description of the workout plan.
+     */
+    const handleEdit = async (name, description) => {
         try {
-            const result = await axiosPrivate.put(`workouts/workoutPlans/${selectedPlan.id}`, { name, description });
-            const newId = Number(result?.data?.id);
-            console.log(result);
-            newId && setWorkoutPlans(prevPlans => prevPlans.map(plan => plan.id === newId ? { ...plan, name, description } : plan));
-        } catch (error) {
-            console.error("Error sending data:", error);
+            const result = await editPlan(selectedPlan.id, { name, description });
+            const newId = result.id;
+            setWorkoutPlans(prevPlans => prevPlans.map(plan => plan.id === newId ? { ...plan, name, description } : plan));
+        } catch (err) {
+            console.error("Error editing plan:", err);
         }
     }
 
@@ -69,11 +108,11 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
                 onChange={handleChange}
             />
             <PopUpContainer display={selectedPlan} onClose={() => setSelectedPlan(null)}>
-                <EditDropDownPopUp
+                <DropDownPopUp
                     plan={selectedPlan}
                     onClose={() => setSelectedPlan(null)}
-                    deletePlan={deletePlan}
-                    handleSave={handleSave}
+                    deletePlan={removePlan}
+                    handleSave={handleEdit}
                     isEditing={true}
                 />
             </PopUpContainer>
@@ -81,9 +120,9 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
     );
 };
 
-/*PlanDropdown.propTypes = {
+PlanDropdown.propTypes = {
     onSelect: PropTypes.func.isRequired,
-    selectedValue: PropTypes.any,
-};*/
+    selectedValue: PropTypes.number.isRequired
+};
 
 export default PlanDropdown;

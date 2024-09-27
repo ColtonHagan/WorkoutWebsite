@@ -1,0 +1,16 @@
+@use '../../util//variables' as v;
+.tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .25em;
+
+    p {
+        margin-bottom: 0;
+        padding: .125em;
+        background-color: v.$hover-effect;
+        color: v.$primary-blue;
+        font-weight: bold;
+        border-radius: 15%;
+    }
+}

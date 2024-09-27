@@ -11,6 +11,10 @@ const {
     getWorkoutsByPlanValidation,
     deleteWorkoutPlanValidation
 } = require("./workoutPlanValidation");
+const {
+    getPublicWorkoutPlanByPlanId,
+    removePublicWorkoutPlanByPlanId
+} = require("../publicWorkoutPlans/publicPlanModel")
 const { asyncHandler, createApiError } = require('../../middleware/errorHandler');
 const validate = require('../../middleware/validationMiddleware');
 
@@ -49,18 +53,26 @@ const editWorkoutPlan = asyncHandler(async (req, res) => {
     if (!result || result.affectedRows === 0) {
         throw createApiError('Workout plan not found', 404);
     }
-    return res.status(200).json({ message: 'Workout plan updated successfully', id: planId });
+    return res.status(200).json({ message: 'Workout plan updated successfully', id: Number(planId) });
 });
 
 // Deletes a workout plan
 const deleteWorkoutPlan = asyncHandler(async (req, res) => {
+    const user_id = req.user.userId;
     const { planId } = req.params;
+
+    // Checks if it is public plan database and deletes it if it is
+    const public = await getPublicWorkoutPlanByPlanId(user_id, planId);
+    if(public) {
+        await removePublicWorkoutPlanByPlanId(planId);
+    }
+
     const result = await removeWorkoutPlan(planId);
 
     if (!result || result.affectedRows === 0) {
         throw createApiError('Workout plan not found', 404);
     }
-    return res.status(200).json({ message: 'Workout plan deleted successfully', id: planId });
+    return res.status(200).json({ message: 'Workout plan deleted successfully', id: Number(planId) });
 });
 
 module.exports = {

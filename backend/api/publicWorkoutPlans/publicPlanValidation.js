@@ -10,6 +10,11 @@ const removePublicPlanValidation = [
     param('id').isInt().withMessage('ID must be an integer'),
 ];
 
+// Validation rules for removing a public plan
+const copyPublicPlanValidation = [
+    param('plan_id').isInt().withMessage('ID must be an integer'),
+];
+
 // Validation rules for rating a public plan
 const ratePlanValidation = [
     body('public_id').isInt().withMessage('Public ID must be an integer'),
@@ -19,5 +24,6 @@ const ratePlanValidation = [
 module.exports = {
     addPublicPlanValidation,
     removePublicPlanValidation,
+    copyPublicPlanValidation,
     ratePlanValidation
 };

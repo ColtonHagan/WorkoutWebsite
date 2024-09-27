@@ -3,13 +3,17 @@ const {
     addPublicPlan,
     removePublicPlan,
     ratePlan,
-    getPublicPlans
+    getPublicPlans,
+    copyPublicPlan
 } = require('./publicPlanController');
 
 const router = express.Router();
 
 // Route to add a public workout plan
 router.post('/', addPublicPlan);
+
+// Copy public plan to new user
+router.post('/copy/:plan_id', copyPublicPlan);
 
 // Route to retrieve all public workout plans
 router.get('/', getPublicPlans);

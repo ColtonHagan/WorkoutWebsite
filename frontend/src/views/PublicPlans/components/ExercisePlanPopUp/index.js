@@ -1,12 +1,23 @@
 import { useState } from 'react';
+import PropTypes, { object } from 'prop-types';
 import PopUpContainer from '../../../../components/PopUpContainer';
 import BackButton from '../../../../components/BackButton';
-import WeeklyDisplay from '../../../Exercise/WeeklyDisplay';
-import ExercisePopUp from '../../../ExercisePopUp';
+import WeeklyDisplay from '../../../../components/WeeklyDisplay';
+import ExercisePopUp from '../../../../components/ExercisePopUp';
 import "./index.scss";
 
-const ExercisePlanPopUp = ({ plan, exercises, onClose }) => {
-    const [currentView, setCurrentView] = useState('plan'); // 'plan' or 'exercise'
+/**
+ * ExercisePlanPopUp Component - Displays a popup for viewing and downloading an exercise plan.
+ * Users can view weekly exercises or click into a specific exercise.
+ * 
+ * @component
+ * @param {Object} plan - The exercise plan object to be displayed.
+ * @param {Array} exercises - The list of exercises associated with the plan.
+ * @param {function} onClose - Callback function to close the popup.
+ * @param {function} downloadPlan - Callback function to handle plan download.
+ */
+const ExercisePlanPopUp = ({ plan, exercises, onClose, downloadPlan }) => {
+    const [currentView, setCurrentView] = useState('plan');
     const [selectedExercise, setSelectedExercise] = useState(null);
 
     const handleExerciseClick = (exercise) => {
@@ -25,21 +36,21 @@ const ExercisePlanPopUp = ({ plan, exercises, onClose }) => {
     };
 
     const onAdd = () => {
-        console.log("adding workout plan");
+        downloadPlan(plan);
         onClose();
     }
 
     return (
         <PopUpContainer display={exercises} onClose={handleCloseClick}>
             {currentView === 'plan' ? (
-                <div className="weekly-display-container medium-pop-up"> {/** This should be its own file */}
+                <div className="weekly-display-container medium-pop-up">
                     <h1>{plan?.name}</h1>
                     <WeeklyDisplay
                         exercises={exercises}
                         onExerciseClick={handleExerciseClick}
                         onDelete={null}
                     />
-                    <button id="save-button" onClick={onAdd}> Download Plan </button>
+                    {exercises?.length > 0 && <button className="button" onClick={onAdd}> Download Plan </button>}
                 </div>
             ) : (
                 <div className="pop-up-plan-container">
@@ -52,6 +63,16 @@ const ExercisePlanPopUp = ({ plan, exercises, onClose }) => {
             )}
         </PopUpContainer >
     );
+};
+// Define PropTypes for the component
+ExercisePlanPopUp.propTypes = {
+    plan: PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+    }),
+    exercises: PropTypes.arrayOf(object),
+    onClose: PropTypes.func.isRequired,
+    downloadPlan: PropTypes.func.isRequired,
 };
 
 export default ExercisePlanPopUp;

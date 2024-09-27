@@ -17,10 +17,14 @@
     border: 0.25rem solid v.$text-color-dark;
     box-sizing: border-box;
     transition: transform 0.2s ease;
-    background-color: white;
+    background-color: v.$secondary-background-color;
 
     &:hover {
         transform: scale(1.05);
+    }
+
+    &:focus {
+        outline: none;
     }
 
     .icon {
@@ -31,6 +35,7 @@
 
 .selected {
     transform: scale(1.05);
-    background-color: #B7E7EB;
+    background-color: v.$accent-blue;
 }
+
 @media screen and (max-width: 600px) { .bodyPartCard { height: 20vh;} }

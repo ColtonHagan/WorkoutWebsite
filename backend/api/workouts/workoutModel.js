@@ -39,11 +39,7 @@ const updateWorkouts = async (workoutId, updates) => {
     values.push(workoutId);
     const query = `UPDATE workouts SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
 
-    console.log("Query:", query);
-    console.log("Values:", values);
-
     const results = await db.execute(query, values);
-    console.log("results", results);
     return results;
 };
 
@@ -142,8 +138,8 @@ const getWorkoutsById = async (user_id, plan_id) => {
             FROM workout_instructions
             GROUP BY workout_id
         ) AS instructions ON w.id = instructions.workout_id
-        WHERE w.user_id = ? AND w.plan_id = ?`,
-        [user_id, plan_id]
+        WHERE w.plan_id = ?`,
+        [plan_id]
     );
 
     return result.map(row => ({

@@ -1,3 +1,4 @@
+@use "../../../../../util//variables" as v;
 .bodyPartSelector {
     position: relative;
     overflow: hidden;
@@ -17,13 +18,13 @@
 
         width: 3rem;
         height: 3rem;
-        background-color: #fff;
-        border: .125em solid #ccc;
+        background-color: v.$secondary-background-color;
+        border: .125em solid v.$primary-grey;
         border-radius: 50%;
         cursor: pointer;
 
         &:hover {
-            background-color: #f0f0f0;
+            background-color: v.$hover-effect;
         }
 
         svg {

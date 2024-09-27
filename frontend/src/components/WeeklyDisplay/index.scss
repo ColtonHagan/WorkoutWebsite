@@ -1,0 +1,41 @@
+@use "../../util/variables" as v;
+
+.weekly-display {
+    width: 100%;
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+
+        th,
+        td {
+            border: .1em solid v.$primary-grey;
+            padding: .5em;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: v.$border-color-light;
+            font-weight: bold;
+        }
+
+        td {
+            min-height: 9.5em;
+            overflow-y: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .weekly-display {
+        overflow-x: auto;
+        table {
+            th {
+                font-size: 2em;
+                position: sticky;
+                width: 28vw;
+            }
+        }
+    }
+}

@@ -1,40 +1,39 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
+import PropTypes from 'prop-types';
 import AddExerciseCard from './components/AddExerciseCard'
 import PopUpContainer from '../../../../../components/PopUpContainer';
-import ExercisePopUp from '../../../../ExercisePopUp';
-import "./index.scss";
+import ExercisePopUp from '../../../../../components/ExercisePopUp';
 import CustomPaginate from '../../../../../components/CustomPaginate';
+import useWindowDimensions from '../../../../../hooks/useWindowDimensions';
+import "./index.scss";
 
+/**
+ * ExerciseList component displays a list of exercises with pagination
+ * and a popup to add selected exercises.
+ *
+ * @param {Object} exercises - List of exercise objects.
+ * @param {Function} addExercise - Callback function to add selected exercise.
+ */
 const ExerciseList = ({ exercises, addExercise }) => {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
-  const [width, setWidth] = useState(window.innerWidth); //This should be a seperate hook
+  const { width } = useWindowDimensions();
+  
 
-  const getExercisesPerPage = () => {
+  // Calculate the number of exercises per page based on window width
+  const exercisesPerPage = useMemo(() => {
     if (width > 1250) return 9;  // Desktop
     if (width > 600) return 6;   // Tablet
     return 4;                    // Mobile
-  };
+  }, [width]);
 
-  const exercisesPerPage = getExercisesPerPage();
-  const pagesVisited = pageNumber * exercisesPerPage;
-  const displayExercises = exercises.slice(pagesVisited, pagesVisited + exercisesPerPage);
-  const pageCount = Math.ceil(exercises.length / exercisesPerPage);
+  const pagesVisited = useMemo(() => pageNumber * exercisesPerPage, [pageNumber, exercisesPerPage]);
+  const displayExercises = useMemo(() => exercises.slice(pagesVisited, pagesVisited + exercisesPerPage), [exercises, pagesVisited, exercisesPerPage]);
+  const pageCount = useMemo(() => Math.ceil(exercises.length / exercisesPerPage), [exercises, exercisesPerPage]);
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-
-  useEffect(() => { //should be in seperate hook
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   return (
     <div className='addExerciseContainer'>
@@ -50,5 +49,15 @@ const ExerciseList = ({ exercises, addExercise }) => {
     </div>
   )
 }
+
+// Prop Types validation
+ExerciseList.propTypes = {
+  exercises: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  addExercise: PropTypes.func.isRequired,
+};
 
 export default ExerciseList

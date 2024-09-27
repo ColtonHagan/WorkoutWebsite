@@ -26,24 +26,22 @@
       }
 
       &.ascending .sort-icon::before {
-        //REPLACE WITH FONT AWESOME IN .JS FILE
         content: "▲";
         padding-left: 5em;
       }
 
       &.descending .sort-icon::before {
-        //REPLACE WITH FONT AWESOME IN .JS FILE
         content: "▼";
       }
 
       &:hover {
-        background-color: v.$hover-effect-dark;
+        background-color: v.$primary-grey;
       }
     }
 
     tr {
       &:hover {
-        background-color: v.$hover-effect-dark;
+        background-color: v.$primary-grey;
       }
     }
 
@@ -64,14 +62,14 @@
     td {
       padding: 1.5rem;
       text-align: center;
-      border-bottom: 0.15em solid v.$hover-effect-dark;
+      border-bottom: 0.15em solid v.$primary-grey;
 
-      #star-container {
+      .star-container {
         align-self: center;
         display: flex;
         justify-content: center;
 
-        #star-container div div span {
+        div div span {
           font-size: 24px !important;
         }
       }
@@ -102,20 +100,20 @@
 }
 
 @media screen and (max-width: 700px) {
-  .public-plan-table table td #star-container #star-container div div span {
-    font-size: 20px !important;
+  .public-plan-table table td .star-container div div span {
+    font-size: 1.2em !important;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .public-plan-table table td #star-container #star-container div div span {
-    font-size: 16px !important;
+  .public-plan-table table td .star-container div div span {
+    font-size: 1.4em !important;
   }
 }
 
 @media screen and (max-width: 500px) {
   .public-plan-table table {
-    font-size: 1.8em;
+    font-size: 1.5em;
 
     th:nth-child(1),
     td:nth-child(1),
@@ -142,5 +140,11 @@
     td {
       padding: 1em;
     }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .public-plan-table table {
+    font-size: 1.3em;
   }
 }

@@ -2,13 +2,12 @@
 
 .close-button {
   position: absolute;
-  top: 0;
-  right: .2em;
-  font-size: 3rem;
+  top: .25rem;
+  right: .2rem;
+  font-size: 2.75rem;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
   color: v.$error-red;
   transition: color 0.3s ease, transform 0.3s ease;
   margin: 0;

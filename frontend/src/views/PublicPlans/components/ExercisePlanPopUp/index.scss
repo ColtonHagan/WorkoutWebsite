@@ -3,24 +3,7 @@
 
 .weekly-display-container {
     text-align: center;
-    margin-bottom: 1em;
-    padding-left: 0;
-    margin-left: 0;
-
-    #save-button {
-        margin-top: 1em;
-        color: v.$text-color-light;
-        padding: 0.7em 1em;
-        border: none;
-        border-radius: 8%;
-        background-color: v.$success-green;
-
-        &:hover {
-            background-color: v.$success-green-hover;
-        }
-    }
-
-    .close-button {
-        font-size: 1.2em;
+    .button {
+        margin-top: 1rem;
     }
 }

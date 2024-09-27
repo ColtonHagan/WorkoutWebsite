@@ -3,7 +3,7 @@
 .searchBar {
     display: flex;
     align-items: center;
-    border: .1em solid v.$hover-effect-dark;
+    border: .1em solid v.$primary-grey;
     background-color: v.$secondary-background-color;
     border-radius: .25em;
     padding: .325em;
@@ -12,10 +12,10 @@
 
     &:focus-within {
         border-color: v.$primary-blue;
-        box-shadow: 0 0 .325em rgba(0, 123, 255, 0.25);
+        box-shadow: 0 0 .325em v.$secondary-blue;
     }
 
-    .searchInput {
+    .search-input {
         flex-grow: 1;
         border: none;
         outline: none;
@@ -23,15 +23,13 @@
         font-size: 1em;
     }
 
-    .clearButton {
+    .clear-button {
         background: none;
         border: none;
         font-size: 1.25em;
         cursor: pointer;
-        margin: 0;
-        padding: 0;
-        padding-right: .325em;
-        margin-left: .325em;
+        margin: 0 0 0 0.325em;
+        padding: 0 .325em 0 0;
 
         &:hover {
             color: v.$secondary-blue;

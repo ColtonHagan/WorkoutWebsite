@@ -5,14 +5,18 @@
     justify-content: center;
     flex-direction: column;
 
-    #search-container {
+    .error-container {
+        margin-top: 5rem;
+    }
+
+    .search-container {
         display: flex;
         flex-direction: row;
         align-items: center;
         margin-top: 1em;
         gap: .25em;
 
-        #body-part-button {
+        .body-part-button {
             box-shadow: none;
             background: none;
             border: none;

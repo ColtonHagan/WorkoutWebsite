@@ -1,0 +1,34 @@
+@use '../../util/variables' as v;
+
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    .spinner {
+        border: 0.625rem solid v.$secondary-background-color;
+        border-top: 0.625rem solid v.$primary-blue;
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+        animation: spin 1s linear infinite;
+    }
+
+    .spinner-message {
+        margin-top: 0.625rem;
+        font-size: 1.2rem;
+        color: v.$text-color-dark;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -1,47 +1,75 @@
 import { useEffect, useState } from "react";
 import PlanDropdown from "../../components/PlanDropdown";
-import "./index.scss";
 import PublicPlanTable from "./components/PublicPlanTable";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import usePublicPlanServices from "../../services/usePublicPlanServices";
+import useWorkoutPlans from "../../hooks/useWorkoutPlans";
+import "./index.scss";
 
+/**
+ * Main page public plans and publishing, viewing, and downloading them.
+ */
 const PublicPlans = () => {
-    const [selectedPlan, setSelectedPlan] = useState();
+    const [selectedPlan, setSelectedPlan] = useState(-1);
     const [publicPlans, setPublicPlans] = useState([]);
-    const axiosPrivate = useAxiosPrivate();
+    const { setWorkoutPlans } = useWorkoutPlans();
+    const { fetchPublicPlans, addPublicPlan, ratePublicPlan, copyPublicPlan } = usePublicPlanServices();
 
     const fetchPlans = async () => {
         try {
-            const response = await axiosPrivate.get("publicPlans/");
-            setPublicPlans(response.data);
-            console.log("public plans", response.data);
+            const response = await fetchPublicPlans();
+            setPublicPlans(response);
         } catch (err) {
-            console.error(err);
+            console.error("Error fetching public plan:", err);
         }
     };
 
     useEffect(() => {
         fetchPlans();
-    }, []);
+    });
 
     const publishPlan = async (plan) => {
         try {
-            console.log(plan);
-            await axiosPrivate.post("publicPlans/", { plan_id: plan });
+            await addPublicPlan(plan);
             fetchPlans();
-            console.log("Plan added:", { plan });
-        } catch (error) {
-            console.error("Error sending data:", error);
+        } catch (err) {
+            console.error("Error publishing plan:", err);
+        }
+    };
+
+    const copyPlan = async (plan) => {
+        try {
+            const response = await copyPublicPlan(plan.id);
+            const id = response.id;
+            const name = plan.name;
+            const description = plan.description;
+            setWorkoutPlans(prevPlans => [...prevPlans, { id, name, description }]);
+        } catch (err) {
+            console.error("Error downloading plan:", err);
+        }
+    };
+
+    const setRating = async (id, rating) => {
+        try {
+            const response = await ratePublicPlan(id, rating);
+            const newId = response.id;
+            setPublicPlans((prevPlans) =>
+                prevPlans.map((plan) =>
+                    plan.id === newId ? { ...plan, average_rating: rating, user_rating: rating } : plan
+                )
+            );
+        } catch (err) {
+            console.error("Error rating plan:", err);
         }
     };
 
     return (
-        <div>
-            <div id="publish-plan">
+        <>
+            <div className="publish-plan testing-test">
                 <PlanDropdown onSelect={(selected) => setSelectedPlan(selected)} selectedValue={selectedPlan} />
-                <button id="publish-button" onClick={() => publishPlan(selectedPlan)}> Publish </button>
+                <button className="publish-button" onClick={() => publishPlan(selectedPlan)}> Publish </button>
             </div>
-            <PublicPlanTable workoutPlans={publicPlans} setWorkoutPlans={setPublicPlans}/>
-        </div>
+            <PublicPlanTable workoutPlans={publicPlans} setRating={setRating} downloadPlan={copyPlan} />
+        </>
     )
 }
 

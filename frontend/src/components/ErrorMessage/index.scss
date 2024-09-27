@@ -1,0 +1,6 @@
+
+@use '../../util/variables' as v;
+.error-message {
+    color: v.$error-red;
+    font-size: 1rem;
+}

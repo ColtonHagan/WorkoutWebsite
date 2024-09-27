@@ -3,15 +3,21 @@ import Footer from "../Footer";
 import NavBar from "../NavBar";
 import "./index.scss";
 
+/**
+ * Layout component that serves as a wrapper for the main application structure.
+ *
+ * This component includes a navigation bar at the top, an outlet for nested routes,
+ * and a footer at the bottom.
+ */
 const Layout = () => {
     return (
-        <main className="App">
+        <div className="App" >
             <NavBar />
             <main>
                 <Outlet />
             </main>
             <Footer />
-        </main>
+        </div>
     )
 }
 

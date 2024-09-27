@@ -17,8 +17,8 @@ const app = express();
 
 // Middleware
 app.use(cors(corsOptions));
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 app.use(requestLogger);
 
 // Public routes
@@ -27,7 +27,7 @@ app.use('/api/users', userRoutes);
 // Authenticated routes - protected by token validation middleware
 app.use(tokenValidation);
 app.use('/api/workouts', workoutRoutes);
-app.use('/api/workouts', workoutPlanRoutes);
+app.use('/api/workouts', workoutPlanRoutes); //temp console.log tmp this should be renamed plans and reworked
 app.use('/api/publicPlans', publicPlansRoutes);
 
 // Global error handling middleware

@@ -20,13 +20,14 @@
     }
 }
 
+// Overlay for background
 .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: v.$text-color-dark;
     backdrop-filter: blur(.625em);
     z-index: 100;
 }
@@ -35,10 +36,11 @@
     overflow: hidden;
 
     &::-webkit-scrollbar {
-        width: 0px;
+        width: 0;
     }
 }
 
+// Pop-up size variations
 .big-pop-up {
     height: 80vh;
     width: 50vw;
@@ -51,7 +53,7 @@
 
 .medium-pop-up {
     width: 50vw;
-    min-height: 35vh;
+    min-height: 25vh;
     max-height: 50vh;
 }
 
@@ -82,7 +84,6 @@
     .medium-pop-up {
         width: 70vw;
         font-size: 1.4em;
-        min-height: 33vh;
     }
 }
 
@@ -106,14 +107,14 @@
 }
 
 @media screen and (max-width: 700px) {
-    //makes room for back button
+    // Makes room for back button
     .pop-up .pop-up-plan-container .pop-up-header {
         margin-left: 5em;
     }
 
     .big-pop-up {
-        width: 90vw;
-        height: 100vh;
+        width: 88vw;
+        height: 97vh;
         border-radius: 0%;
     }
 
@@ -132,7 +133,13 @@
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 545px) {
+
+    .big-pop-up {
+        width: 85vw;
+        height: 98vh;
+        border-radius: 0%;
+    }
 
     .pop-up .pop-up-plan-container .pop-up-header {
         padding-top: 6em;
@@ -141,6 +148,23 @@
     }
 
     .medium-pop-up .weekly-display table td {
-        font-size: .8em;
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .big-pop-up {
+        width: 82vw;
+        height: 98vh;
+    }
+    .medium-pop-up {
+        width: 85vw;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .big-pop-up {
+        width: 80vw;
+        height: 98vh;
     }
 }

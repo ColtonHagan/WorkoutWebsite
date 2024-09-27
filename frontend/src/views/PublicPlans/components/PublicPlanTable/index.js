@@ -1,38 +1,32 @@
 import { useState, useMemo } from "react";
+import PropTypes from "prop-types";
 import RatingStars from "react-rating-stars-component";
 import ExercisePlanPopUp from "../ExercisePlanPopUp";
-import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 import CustomPaginate from "../../../../components/CustomPaginate";
+import useWorkoutService from "../../../../services/useWorkoutService";
 import "./index.scss";
 
-const PublicPlanTable = ({ workoutPlans, setWorkoutPlans }) => {
+/**
+ * PublicPlanTable Component - Displays a table of public workout plans with sorting and pagination.
+ * Users can rate plans, view exercise details, and download plans.
+ * 
+ * @component
+ * @param {Array} workoutPlans - List of workout plans to display.
+ * @param {Function} setRating - Function to set the user's rating for a plan.
+ * @param {Function} downloadPlan - Function to download the selected plan.
+ */
+const PublicPlanTable = ({ workoutPlans, setRating, downloadPlan }) => {
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
+  const { fetchWorkouts } = useWorkoutService();
   const itemsPerPage = 10;
-
-  const axiosPrivate = useAxiosPrivate();
 
   const fetchExercises = async (planId) => {
     try {
-      const response = await axiosPrivate.get(`workouts/${planId}/workout`);
-      setSelectedExercise(response.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const setRating = async (id, rating) => {
-    try {
-      const response = await axiosPrivate.post(`publicPlans/rate`, { public_id: id, rating });
-      console.log("new rating", response.data.id);
-      const newId = response?.data?.id;
-      setWorkoutPlans((prevPlans) =>
-        prevPlans.map((plan) =>
-          plan.id === newId ? { ...plan, average_rating: rating, user_rating: rating } : plan
-        )
-      );
+      const response = await fetchWorkouts(planId);
+      setSelectedExercise(response);
     } catch (err) {
       console.error(err);
     }
@@ -46,22 +40,22 @@ const PublicPlanTable = ({ workoutPlans, setWorkoutPlans }) => {
     setSortConfig({ key, direction });
   };
 
-  //maybe should be a memo
-  const sortedPlans = [...workoutPlans].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
-      return sortConfig.direction === 'ascending' ? -1 : 1;
-    }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
-      return sortConfig.direction === 'ascending' ? 1 : -1;
-    }
-    return 0;
-  });
+  const sortedPlans = useMemo(() => {
+    return [...workoutPlans].sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? -1 : 1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+  }, [workoutPlans, sortConfig]);
 
-  //maybe memmo
-  const startIndex = pageNumber * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedPlans = sortedPlans.slice(startIndex, endIndex);
-  console.log({ pageNumber, startIndex, endIndex, paginatedPlans });
+  const paginatedPlans = useMemo(() => {
+    const startIndex = pageNumber * itemsPerPage;
+    return sortedPlans.slice(startIndex, startIndex + itemsPerPage);
+  }, [pageNumber, sortedPlans]);
 
   const updateRating = (id, newRating) => {
     setRating(id, newRating);
@@ -115,16 +109,14 @@ const PublicPlanTable = ({ workoutPlans, setWorkoutPlans }) => {
               <td>{plan.name}</td>
               <td>{plan.description}</td>
               <td>
-                <div id="star-container">
-                  <div id="star-container" onClick={(e) => e.stopPropagation()}>
-                    <RatingStars
-                      count={5}
-                      value={parseFloat(plan.user_rating || plan.average_rating)}
-                      onChange={(newRating) => updateRating(plan.id, newRating)}
-                      activeColor="#ffd700"
-                      isHalf={true}
-                    />
-                  </div>
+                <div className="star-container" onClick={(e) => e.stopPropagation()}>
+                  <RatingStars
+                    count={5}
+                    value={parseFloat(plan.user_rating || plan.average_rating)}
+                    onChange={(newRating) => updateRating(plan.id, newRating)}
+                    activeColor="#ffd700"
+                    isHalf={true}
+                  />
                 </div>
               </td>
               <td>{new Date(plan.date).toLocaleDateString()}</td>
@@ -136,9 +128,24 @@ const PublicPlanTable = ({ workoutPlans, setWorkoutPlans }) => {
         pageCount={Math.ceil(sortedPlans.length / itemsPerPage)}
         changePage={changePage}
       />}
-      <ExercisePlanPopUp plan={selectedPlan} exercises={selectedExercise} onClose={() => setSelectedExercise(null)} />
+      <ExercisePlanPopUp plan={selectedPlan} exercises={selectedExercise} onClose={() => setSelectedExercise(null)} downloadPlan={downloadPlan} />
     </div>
   );
+};
+
+// Required PropTypes
+PublicPlanTable.propTypes = {
+  workoutPlans: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      date: PropTypes.string.isRequired,
+      plan_id: PropTypes.number.isRequired,
+    })
+  ),
+  setRating: PropTypes.func.isRequired,
+  downloadPlan: PropTypes.func.isRequired,
 };
 
 export default PublicPlanTable;

@@ -3,20 +3,19 @@
 .back-button {
     position: absolute;
     top: 0;
-    left: 0.2em;
+    left: 0.2rem;
     font-size: 3rem;
 
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
     color: v.$text-color-dark;
     transition: color 0.3s ease, transform 0.3s ease;
     margin: 0;
     padding: 0;
 
     &:hover {
-        color: black;
+        color: v.$text-color-dark;
         transform: scale(1.1);
     }
 

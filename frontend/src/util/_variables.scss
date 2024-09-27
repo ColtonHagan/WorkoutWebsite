@@ -1,26 +1,30 @@
 // Colors
 $background-color: #F7F7F7;
 $secondary-background-color: #FFFFFF;
-$accent-background-color: #F6F8FC; //Maybe #e6e9ee
+$accent-background-color: #F6F8FC;
+
 $primary-blue: #1d82fb;
 $secondary-blue: #0056b3;
 $accent-blue: #B7E7EB;
+$primary-grey: #ddd;
+
+// Text Colors
 $text-color-dark: #333333;
 $text-color-light: #ffffff;
 
 // Feedback Colors
 $success-green: #28a745;
-$success-green-hover: #4bc05e;
+$success-green-hover: #24963e;
 $error-red: #dc3545;
 $error-red-hover: #b02a37;
+$error-red-background: #f8d7da;
 
 // Borders
 $border-color: #696363;
 $border-color-light: #e9e9e9;
 $input-border-color: #007BFF;
 
-// Misc
+// Hovers
 $hover-effect: #ddebfe;
-$hover-effect-dark: #ddd;
 
-$test-color: #F6F8FC; // Maybe #F6F8FC
+$test-color: #F6F8FC;

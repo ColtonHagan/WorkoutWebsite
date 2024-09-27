@@ -17,6 +17,12 @@ const removePublicWorkoutPlan = async (id) => {
     return result;
 };
 
+// Remove a public workout plan by planId
+const removePublicWorkoutPlanByPlanId = async (planId) => {
+    const [result] = await db.execute('DELETE FROM public_workout_plans WHERE plan_id = ?', [planId]);
+    return result;
+};
+
 // Rate a public workout plan
 const rateWorkoutPlan = async (userRating) => {
     const [result] = await db.execute(
@@ -79,10 +85,38 @@ const getPublicWorkoutPlans = async (user_id) => {
     return rows;
 };
 
+// Get a public workout plan by planId, including ratings
+const getPublicWorkoutPlanByPlanId = async (user_id, planId) => {
+    const query = `
+        SELECT 
+            pwp.id,
+            pwp.plan_id,
+            wp.name, 
+            wp.description, 
+            COALESCE(ROUND(AVG(ur.rating), 1), 0.0) AS average_rating,
+            (
+                SELECT ur2.rating 
+                FROM user_ratings ur2 
+                WHERE ur2.public_id = pwp.id AND ur2.user_id = ?
+            ) AS user_rating,
+            pwp.date 
+        FROM public_workout_plans pwp
+        JOIN workout_plans wp ON pwp.plan_id = wp.id
+        LEFT JOIN user_ratings ur ON pwp.id = ur.public_id
+        WHERE pwp.plan_id = ?
+        GROUP BY pwp.id, wp.name, wp.description, pwp.date
+    `;
+
+    const [rows] = await db.execute(query, [user_id, planId]);
+    return rows;
+};
+
 module.exports = {
     addPublicWorkoutPlan,
     removePublicWorkoutPlan,
+    removePublicWorkoutPlanByPlanId,
     rateWorkoutPlan,
     getPublicWorkoutPlans,
-    getPublicWorkoutPlansById
+    getPublicWorkoutPlansById,
+    getPublicWorkoutPlanByPlanId
 };

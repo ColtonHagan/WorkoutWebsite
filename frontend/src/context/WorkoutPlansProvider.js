@@ -1,6 +1,9 @@
 import { createContext } from 'react';
 import useFetchWorkoutPlans from '../hooks/useFetchWorkoutPlans';
 
+/**
+ * WorkoutPlans context state.
+ */
 const WorkoutPlansContext = createContext({});
 
 export const WorkoutPlansProvider = ({ children }) => {

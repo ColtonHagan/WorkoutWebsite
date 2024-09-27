@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 
-// Custom hook to get and track window dimensions
+/**
+ * Custom hook to get and track the window dimensions.
+ *
+ * @returns {UseState} A useState containing the current window width and height.
+ */
 const useWindowDimensions = () => {
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
@@ -8,6 +12,9 @@ const useWindowDimensions = () => {
   });
 
   useEffect(() => {
+    /**
+    * Handles the window resize event and updates the dimensions.
+    */
     const handleResize = () => {
       setWindowDimensions({
         width: window.innerWidth,
@@ -18,7 +25,7 @@ const useWindowDimensions = () => {
     window.addEventListener('resize', handleResize);
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
-  }, []); 
+  }, []);
 
   return windowDimensions;
 };

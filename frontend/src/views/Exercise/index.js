@@ -1,51 +1,45 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AddExercise from "./components/AddExercise";
-import WeeklyDisplay from "./WeeklyDisplay";
+import WeeklyDisplay from "../../components/WeeklyDisplay";
 import WorkoutPlans from "./components/WorkoutPlans";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import PopUpContainer from "../../components/PopUpContainer";
-import ExercisePopUp from "../ExercisePopUp";
+import ExercisePopUp from "../../components/ExercisePopUp";
+import useWorkoutService from "../../services/useWorkoutService";
+import useWorkouts from "../../hooks/useWorkouts";
 
+/**
+ * Main component for managing exercises/workouts
+ */
 const Exercise = () => {
-  const [selectedPlan, setSelectedPlan] = useState("");
-  const [selectedExercise, setSelectedExercise] = useState("");
-  const [exercises, setExercises] = useState([]);
-  const axiosPrivate = useAxiosPrivate();
+  const { deleteWorkout, addWorkout } = useWorkoutService();
+  const [ selectedPlan, setSelectedPlan ] = useState(-1);
+  const [ selectedExercise, setSelectedExercise ] = useState();
+  const { workouts, setWorkouts } = useWorkouts();
 
-  useEffect(() => {
-    const fetchExercises = async (planId) => {
-      try {
-        const response = await axiosPrivate.get(`workouts/${planId}/workout`); /* should be moved to seperate api file */
-        setExercises(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    selectedPlan && fetchExercises(selectedPlan);
-    console.log(exercises);
-  }, [selectedPlan]);
-
+  /**
+   * Adds an exercise to the workout plan.
+   *
+   * @param {Object} exercise - The exercise to add.
+   */
   const addExercise = async (exercise) => {
-    exercise.plan_id = selectedPlan;
     try {
-      const response = await axiosPrivate.post("workouts/", exercise);
-      console.log(response.data);
-      exercise.id = response.data;
-      setExercises(prevExercises => [...prevExercises, exercise]);
-      console.log("Workout added:", exercise);
-
+      const response = await addWorkout(exercise, selectedPlan);
+      exercise.id = response;
+      setWorkouts(prevWorkouts => [...prevWorkouts, exercise]);
     } catch (error) {
       console.error("Error sending data:", error);
     }
   };
 
+  /**
+   * Deletes an exercise from the workout plan.
+   *
+   * @param {number} id - The ID of the exercise to delete.
+   */
   const deleteExercise = async (id) => {
-    console.log("attempting to delete ", id);
     try {
-      await axiosPrivate.delete(`workouts/${id}`);
-      setExercises(prevExercises => prevExercises.filter(exercise => exercise.id !== id));
-      console.log('Workout deleted:', id);
+      await deleteWorkout(id);
+      setWorkouts(prevWorkouts => prevWorkouts.filter(exercise => exercise.id !== id));
     } catch (error) {
       console.error("Error sending data:", error);
     }
@@ -54,8 +48,7 @@ const Exercise = () => {
   return (
     <div>
       <WorkoutPlans setSelectedPlan={(plan) => setSelectedPlan(plan)} selectedPlan={selectedPlan} />
-      {/* add safty check here to check if it can conect to external workout db */}
-      <WeeklyDisplay exercises={exercises} deleteWorkout={(id) => deleteExercise(id)} onExerciseClick={(exercise) => setSelectedExercise(exercise)}/>
+      <WeeklyDisplay exercises={workouts} deleteWorkout={(id) => deleteExercise(id)} onExerciseClick={(exercise) => setSelectedExercise(exercise)}/>
       <AddExercise addExercise={(exercise) => addExercise(exercise)}  />
       <PopUpContainer display={selectedExercise}  onClose={() => setSelectedExercise(null)}>
         <ExercisePopUp exercise={selectedExercise}/>

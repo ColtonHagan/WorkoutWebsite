@@ -1,6 +1,6 @@
 @use "../../util/variables" as v;
 
-#publish-plan {
+.publish-plan {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,8 +8,8 @@
     margin-bottom: 1.3em;
     gap: .5em;
 
-    #publish-button {
-        padding: .38rem;
+    .publish-button {
+        padding: .5rem;
         height: 100%;
         font-size: 1.1rem;
         border: 0.15rem solid v.$border-color;

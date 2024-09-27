@@ -1,0 +1,158 @@
+@use "../../../../util/variables" as v;
+
+.exercise-item {
+    border-radius: .5em;
+    margin: 1em;
+    padding: .25em;
+    width: 20vw;
+    height: 20vh;
+    position: relative;
+    background-color: v.$secondary-background-color;
+    border-left: 2em solid v.$secondary-background-color;
+    box-shadow: 0.325em 0.325em 1em v.$border-color;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h1 {
+        margin: 0;
+        font-size: 2.7em;
+    }
+
+    .exercise-count {
+        font-size: 1.1em;
+    }
+
+    .weight-info {
+        margin-top: .25em;
+        font-size: 1.5em;
+
+        .small-text {
+            font-size: .8em;
+        }
+    }
+
+    .checkbox-container {
+        /* 
+           used the wonderful tutorail
+           https://moderncss.dev/pure-css-custom-checkbox-style/ 
+        */
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: .25em;
+
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+
+            font: inherit;
+            color: currentColor;
+            width: 1.6em;
+            height: 1.6em;
+            border: 0.15em solid v.$border-color;
+            border-radius: 50%;
+
+            display: grid;
+            place-content: center;
+
+            &::before {
+                content: "";
+                width: 0.8em;
+                height: 0.8em;
+                transform: scale(0);
+                transition: 120ms transform ease-in-out;
+                box-shadow: inset 1em 1em var(--form-control-color);
+                background-color: CanvasText;
+                transform-origin: bottom left;
+                clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+            }
+
+            &:checked {
+                background-color: v.$primary-blue;
+                border-color: v.$primary-blue;
+
+                &::before {
+                    transform: scale(1);
+                    background-color: v.$secondary-background-color;
+                }
+            }
+        }
+    }
+
+    &.checked {
+        border-color: v.$primary-blue;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .exercise-item {
+        width: 25vw;
+        height: 12vh;
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .exercise-item {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .exercise-item {
+        width: 40vw;
+        height: 12vh;
+
+        .checkbox-container input[type="checkbox"] {
+            width: 2.5em;
+            height: 2.5em;
+
+            &::before {
+                width: 1.25em;
+                height: 1.25em;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .exercise-item {
+        width: 90vw;
+        height: 10vh;
+        font-size: 1.6em;
+
+        .tags p {
+            margin-top: .5em;
+            font-size: 1.5em;
+        }
+
+        .cnt-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: .5em;
+            gap: 2em;
+
+            .weight-info,
+            .exercise-count {
+                font-size: 1.5em;
+            }
+
+            .weight-info {
+                margin-top: 0;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .exercise-item {
+        height: 12vh;
+    }
+}

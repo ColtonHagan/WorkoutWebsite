@@ -2,7 +2,17 @@ import { Outlet, useLocation, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useRefreshToken from "../../hooks/useRefreshToken";
 import useAuth from "../../hooks/useAuth";
+import Loading from "../Loading";
+import './index.scss';
 
+/**
+ * AuthHandler component that manages authentication state.
+ *
+ * This component verifies the user's authentication status 
+ * and redirects to the login page if the user is not authenticated.
+ *
+ * @returns {JSX.Element} Outlet / Loading component
+ */
 const AuthHandler = () => {
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
@@ -16,9 +26,9 @@ const AuthHandler = () => {
             try {
                 await refresh();
             } catch (err) {
-                console.error(err);
+                console.error("Error getting refresh token", err);
             } finally {
-                if (isMounted) setIsLoading(false);
+                isMounted && setIsLoading(false);
             }
         };
 
@@ -28,7 +38,7 @@ const AuthHandler = () => {
     }, []);
 
     if (isLoading) {
-        return <p>Loading...</p>; // Replace with a spinner or any loading component
+        return <div className="loading"><Loading/></div>
     }
 
     return (

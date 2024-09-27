@@ -3,6 +3,14 @@ import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
 
+/**
+ * Custom hook to handle Axios private requests with authorization.
+ * 
+ * This hook manages Axios interceptors to attach the authorization token
+ * to requests and refresh the token when a 403 error is encountered.
+ *
+ * @returns {Object} The configured Axios instance for private requests.
+ */
 const useAxiosPrivate = () => {
     const refresh = useRefreshToken();
     const { auth } = useAuth();
@@ -31,6 +39,7 @@ const useAxiosPrivate = () => {
             }
         );
 
+        // Cleanup function to remove interceptors
         return () => {
             axiosPrivate.interceptors.request.eject(requestIntercept);
             axiosPrivate.interceptors.response.eject(responseIntercept);
