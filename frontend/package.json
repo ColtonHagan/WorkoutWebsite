@@ -2,7 +2,7 @@
   "name": "bytebrawn",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://your-username.github.io/your-repo-name",
+  "homepage": "https://coltonhagan.github.io/WorkoutWebsite",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
@@ -36,7 +36,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build --force",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
