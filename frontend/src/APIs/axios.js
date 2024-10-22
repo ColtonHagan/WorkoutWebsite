@@ -33,8 +33,7 @@ const axiosPrivate = axios.create({
  * Throws an error if the API key is missing, ensuring secure configuration.
  */
 const axiosExerciseDB = (() => {
-    const exerciseApiKey = process.env.REACT_APP_EXERCISE_API_KEY;
-    if (!exerciseApiKey) {
+    if (!process.env.REACT_APP_EXERCISE_API_KEY) {
         console.error('Missing Exercise API key! Please check your .env file.');
     }
 
@@ -42,7 +41,7 @@ const axiosExerciseDB = (() => {
         baseURL: BASE_EXERCISE_URL,
         headers: {
             'x-rapidapi-host': 'exercisedb.p.rapidapi.com',
-            'x-rapidapi-key': exerciseApiKey,
+            'x-rapidapi-key': process.env.REACT_APP_EXERCISE_API_KEY,
         },
     });
 })();
@@ -54,15 +53,14 @@ const axiosExerciseDB = (() => {
  * Throws an error if the API key is missing, ensuring secure configuration.
  */
 const axiosOpenAI = (() => {
-    const openAiApiKey = process.env.REACT_APP_CHATGPT_API_KEY;
-    if (!openAiApiKey) {
+    if (!process.env.REACT_APP_CHATGPT_API_KEY) {
         console.error('Missing OpenAI API key! Please check your .env file.');
     }
 
     return axios.create({
         baseURL: BASE_OPENAI_URL,
         headers: {
-            Authorization: `Bearer ${openAiApiKey}`,
+            Authorization: `Bearer ${process.env.REACT_APP_CHATGPT_API_KEY}`,
             'Content-Type': 'application/json',
         },
     });
