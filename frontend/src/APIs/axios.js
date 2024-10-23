@@ -53,10 +53,6 @@ const axiosExerciseDB = (() => {
  * Throws an error if the API key is missing, ensuring secure configuration.
  */
 const axiosOpenAI = (() => {
-    if (!process.env.REACT_APP_CHATGPT_API_KEY) {
-        console.error('Missing OpenAI API key! Please check your .env file.');
-    }
-
     return axios.create({
         baseURL: BASE_OPENAI_URL,
         headers: {
