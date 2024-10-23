@@ -9,9 +9,11 @@ const logger = require('./config/logger');
 const requestLogger = require('./middleware/loggerMiddleware');
 
 const userRoutes = require("./api/users/userRoutes");
+const keysRoutes = require("./api/apiKeys/apiKeysRoutes");
 const workoutRoutes = require('./api/workouts/workoutRoutes');
 const workoutPlanRoutes = require('./api/workoutPlans/workoutPlanRoutes');
 const publicPlansRoutes = require('./api/publicWorkoutPlans/publicPlanRoutes');
+
 
 const app = express();
 
@@ -23,6 +25,7 @@ app.use(requestLogger);
 
 // Public routes
 app.use('/api/users', userRoutes);
+app.use('/api/keys', keysRoutes);
 
 // Authenticated routes - protected by token validation middleware
 app.use(tokenValidation);
