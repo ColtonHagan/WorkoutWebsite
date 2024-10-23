@@ -1,5 +1,6 @@
 import { axiosOpenAI } from '../APIs/axios';
 import { handleRequest } from './util/handleRequest';
+import useAxiosOpenAI from '../hooks/useAxiosOpenAi';
 
 const MODEL = 'gpt-3.5-turbo';
 const ROLE = 'user';
@@ -9,6 +10,8 @@ const MAX_TOKENS = 10;
  * Service to interact with the ChatGPT API.
  */
 const useChatGPTService = () => {
+    const axiosOpenAI = useAxiosOpenAI();
+    
     /**
      * Retrieves a nickname based on the exercise name by querying the ChatGPT model.
      *

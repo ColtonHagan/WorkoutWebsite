@@ -1,0 +1,19 @@
+.test-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80vh;
+    gap: 50px;
+
+    font-size: 40px;
+
+    .key {
+        display: block;
+        font-size: 15px;
+        width: 50vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

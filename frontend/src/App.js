@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.scss';
 
+import TempTesting from './TempTesting'; //temp for testing obvously
+
 import Home from './views/Home';
 import Exercise from './views/Exercise';
 import Public from './views/PublicPlans';
