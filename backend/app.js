@@ -14,7 +14,6 @@ const workoutRoutes = require('./api/workouts/workoutRoutes');
 const workoutPlanRoutes = require('./api/workoutPlans/workoutPlanRoutes');
 const publicPlansRoutes = require('./api/publicWorkoutPlans/publicPlanRoutes');
 
-
 const app = express();
 
 // Middleware
@@ -37,7 +36,7 @@ app.use('/api/publicPlans', publicPlansRoutes);
 app.use(errorHandler);
 
 // Start server and listen on specified port
-const PORT = process.env.APP_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
 });
