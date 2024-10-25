@@ -25,7 +25,7 @@ app.use(requestLogger);
 
 // Public routes
 app.use('/api/users', userRoutes);
-app.use('/api/keys', keysRoutes);
+app.use('/api/keys', keysRoutes); //temp console.log tmp this should be moved into authenticated routes
 
 // Authenticated routes - protected by token validation middleware
 app.use(tokenValidation);
