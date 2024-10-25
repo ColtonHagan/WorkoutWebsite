@@ -4,7 +4,7 @@
   "description": "Workout Website Backend",
   "main": "app.js",
   "scripts": {
-    "start": "node backend/app.js"
+    "start": "node app.js"
   },
   "author": "ColtonHagan",
   "license": "ISC",
