@@ -1,11 +1,12 @@
-import { axiosExerciseDB } from '../APIs/axios';
 import { handleRequest } from './util/handleRequest';
+import useAxiosExercise from '../hooks/useAxiosExercise';
 
 /**
  * Service to interact with the external exercise API.
  */
 const useExternalExercisesServices = () => {
     const endpointUrl = '/exercises';
+    const axiosExerciseDB = useAxiosExercise();
 
     /**
      * Fetch exercises with pagination.

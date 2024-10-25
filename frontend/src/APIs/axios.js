@@ -37,7 +37,6 @@ const axiosExerciseDB = (() => {
         baseURL: BASE_EXERCISE_URL,
         headers: {
             'x-rapidapi-host': 'exercisedb.p.rapidapi.com',
-            'x-rapidapi-key': process.env.REACT_APP_EXERCISE_API_KEY,
         },
     });
 })();

@@ -1,4 +1,3 @@
-import { axiosOpenAI } from '../APIs/axios';
 import { handleRequest } from './util/handleRequest';
 import useAxiosOpenAI from '../hooks/useAxiosOpenAi';
 
