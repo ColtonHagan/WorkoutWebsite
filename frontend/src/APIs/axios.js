@@ -4,7 +4,7 @@ import axios from 'axios';
  * Centralized axios instance configuration for different API services.
  * It handles requests to the workout API, external exercise API, and OpenAI API.
  */
-const BASE_WORKOUT_URL = 'http://localhost:5000/api/';
+const BASE_WORKOUT_URL = 'https://bytebrawn-f10e2791a888.herokuapp.com/api/';
 const BASE_EXERCISE_URL = 'https://exercisedb.p.rapidapi.com';
 const BASE_OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
 
@@ -29,10 +29,6 @@ const axiosPrivate = axios.create({
  * Create an axios instance to interact with the external exercise database API.
  */
 const axiosExerciseDB = (() => {
-    if (!process.env.REACT_APP_EXERCISE_API_KEY) {
-        console.error('Missing Exercise API key! Please check your .env file.');
-    }
-
     return axios.create({
         baseURL: BASE_EXERCISE_URL,
         headers: {

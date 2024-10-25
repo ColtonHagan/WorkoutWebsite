@@ -25,7 +25,7 @@ const PublicPlans = () => {
 
     useEffect(() => {
         fetchPlans();
-    });
+    }, []);
 
     const publishPlan = async (plan) => {
         try {
