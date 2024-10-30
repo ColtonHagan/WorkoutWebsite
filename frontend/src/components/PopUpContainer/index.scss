@@ -87,6 +87,12 @@
     }
 }
 
+@media screen and (max-width: 1024px) and (orientation: landscape) and (max-height: 550px) {
+    .medium-pop-up {
+        min-height: 88vh;
+    }
+}
+
 @media screen and (max-width: 900px) {
     .small-pop-up {
         width: 50vw;

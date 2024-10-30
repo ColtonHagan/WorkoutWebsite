@@ -8,7 +8,7 @@ import PopUpContainer from "../PopUpContainer";
 import useWorkoutPlanService from "../../services/useWorkoutPlanServices";
 import useWorkoutService from "../../services/useWorkoutService";
 import useWorkouts from "../../hooks/useWorkouts";
-import ErrorPage from "../../views/ErrorPage";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import "./index.scss";
 
 /**
@@ -24,6 +24,7 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
     const { setWorkouts } = useWorkouts();
     const { fetchWorkouts } = useWorkoutService();
     const { deletePlan, editPlan } = useWorkoutPlanService();
+    const [ currentPlan, setCurrentPlan] = useLocalStorage('selectedPlan', selectedValue);
 
     // Format options for the select component
     const formattedOptions = workoutPlans?.map((plan) => ({
@@ -33,7 +34,8 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
 
     useEffect(() => {
         if (workoutPlans.length > 0 && selectedValue < 0) {
-            handleChange(formattedOptions[0]);
+            if(currentPlan) handleChange({value: currentPlan});
+            else handleChange(formattedOptions[0]);
         }
     }, [formattedOptions, workoutPlans, selectedValue]);
 
@@ -52,6 +54,7 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
             }
         };
         await fetchWorkoutData(workoutPlans[0].id);
+        setCurrentPlan(selectedOption.value);
         onSelect(selectedOption.value);
     };
 
@@ -70,7 +73,7 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
             const deletedId = result.id;
             setWorkoutPlans(prevPlans => prevPlans.filter(plan => plan.id !== deletedId));
             const firstValidOption = formattedOptions?.find(option => option.value !== deletedId);
-            firstValidOption && onSelect(firstValidOption.value);
+            firstValidOption && handleChange(firstValidOption.value);
         } catch (err) {
             console.error("Error deleting plan:", err);
         }

@@ -41,9 +41,10 @@ const SearchBar = ({ placeholder = 'Search...', onSearch }) => {
   );
 }
 
+// Prop Types validation
 SearchBar.propTypes = {
   placeholder: PropTypes.string,
-  onSearch: PropTypes.func.isRequired, // Ensures onSearch is a function
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default SearchBar

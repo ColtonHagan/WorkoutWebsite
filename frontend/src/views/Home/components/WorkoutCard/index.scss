@@ -97,6 +97,12 @@
     }
 }
 
+@media screen and (max-width: 1024px) and (orientation: landscape) and (max-height: 550px) {
+    .exercise-item {
+        height: 20vh;
+    }
+}
+
 @media screen and (max-width: 900px) {
     .exercise-item {
         font-size: 1.5em;

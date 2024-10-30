@@ -12,6 +12,7 @@ import "./index.scss";
 const CustomSingleValue = (props) => {
     const handleEdit = (e) => {
         e.stopPropagation();
+        e.preventDefault();
         props.onEditClick && props.onEditClick(props.data.value);
     };
 
@@ -23,7 +24,7 @@ const CustomSingleValue = (props) => {
                 ) : (
                     <span>Create a workout plan...</span>
                 )}
-                {props.formattedOptions.length > 0 && <FontAwesomeIcon icon={faPenToSquare} onMouseDown={handleEdit} id="editButton" aria-label="Edit workout plan"/>}
+                {props.formattedOptions.length > 0 && <FontAwesomeIcon icon={faPenToSquare} onMouseDown={handleEdit} onTouchStart={handleEdit} id="editButton" aria-label="Edit workout plan"/>}
             </div>
         </components.SingleValue>
     );

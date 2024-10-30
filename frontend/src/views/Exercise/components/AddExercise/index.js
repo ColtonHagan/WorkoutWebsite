@@ -25,8 +25,8 @@ const AddExercise = ({ addExercise }) => {
 
     /**
      * Since dataset is large and static I am fetching everything and then filtering
-     * rather then using the built in pagination. This also limits the api calls
-     * as I am using the free vesion with a limit.
+     * rather than using the built-in pagination. This also limits the API calls
+     * as I am using the free version with a limit.
      */
     useEffect(() => { 
         const limit = 1600; // needs 1600+ to overwrite base limit 10
@@ -105,6 +105,8 @@ const AddExercise = ({ addExercise }) => {
                     <ExerciseList
                         exercises={filteredExercises}
                         addExercise={addExercise}
+                        searchQuery={searchQuery}
+                        selectedBodyPart={selectedBodyPart}
                     />
                 </>
             )}

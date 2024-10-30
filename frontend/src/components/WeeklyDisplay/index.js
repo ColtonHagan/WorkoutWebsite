@@ -79,7 +79,7 @@ WeeklyDisplay.propTypes = {
     exercises: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
-            id: PropTypes.number.isRequired,
+            id: PropTypes.oneOfType([PropTypes.object, PropTypes.number]).isRequired,
             reps: PropTypes.number,
             sets: PropTypes.number,
             weight: PropTypes.number,

@@ -24,7 +24,7 @@ const Exercise = () => {
   const addExercise = async (exercise) => {
     try {
       const response = await addWorkout(exercise, selectedPlan);
-      exercise.id = response;
+      exercise.id = response.id;
       setWorkouts(prevWorkouts => [...prevWorkouts, exercise]);
     } catch (error) {
       console.error("Error sending data:", error);

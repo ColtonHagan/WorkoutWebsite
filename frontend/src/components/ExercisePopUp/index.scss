@@ -46,7 +46,7 @@
                 justify-content: center;
                 gap: 0.5rem;
                 width: 25vw;
-                
+
                 ul {
                     list-style-type: none;
                     padding: 0;
@@ -136,6 +136,28 @@
 
                 ul li {
                     font-size: 2em;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) and (max-height: 550px) {
+    .exercise-pop-up-container {
+        .pop-up-content {
+            .exercise-info {
+                .exercise-details {
+                    ul {
+                        li {
+                            label {
+                                font-size: 2.5em;
+                            }
+                            input,
+                            .react-multi-date-picker {
+                                height: 5vh;
+                            }
+                        }
+                    }
                 }
             }
         }

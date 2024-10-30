@@ -12,7 +12,7 @@ import "./index.scss";
  * @param {number} pageCount - The total number of pages (must be an integer).
  * @param {function} changePage - Callback function to handle page changes.
  */
-const CustomPaginate = ({ pageCount, changePage }) => {
+const CustomPaginate = ({ pageCount, changePage, currentPage }) => {
   const handlePageChange = (e) => {
     changePage(e);
     setTimeout(() => {
@@ -32,6 +32,7 @@ const CustomPaginate = ({ pageCount, changePage }) => {
       nextLabel={<FaChevronRight className="icon-custom" />}
       pageCount={pageCount}
       onPageChange={handlePageChange}
+      forcePage={currentPage}
       containerClassName="pagination"
       previousClassName="pagination__arrow"
       nextClassName="pagination__arrow"

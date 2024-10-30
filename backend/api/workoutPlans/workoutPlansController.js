@@ -25,7 +25,7 @@ const createWorkoutPlan = asyncHandler(async (req, res) => {
 
     const plan = { user_id, name, description };
     const result = await addWorkoutPlan(plan);
-    return res.status(201).json({ message: 'Workout plan created successfully', planId: result.insertId });
+    return res.status(201).json({ message: 'Workout plan created successfully', planId: Number(result.insertId) });
 });
 
 // Gets all workout plans

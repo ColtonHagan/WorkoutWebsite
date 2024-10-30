@@ -66,6 +66,7 @@ const Home = () => {
               ...workout,
               sets: exercise.sets,
               reps: exercise.reps,
+              weight: exercise.weight,
               days: exercise.days,
               date: exercise.date
             }

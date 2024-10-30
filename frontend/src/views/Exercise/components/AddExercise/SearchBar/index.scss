@@ -7,7 +7,7 @@
     background-color: v.$secondary-background-color;
     border-radius: .25em;
     padding: .325em;
-    width: 25vw;
+    width: 35vw;
     margin: 0;
 
     &:focus-within {
@@ -39,13 +39,12 @@
 
 @media screen and (max-width: 1200px) {
     .searchBar {
-        width: 35vw;
+        width: 50vw;
     }
 }
 
 @media screen and (max-width: 900px) {
     .searchBar {
-        width: 50vw;
         font-size: 1.4em;
     }
 }

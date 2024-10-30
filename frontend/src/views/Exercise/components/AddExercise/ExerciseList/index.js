@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import AddExerciseCard from './components/AddExerciseCard'
 import PopUpContainer from '../../../../../components/PopUpContainer';
@@ -14,10 +14,15 @@ import "./index.scss";
  * @param {Object} exercises - List of exercise objects.
  * @param {Function} addExercise - Callback function to add selected exercise.
  */
-const ExerciseList = ({ exercises, addExercise }) => {
+const ExerciseList = ({ exercises, addExercise, searchQuery, selectedBodyPart }) => {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
   const { width } = useWindowDimensions();
+
+  // Reset to first page when search or body part filter changes
+  useEffect(() => {
+    setPageNumber(0);
+  }, [searchQuery, selectedBodyPart]);
   
 
   // Calculate the number of exercises per page based on window width
@@ -42,7 +47,7 @@ const ExerciseList = ({ exercises, addExercise }) => {
           <AddExerciseCard key={exercise.id} exercise={exercise} onClick={() => setSelectedExercise(exercise)} />
         ))}
       </div>
-      {exercises.length > exercisesPerPage && <CustomPaginate pageCount={pageCount} changePage={changePage}/>}
+      {exercises.length > exercisesPerPage && <CustomPaginate pageCount={pageCount} changePage={changePage} currentPage={pageNumber}/>}
       <PopUpContainer display={selectedExercise}  onClose={() => setSelectedExercise(null)}>
         <ExercisePopUp exercise={selectedExercise} isEditing={false} onClose={() => setSelectedExercise(null)} onSubmit={addExercise} />
       </PopUpContainer>
@@ -58,6 +63,8 @@ ExerciseList.propTypes = {
     })
   ).isRequired,
   addExercise: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string.isRequired,
+  selectedBodyPart: PropTypes.string,
 };
 
 export default ExerciseList
