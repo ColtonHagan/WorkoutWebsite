@@ -34,7 +34,7 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
 
     useEffect(() => {
         if (workoutPlans.length > 0 && selectedValue < 0) {
-            if(currentPlan) handleChange({value: currentPlan});
+            if(currentPlan && currentPlan >= 0) handleChange({value: currentPlan});
             else handleChange(formattedOptions[0]);
         }
     }, [formattedOptions, workoutPlans, selectedValue]);
@@ -55,6 +55,7 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
         };
         await fetchWorkoutData(workoutPlans[0].id);
         setCurrentPlan(selectedOption.value);
+        console.log("setting current plan to", selectedOption.value);
         onSelect(selectedOption.value);
     };
 
