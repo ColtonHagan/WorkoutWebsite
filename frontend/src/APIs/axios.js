@@ -5,6 +5,7 @@ import axios from 'axios';
  * It handles requests to the workout API, external exercise API, and OpenAI API.
  */
 const BASE_WORKOUT_URL = 'https://bytebrawn-f10e2791a888.herokuapp.com/api/';
+//const BASE_WORKOUT_URL = 'http://localhost:5000/api/';
 const BASE_EXERCISE_URL = 'https://exercisedb.p.rapidapi.com';
 const BASE_OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
 
