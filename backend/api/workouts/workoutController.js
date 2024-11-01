@@ -23,7 +23,6 @@ const validate = require('../../middleware/validationMiddleware');
 const addWorkout = asyncHandler(async (req, res) => {
     const { name, nickname, reps, sets, dates, plan_id, weight, days, body_part, target, gif, instructions } = req.body;
     const user_id = req.user.userId;
-    console.log({user_id, name, nickname, reps, sets, dates, plan_id, weight, days, body_part, target, gif, instructions});
 
     const workout = {
         user_id,
@@ -95,7 +94,6 @@ const updateWorkout = asyncHandler(async (req, res) => {
         await deleteWorkoutDatesByWorkoutId(workoutId);
         await addWorkoutDates(workoutId, dates);
     }
-    console.log(typeof(workoutId));
     res.status(200).json({ message: 'Workout updated successfully', id: Number(workoutId) });
 });
 

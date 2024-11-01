@@ -55,7 +55,6 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
         };
         await fetchWorkoutData(workoutPlans[0].id);
         setCurrentPlan(selectedOption.value);
-        console.log("setting current plan to", selectedOption.value);
         onSelect(selectedOption.value);
     };
 
@@ -111,7 +110,7 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
                 }}
                 onChange={handleChange}
             />
-            <PopUpContainer display={selectedPlan} onClose={() => setSelectedPlan(null)}>
+            <PopUpContainer display={selectedPlan} onClose={() => setSelectedPlan(null)} size = "small">
                 <DropDownPopUp
                     plan={selectedPlan}
                     onClose={() => setSelectedPlan(null)}

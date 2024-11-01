@@ -41,38 +41,38 @@
 }
 
 // Pop-up size variations
-.big-pop-up {
+.large {
     height: 80vh;
     width: 50vw;
 }
 
-.small-pop-up {
+.small {
     width: 30vw;
     height: auto;
 }
 
-.medium-pop-up {
+.medium {
     width: 50vw;
     min-height: 25vh;
     max-height: 50vh;
 }
 
 @media screen and (max-width: 1400px) {
-    .big-pop-up {
+    .large {
         width: 60vw;
     }
 
-    .small-pop-up {
+    .small {
         width: 40vw;
     }
 
-    .medium-pop-up {
+    .medium {
         width: 65vw;
     }
 }
 
 @media screen and (max-width: 1024px) {
-    .big-pop-up {
+    .large {
         width: 80vw;
     }
 
@@ -81,25 +81,25 @@
         font-size: 1.5em;
     }
 
-    .medium-pop-up {
+    .medium {
         width: 70vw;
         font-size: 1.4em;
     }
 }
 
 @media screen and (max-width: 1024px) and (orientation: landscape) and (max-height: 550px) {
-    .medium-pop-up {
-        min-height: 88vh;
+    .medium {
+        min-height: 90vh;
     }
 }
 
 @media screen and (max-width: 900px) {
-    .small-pop-up {
+    .small {
         width: 50vw;
         font-size: 1.8em;
     }
 
-    .medium-pop-up {
+    .medium {
         width: 80vw;
         h1 {
             font-size: 3em;
@@ -118,14 +118,14 @@
         margin-left: 5em;
     }
 
-    .big-pop-up {
-        width: 88vw;
-        height: 97vh;
+    .large {
+        width: 100vw;
+        height: 100vh;
         border-radius: 0%;
     }
 
-    .medium-pop-up {
-        width: 90vw;
+    .medium {
+        width: 100vw;
 
         .weekly-display table th {
             font-size: 1.5em;
@@ -140,37 +140,13 @@
 }
 
 @media screen and (max-width: 545px) {
-
-    .big-pop-up {
-        width: 85vw;
-        height: 98vh;
-        border-radius: 0%;
-    }
-
     .pop-up .pop-up-plan-container .pop-up-header {
         padding-top: 6em;
         margin-right: 0;
         padding-right: 0;
     }
 
-    .medium-pop-up .weekly-display table td {
+    .medium .weekly-display table td {
         font-size: 0.8em;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .big-pop-up {
-        width: 82vw;
-        height: 98vh;
-    }
-    .medium-pop-up {
-        width: 85vw;
-    }
-}
-
-@media screen and (max-width: 380px) {
-    .big-pop-up {
-        width: 80vw;
-        height: 98vh;
     }
 }

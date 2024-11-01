@@ -41,7 +41,7 @@ const WorkoutPlans = ({ setSelectedPlan, selectedPlan }) => {
       <button id="add-plan-button" onClick={() => setIsPopUpVisible(true)}>
         <FontAwesomeIcon icon={faCirclePlus} />
       </button>
-      <PopUpContainer display={isPopUpVisible} onClose={() => setIsPopUpVisible(false)}>
+      <PopUpContainer display={isPopUpVisible} onClose={() => setIsPopUpVisible(false)} size = "small">
         <DropDownPopUp
           onClose={() => setIsPopUpVisible(false)}
           handleSave={handleSave}

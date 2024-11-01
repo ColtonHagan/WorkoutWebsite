@@ -50,7 +50,7 @@ const AuthForm = ({ isLoginMode = true }) => {
     }
 
     const handleError = (err) => {
-        console.log(err);
+        console.error(err);
         if (!err?.status) {
             setErrMsg("Server is offline");
         } else if (err.status === 400) {

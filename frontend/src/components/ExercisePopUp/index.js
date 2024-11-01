@@ -117,7 +117,7 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
     };
 
     return (
-        <div className="exercise-pop-up-container big-pop-up">
+        <div className="exercise-pop-up-container">
             <div className='pop-up-header'>
                 <h1 className='ellipsis'>{CapitalizeWords(exercise.name)}</h1>
             </div>

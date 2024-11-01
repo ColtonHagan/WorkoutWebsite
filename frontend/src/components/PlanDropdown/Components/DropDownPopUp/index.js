@@ -51,7 +51,7 @@ const DropDownPopUp = ({ onClose, plan, handleSave, deletePlan, isEditing = fals
     };
 
     return (
-        <div className="edit-plan-container small-pop-up">
+        <div className="edit-plan-container">
             <h1>{isEditing ? 'Edit Workout Plan' : 'Add Workout Plan'}</h1>
             <ul>
                 <li>

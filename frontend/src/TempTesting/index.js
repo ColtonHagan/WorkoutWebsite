@@ -11,7 +11,6 @@ const TempTesting = () => {
             const response = await getNickname('Explosive Plyometric Box Jumps with Weighted Resistance for Power Development');
             const nickname = response.choices[0].message.content;
             setText(nickname);
-            console.log(nickname);
         } catch (error) {
             console.error("Error fetching nickname from ChatGPT:", error);
             return null;

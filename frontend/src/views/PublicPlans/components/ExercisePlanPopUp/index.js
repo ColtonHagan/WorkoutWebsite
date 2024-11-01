@@ -41,16 +41,16 @@ const ExercisePlanPopUp = ({ plan, exercises, onClose, downloadPlan }) => {
     }
 
     return (
-        <PopUpContainer display={exercises} onClose={handleCloseClick}>
+        <PopUpContainer display={exercises} onClose={handleCloseClick} size={currentView === 'plan' ? "medium" : "large"}>
             {currentView === 'plan' ? (
-                <div className="weekly-display-container medium-pop-up">
+                <div className="weekly-display-container">
                     <h1>{plan?.name}</h1>
                     <WeeklyDisplay
                         exercises={exercises}
                         onExerciseClick={handleExerciseClick}
                         onDelete={null}
                     />
-                    {exercises?.length > 0 && <button className="button" onClick={onAdd}> Download Plan </button>}
+                    {exercises?.length > 0 && <button className="button download" onClick={onAdd}> Download Plan </button>}
                 </div>
             ) : (
                 <div className="pop-up-plan-container">

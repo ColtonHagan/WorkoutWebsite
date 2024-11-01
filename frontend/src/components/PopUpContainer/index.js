@@ -12,7 +12,7 @@ import "./index.scss";
  * @param {function} onClose - Callback to close the popup.
  * @param {node} children - Elements or components to display inside the popup.
  */
-const PopUpContainer = ({ display = false, onClose, children }) => {
+const PopUpContainer = ({ display = false, onClose, children, size = "large" }) => {
     // Hides scroll wheel of "background" when pop-up is mounted
     useEffect(() => {
         if (display) {
@@ -29,7 +29,7 @@ const PopUpContainer = ({ display = false, onClose, children }) => {
     return ReactDOM.createPortal(
         <div>
             <div className="popup-overlay" />
-            <div className="pop-up">
+            <div className={`pop-up ${size ? ` ${size}` : ''}`}>
                 <CloseButton onClick={onClose} />
                 {children}
             </div>
@@ -47,6 +47,7 @@ PopUpContainer.propTypes = {
     ]),
     onClose: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
+    size: PropTypes.string
 };
 
 export default PopUpContainer;

@@ -102,7 +102,7 @@ const Home = () => {
               <p>Resting</p>
             </div>
           )}
-          <PopUpContainer display={selectedExercise} onClose={() => setSelectedExercise(null)}>
+          <PopUpContainer display={selectedExercise} onClose={() => setSelectedExercise(null)} size = "large">
             <ExercisePopUp
               exercise={selectedExercise}
               onClose={() => setSelectedExercise(null)}

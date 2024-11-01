@@ -48,7 +48,7 @@ const ExerciseList = ({ exercises, addExercise, searchQuery, selectedBodyPart })
         ))}
       </div>
       {exercises.length > exercisesPerPage && <CustomPaginate pageCount={pageCount} changePage={changePage} currentPage={pageNumber}/>}
-      <PopUpContainer display={selectedExercise}  onClose={() => setSelectedExercise(null)}>
+      <PopUpContainer display={selectedExercise}  onClose={() => setSelectedExercise(null)} size="large">
         <ExercisePopUp exercise={selectedExercise} isEditing={false} onClose={() => setSelectedExercise(null)} onSubmit={addExercise} />
       </PopUpContainer>
     </div>

@@ -50,7 +50,7 @@ const Exercise = () => {
       <WorkoutPlans setSelectedPlan={(plan) => setSelectedPlan(plan)} selectedPlan={selectedPlan} />
       <WeeklyDisplay exercises={workouts} deleteWorkout={(id) => deleteExercise(id)} onExerciseClick={(exercise) => setSelectedExercise(exercise)}/>
       <AddExercise addExercise={(exercise) => addExercise(exercise)}  />
-      <PopUpContainer display={selectedExercise}  onClose={() => setSelectedExercise(null)}>
+      <PopUpContainer display={selectedExercise}  onClose={() => setSelectedExercise(null)} size="large">
         <ExercisePopUp exercise={selectedExercise}/>
       </PopUpContainer>
     </div>
