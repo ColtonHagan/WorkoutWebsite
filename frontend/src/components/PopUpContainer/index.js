@@ -11,6 +11,7 @@ import "./index.scss";
  * @param {boolean} display - Controls whether the popup is visible or not.
  * @param {function} onClose - Callback to close the popup.
  * @param {node} children - Elements or components to display inside the popup.
+ * @param {string} size - The size of the popup; can be 'small', 'medium', or 'large'.
  */
 const PopUpContainer = ({ display = false, onClose, children, size = "large" }) => {
     // Hides scroll wheel of "background" when pop-up is mounted
@@ -29,7 +30,7 @@ const PopUpContainer = ({ display = false, onClose, children, size = "large" }) 
     return ReactDOM.createPortal(
         <div>
             <div className="popup-overlay" />
-            <div className={`pop-up ${size ? ` ${size}` : ''}`}>
+            <div className={`pop-up ${size}`}>
                 <CloseButton onClick={onClose} />
                 {children}
             </div>
@@ -47,7 +48,7 @@ PopUpContainer.propTypes = {
     ]),
     onClose: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
-    size: PropTypes.string
+    size: PropTypes.oneOf(['small', 'medium', 'large']) 
 };
 
 export default PopUpContainer;
