@@ -76,7 +76,7 @@
         width: 80vw;
     }
 
-    .small-pop-up {
+    .small {
         width: 45vw;
         font-size: 1.5em;
     }
@@ -133,17 +133,21 @@
         }
     }
 
-    .small-pop-up {
+    .small {
         width: 80vw;
         font-size: 1.8em;
     }
 }
 
-@media screen and (max-width: 545px) {
+@media screen and (max-width: 550px) {
     .pop-up .pop-up-plan-container .pop-up-header {
         padding-top: 6em;
         margin-right: 0;
         padding-right: 0;
+    }
+
+    .large {
+        margin-top: 2rem;
     }
 
     .medium .weekly-display table td {
