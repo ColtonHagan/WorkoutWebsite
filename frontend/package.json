@@ -2,7 +2,7 @@
   "name": "bytebrawn",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://coltonhagan.github.io/WorkoutWebsite/",
+  "homepage": "https://coltonhagan.github.io/ByteBrawn/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
