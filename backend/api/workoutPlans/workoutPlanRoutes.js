@@ -9,18 +9,18 @@ const {
 const router = express.Router();
 
 // Route to create a new workout plan
-router.post('/workoutPlans', createWorkoutPlan);
+router.post('/', createWorkoutPlan);
 
 // Route to get all workout plans for the authenticated user
-router.get('/workoutPlans', getWorkoutPlans);
+router.get('/', getWorkoutPlans);
 
 // Route to get all workouts associated with a specific workout plan
-router.get('/workoutPlans/:planId/workout', getWorkoutsByPlan);
+router.get('/:planId/workout', getWorkoutsByPlan);
 
 // Route to update an existing workout plan
-router.put('/workoutPlans/:planId', editWorkoutPlan);
+router.put('/:planId', editWorkoutPlan);
 
 // Route to delete a workout plan
-router.delete('/workoutPlans/:planId', deleteWorkoutPlan);
+router.delete('/:planId', deleteWorkoutPlan);
 
 module.exports = router;

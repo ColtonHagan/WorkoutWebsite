@@ -23,14 +23,14 @@ app.use(express.json());
 app.use(requestLogger);
 
 // Public routes
-app.use('/api/keys', keysRoutes);
-app.use('/api/users', userRoutes);
+app.use('/users', userRoutes);
+app.use('/keys', keysRoutes);
 
 // Authenticated routes - protected by token validation middleware
 app.use(tokenValidation);
-app.use('/api/workouts', workoutRoutes);
-app.use('/api/workouts', workoutPlanRoutes); //temp console.log tmp this should be renamed plans and reworked
-app.use('/api/publicPlans', publicPlansRoutes);
+app.use('/workouts', workoutRoutes);
+app.use('/plans', workoutPlanRoutes);
+app.use('/public', publicPlansRoutes);
 
 // Global error handling middleware
 app.use(errorHandler);

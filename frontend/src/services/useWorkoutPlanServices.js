@@ -6,7 +6,7 @@ import { handleRequest } from './util/handleRequest';
  */
 const useWorkoutPlanService = () => {
     const axiosPrivate = useAxiosPrivate();
-    const endpointUrl = 'workouts/workoutPlans/';
+    const endpointUrl = 'plans/';
 
     /**
      * Fetch all workout plans.

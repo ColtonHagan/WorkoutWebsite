@@ -6,7 +6,7 @@ import { handleRequest } from './util/handleRequest';
  */
 const usePublicPlanServices = () => {
     const axiosPrivate = useAxiosPrivate();
-    const endpointUrl = 'publicPlans/';
+    const endpointUrl = 'public/';
 
     /**
      * Fetch public plans.
