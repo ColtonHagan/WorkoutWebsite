@@ -24,10 +24,10 @@ app.use(requestLogger);
 
 // Public routes
 app.use('/api/users', userRoutes);
-app.use('/api/keys', keysRoutes); //temp console.log tmp this should be moved into authenticated routes
 
 // Authenticated routes - protected by token validation middleware
 app.use(tokenValidation);
+app.use('/api/keys', keysRoutes);
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/workouts', workoutPlanRoutes); //temp console.log tmp this should be renamed plans and reworked
 app.use('/api/publicPlans', publicPlansRoutes);

@@ -10,12 +10,12 @@ import { CapitalizeWords } from '../../../../../../../util/CapitalizeWords';
  * and provides an action to add it.
  *
  * @param {Object} exercise - The exercise object containing details.
- * @param {Function} onClick - Callback function to handle click events.
+ * @param {Function} onClick - Function to handle on click events.
  */
 const AddExerciseCard = ({ exercise, onClick }) => {
   return (
     <div className='exercise' onClick={onClick}>
-      <img src={exercise.gifUrl} alt={exercise.name} loading='lazy' onError={(e) => e.target.src = Logo}/>
+      <img src={`https://exercise-gif-api-989b2a8bed95.herokuapp.com/exercises/gif/${exercise.id}`} alt={exercise.name} loading='lazy' onError={(e) => e.target.src = Logo}/>
       <Tags bodyPart={exercise.bodyPart} target={exercise.target}/>
       <h1 className='ellipsis'>{CapitalizeWords(exercise.name)}</h1> 
       <button className='add-exercise-button' aria-label={`Add ${exercise.name}`}>
