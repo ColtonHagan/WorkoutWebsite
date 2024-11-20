@@ -1,7 +1,5 @@
 # ByteBrawn Project
 
-Welcome to the **ByteBrawn** project! Below you'll find links to the relevant resources for both the front-end website and the back-end documentation, as well as my personal portfolio.
-
 ## Website
 
 Explore the **ByteBrawn** website by clicking the link below:
