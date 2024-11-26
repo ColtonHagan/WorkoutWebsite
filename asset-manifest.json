@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/ByteBrawn/static/css/main.be061c04.css",
+    "main.js": "/ByteBrawn/static/js/main.aa06f9f0.js",
+    "static/media/Logo.png": "/ByteBrawn/static/media/Logo.78a4e13a6f889a5bc259.png",
+    "static/media/LogoUnderline.png": "/ByteBrawn/static/media/LogoUnderline.dbfd824cb7b114ca4371.png",
+    "static/media/helvetica-neu.ttf": "/ByteBrawn/static/media/helvetica-neu.8a19678078a6b21c8057.ttf",
+    "static/media/EmptyProfile.png": "/ByteBrawn/static/media/EmptyProfile.670e139043815fca9e91.png",
+    "static/media/slick.svg": "/ByteBrawn/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/ByteBrawn/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/ByteBrawn/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/ByteBrawn/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/ByteBrawn/index.html",
+    "main.be061c04.css.map": "/ByteBrawn/static/css/main.be061c04.css.map",
+    "main.aa06f9f0.js.map": "/ByteBrawn/static/js/main.aa06f9f0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.be061c04.css",
+    "static/js/main.aa06f9f0.js"
+  ]
+}
