@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import useWorkoutPlanService from '../services/useWorkoutPlanServices';
 
 /**
- * Custom hook to fetch workout plans from the workout plan service.
+ * Custom hook to fetch workout plans and create useState for them.
  *
- * @returns {UseState} An object containing the workout plans and a function to update them.
+ * @returns {UseState} An useState workout plans.
  */
 const useFetchWorkoutPlans = () => {
     const [workoutPlans, setWorkoutPlans] = useState([]);

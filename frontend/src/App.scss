@@ -32,6 +32,7 @@ main {
     flex: 1;
 }
 
+// Adds ellipsis when overflow is occuring
 .ellipsis {
     white-space: nowrap;
     overflow: hidden;
@@ -68,21 +69,21 @@ main {
     }
 }
 
-//Small laptops/giant tablets
+// Small laptops/giant tablets
 @media screen and (max-width: 1024px) {
     body {
         font-size: 10px;
     }
 }
 
-//tablets
+// Tablets
 @media screen and (max-width: 900px) {
     body {
         font-size: 8px;
     }
 }
 
-//phones
+// Phones
 @media screen and (max-width: 500px) {
     body {
         font-size: 6px;

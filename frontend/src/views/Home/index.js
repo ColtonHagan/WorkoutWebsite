@@ -36,7 +36,7 @@ const Home = () => {
     * 
     * @param {Date} date - The date of the calendar tile.
     * @param {string} view - The current view of the calendar ('month', etc.).
-    * @returns {string|null} Returns 'highlighted-date' if the date has workouts, otherwise null.
+    * @returns {string | null} Returns 'highlighted-date' if the date has workouts, otherwise null.
     */
   const tileClassName = ({ date, view }) => {
     if (view === 'month') {

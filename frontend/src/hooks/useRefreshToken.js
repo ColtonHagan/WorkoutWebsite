@@ -10,9 +10,7 @@ const useRefreshToken = () => {
     const { setAuth } = useAuth();
     const { fetchRefreshToken } = useUserService();
 
-    /**
-     * Refreshes the user's access token.
-     */
+    // Refreshes the user's access token.
     const refresh = async () => {
         const response = await fetchRefreshToken();
         setAuth(prev => {

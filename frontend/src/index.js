@@ -8,7 +8,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <HashRouter>
+    <HashRouter> {/* Uses hash router to optmize the github pages hosting experience*/}
       <AuthProvider>
         <App />
       </AuthProvider>

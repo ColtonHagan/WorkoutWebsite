@@ -2,7 +2,7 @@
  * Handles API errors by categorizing them based on their response status.
  *
  * @param {Object} error - The error object thrown during the API request.
- * @returns {Object} An object containing an error message to be displayed.
+ * @returns {Object} An object containing an error message.
  */
 const handleApiError = (error) => {
     // Network error (no response from server)

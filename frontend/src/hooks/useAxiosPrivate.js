@@ -9,7 +9,7 @@ import useAuth from "./useAuth";
  * This hook manages Axios interceptors to attach the authorization token
  * to requests and refresh the token when a 403 error is encountered.
  *
- * @returns {Object} The configured Axios instance for private requests.
+ * @returns {Object} The configured Axios instance for private requests to custom backend.
  */
 const useAxiosPrivate = () => {
     const refresh = useRefreshToken();

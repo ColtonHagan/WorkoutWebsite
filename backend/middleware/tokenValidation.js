@@ -1,9 +1,10 @@
 const { verify } = require('jsonwebtoken');
 
-// Middleware to validate the JWT token
+// Middleware for validating the JWT token
 const tokenValidation = async (req, res, next) => {
   const token = req?.header('Authorization')?.replace('Bearer ', '');
 
+  // Checks if JWT token exists
   if (!token) {
     return res.status(401).json({
       error: 'Access denied. No token provided.'

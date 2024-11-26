@@ -4,10 +4,8 @@ import NavBar from "../NavBar";
 import "./index.scss";
 
 /**
- * Layout component that serves as a wrapper for the main application structure.
+ * Layout component that serves as a wrapper with navbar and footer.
  *
- * This component includes a navigation bar at the top, an outlet for nested routes,
- * and a footer at the bottom.
  */
 const Layout = () => {
     return (

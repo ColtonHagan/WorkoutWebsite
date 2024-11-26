@@ -15,6 +15,7 @@ const updateWorkouts = async (workoutId, updates) => {
     const fieldsToUpdate = [];
     const values = [];
 
+    // Only updates parts that are included in updates from user
     if (updates.reps !== undefined) {
         fieldsToUpdate.push('reps = ?');
         values.push(updates.reps);
@@ -100,7 +101,7 @@ const getWorkoutById = async (user_id, workoutId) => {
         [user_id, workoutId]
     );
 
-    //Grabs the first (and only workout)
+    // Grabs the first (and only workout)
     const row = result[0];
     if (row == null) return null;
 

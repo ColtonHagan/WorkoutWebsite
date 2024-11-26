@@ -10,7 +10,7 @@ import moment from 'moment';
  * - The month and day if the date is within the current year.
  * - The full date (month, day, and year) for all other dates.
  *
- * @param {string | Date} date - The date to format and display.
+ * @param {string} date - The date to format and display.
  * @returns {string} Formatted date string.
  */
 const DateHeading = ({ date }) => {
@@ -28,7 +28,7 @@ const DateHeading = ({ date }) => {
     }
 }
 
-// Prop Types validation
+// PropTypes validation
 DateHeading.propTypes = {
   date: PropTypes.oneOfType([
       PropTypes.string,

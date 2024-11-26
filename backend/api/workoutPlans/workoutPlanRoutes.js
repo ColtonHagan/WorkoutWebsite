@@ -11,10 +11,10 @@ const router = express.Router();
 // Route to create a new workout plan
 router.post('/', createWorkoutPlan);
 
-// Route to get all workout plans for the authenticated user
+// Route to get all workout plans for user
 router.get('/', getWorkoutPlans);
 
-// Route to get all workouts associated with a specific workout plan
+// Route to get all workouts for specific workout plan
 router.get('/:planId/workout', getWorkoutsByPlan);
 
 // Route to update an existing workout plan

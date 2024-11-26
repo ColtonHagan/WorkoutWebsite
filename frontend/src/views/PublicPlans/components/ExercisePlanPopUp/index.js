@@ -7,14 +7,13 @@ import ExercisePopUp from '../../../../components/ExercisePopUp';
 import "./index.scss";
 
 /**
- * ExercisePlanPopUp Component - Displays a popup for viewing and downloading an exercise plan.
+ * ExercisePlanPopUp Component displays a popup for viewing and downloading an exercise plan.
  * Users can view weekly exercises or click into a specific exercise.
  * 
- * @component
  * @param {Object} plan - The exercise plan object to be displayed.
  * @param {Array} exercises - The list of exercises associated with the plan.
- * @param {function} onClose - Callback function to close the popup.
- * @param {function} downloadPlan - Callback function to handle plan download.
+ * @param {function} onClose - Function to close the popup.
+ * @param {function} downloadPlan - Function to handle plan download.
  */
 const ExercisePlanPopUp = ({ plan, exercises, onClose, downloadPlan }) => {
     const [currentView, setCurrentView] = useState('plan');
@@ -64,7 +63,7 @@ const ExercisePlanPopUp = ({ plan, exercises, onClose, downloadPlan }) => {
         </PopUpContainer >
     );
 };
-// Define PropTypes for the component
+// PropTypes validation
 ExercisePlanPopUp.propTypes = {
     plan: PropTypes.shape({
         id: PropTypes.number,

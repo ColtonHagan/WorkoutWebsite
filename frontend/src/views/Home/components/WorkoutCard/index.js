@@ -9,7 +9,7 @@ import "./index.scss";
  * ExerciseCard component displays information about a specific exercise.
  *
  * @param {Object} exercise - The exercise data.
- * @param {function} onClick - The function to call when the card is clicked.
+ * @param {function} onClick - Function to call when the card is clicked.
  */
 const WorkoutCard = ({ exercise, onClick }) => {
     const [isChecked, setIsChecked] = useState(false);
@@ -37,6 +37,7 @@ const WorkoutCard = ({ exercise, onClick }) => {
     )
 }
 
+// PropTypes validation
 WorkoutCard.propTypes = {
     exercise: PropTypes.shape({
         nickname: PropTypes.string.isRequired,

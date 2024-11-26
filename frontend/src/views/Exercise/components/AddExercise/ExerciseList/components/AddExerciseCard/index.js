@@ -25,7 +25,7 @@ const AddExerciseCard = ({ exercise, onClick }) => {
   )
 }
 
-// Prop Types validation
+// PropTypes validation
 AddExerciseCard.propTypes = {
   exercise: PropTypes.shape({
     gifUrl: PropTypes.string.isRequired,

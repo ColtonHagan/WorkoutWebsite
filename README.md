@@ -8,7 +8,7 @@ Explore the **ByteBrawn** website by clicking the link below:
 
 ## Backend Documentation
 
-For detailed backend information, refer to the `README` file located in the **backend** folder.
+For detailed backend documentation, refer to the `README` file located in the **backend** folder.
 
 - [Backend README](backend/README.md)
 

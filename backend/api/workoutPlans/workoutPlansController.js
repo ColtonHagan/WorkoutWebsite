@@ -18,7 +18,7 @@ const {
 const { asyncHandler, createApiError } = require('../../middleware/errorHandler');
 const validate = require('../../middleware/validationMiddleware');
 
-// Creates a workout plan
+// Adds a workout plan
 const createWorkoutPlan = asyncHandler(async (req, res) => {
     const { name, description } = req.body;
     const user_id = req.user.userId;

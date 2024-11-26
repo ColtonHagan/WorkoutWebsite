@@ -14,7 +14,7 @@ import "./index.scss";
 /**
  * Dropdown component for selecting and managing workout plans.
  *
- * @param {function} onSelect - Callback function to handle selection change.
+ * @param {function} onSelect - function to handle selection change.
  * @param {number} selectedValue - Currently selected workout plan id.
  * 
  */
@@ -123,6 +123,7 @@ const PlanDropdown = ({ onSelect, selectedValue }) => {
     );
 };
 
+// PropTypes validation
 PlanDropdown.propTypes = {
     onSelect: PropTypes.func.isRequired,
     selectedValue: PropTypes.number.isRequired

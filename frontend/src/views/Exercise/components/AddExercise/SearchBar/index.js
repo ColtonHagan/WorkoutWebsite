@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import './index.scss';
 
 /**
- * SearchBar component allows users to input a search query and clear it.
+ * SearchBar component allows users to search and clear it.
  *
  * @param {string} placeholder - Placeholder text for the input field.
- * @param {function} onSearch - Callback function to handle search query changes.
+ * @param {function} onSearch - function to handle search query changes.
  */
 const SearchBar = ({ placeholder = 'Search...', onSearch }) => {
   const [query, setQuery] = useState('');
@@ -41,7 +41,7 @@ const SearchBar = ({ placeholder = 'Search...', onSearch }) => {
   );
 }
 
-// Prop Types validation
+// PropTypes validation
 SearchBar.propTypes = {
   placeholder: PropTypes.string,
   onSearch: PropTypes.func.isRequired,

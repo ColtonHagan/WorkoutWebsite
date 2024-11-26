@@ -23,6 +23,7 @@ const WeeklyDisplay = ({ exercises, onExerciseClick, deleteWorkout }) => {
             return acc;
         }, {});
 
+        // Iterate over the exercises to categorize them by day for formating
         exercises.forEach(workout => {
             if (workout.days.length > 0) {
                 workout.days.forEach(day => {
@@ -32,6 +33,7 @@ const WeeklyDisplay = ({ exercises, onExerciseClick, deleteWorkout }) => {
                     updatedWorkoutsByDay[day].push(workout);
                 });
             }
+            // Assign exercises to "Misc" if they have valid dates in the defined range
             const validDates = workout.dates.filter(date => moment(date).isBetween(today, nextMonth));
             if (validDates.length > 0) {
                 updatedWorkoutsByDay['Misc'].push(workout);
@@ -75,6 +77,7 @@ const WeeklyDisplay = ({ exercises, onExerciseClick, deleteWorkout }) => {
     );
 };
 
+// PropTypes validation
 WeeklyDisplay.propTypes = {
     exercises: PropTypes.arrayOf(
         PropTypes.shape({

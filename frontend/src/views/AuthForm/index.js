@@ -103,7 +103,7 @@ const AuthForm = ({ isLoginMode = true }) => {
     );
 }
 
-// Prop Types validation
+// PropTypes validation
 AuthForm.propTypes = {
     isLoginMode: PropTypes.bool,
 };

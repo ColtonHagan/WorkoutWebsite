@@ -57,7 +57,7 @@ const addWorkout = asyncHandler(async (req, res) => {
     res.status(201).json({ message: 'Workout added successfully', id: Number(workoutId) });
 });
 
-// Get workouts by plan ID
+// Gets workouts by plan ID
 const getWorkouts = asyncHandler(async (req, res) => {
     const userId = req.user.userId;
     const { planId } = req.params;
@@ -81,7 +81,7 @@ const updateWorkout = asyncHandler(async (req, res) => {
         reps,
         sets,
         weight,
-        days: days ? encodeDays(days) : encodeDays(existingWorkout.days) // Keep existing days if not provided
+        days: days ? encodeDays(days) : encodeDays(existingWorkout.days) // Keeps existing days if not provided
     };
 
     const result = await updateWorkouts(workoutId, updates);
@@ -89,7 +89,7 @@ const updateWorkout = asyncHandler(async (req, res) => {
         throw createApiError('Workout plan not found', 404);
     }
 
-
+    // Deletes old dates and adds new
     if (dates && dates.length > 0) {
         await deleteWorkoutDatesByWorkoutId(workoutId);
         await addWorkoutDates(workoutId, dates);

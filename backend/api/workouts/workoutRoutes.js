@@ -3,16 +3,16 @@ const { addWorkout, getWorkouts, deleteWorkout, updateWorkout } = require('./wor
 
 const router = express.Router();
 
-// Create a new workout
+// Route to add a new workout
 router.post("/", addWorkout);
 
-// Get workouts for a specific plan
+// Route to get workouts for a specific plan
 router.get("/:planId/workout", getWorkouts);
 
-// Delete a workout by ID
+// Route to delete a workout by ID
 router.delete("/:id", deleteWorkout);
 
-// Update a workout by ID
+// Route to update a workout by ID
 router.put('/:id', updateWorkout);
 
 module.exports = router;

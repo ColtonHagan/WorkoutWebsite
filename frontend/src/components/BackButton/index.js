@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { FaArrowLeft } from 'react-icons/fa';
-import './index.scss';  // Import the SCSS file
+import './index.scss';
 
 /**
- * BackButton component that renders a button for navigating back.
+ * Back button component for navigating back.
  *
  * @param {function} onClick - Function to call when the button is clicked
  */
@@ -20,9 +20,9 @@ const BackButton = ({ onClick }) => {
   );
 };
 
+// PropTypes validation
 BackButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
-
 
 export default BackButton;

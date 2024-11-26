@@ -11,13 +11,13 @@ const addPublicWorkoutPlan = async (publicPlan) => {
     return result;
 };
 
-// Remove a public workout plan by ID
+// Delete a public workout plan by ID
 const removePublicWorkoutPlan = async (id) => {
     const [result] = await db.execute('DELETE FROM public_workout_plans WHERE id = ?', [id]);
     return result;
 };
 
-// Remove a public workout plan by planId
+// Delete a public workout plan by planId
 const removePublicWorkoutPlanByPlanId = async (planId) => {
     const [result] = await db.execute('DELETE FROM public_workout_plans WHERE plan_id = ?', [planId]);
     return result;
@@ -34,7 +34,7 @@ const rateWorkoutPlan = async (userRating) => {
     return result;
 };
 
-// Get a public workout plan by ID, including ratings
+// Gets a public workout plan by ID, including ratings
 const getPublicWorkoutPlansById = async (user_id, id) => {
     const query = `
         SELECT 
@@ -60,7 +60,7 @@ const getPublicWorkoutPlansById = async (user_id, id) => {
     return rows;
 };
 
-// Get all public workout plans, including ratings
+// Gets all public workout plans, including ratings
 const getPublicWorkoutPlans = async (user_id) => {
     const query = `
         SELECT 
@@ -85,7 +85,7 @@ const getPublicWorkoutPlans = async (user_id) => {
     return rows;
 };
 
-// Get a public workout plan by planId, including ratings
+// Gets a public workout plan by planId, including ratings
 const getPublicWorkoutPlanByPlanId = async (user_id, planId) => {
     const query = `
         SELECT 

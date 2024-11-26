@@ -12,6 +12,7 @@ const logger = createLogger({
       return `${timestamp} ${level}: ${message} ${stack ? `\n${stack}` : ''}`;
     })
   ),
+  // Prints to console and logs to related log files
   transports: [
     new transports.Console(),
     new transports.File({ filename: path.join(logDir, 'error.log'), level: 'error' }),

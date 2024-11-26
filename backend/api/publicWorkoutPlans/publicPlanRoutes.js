@@ -12,7 +12,7 @@ const router = express.Router();
 // Route to add a public workout plan
 router.post('/', addPublicPlan);
 
-// Copy public plan to new user
+// Route to copy public plan to new user
 router.post('/copy/:plan_id', copyPublicPlan);
 
 // Route to retrieve all public workout plans

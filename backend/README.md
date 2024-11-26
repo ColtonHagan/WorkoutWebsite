@@ -2,7 +2,7 @@
 
 ## Overview
 
-This API allows users to manage workout plans, workouts, authentication, and public workout plans. Users can register, log in, refresh tokens, and log out. The API supports workout plans, workouts associated with plans, and also public workout plans that can be shared, rated, and copied.
+This API allows users to manage workout plans, workouts, authentication, and public workout plans. Users can register, login, refresh tokens, and logout.
 
 ## Table of Contents
 

@@ -12,9 +12,8 @@ const useWindowDimensions = () => {
   });
 
   useEffect(() => {
-    /**
-    * Handles the window resize event and updates the dimensions.
-    */
+    
+    // Handles the window resizing
     const handleResize = () => {
       setWindowDimensions({
         width: window.innerWidth,

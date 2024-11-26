@@ -9,7 +9,7 @@ import "./index.scss";
  * It manages background scroll-locking when the modal is open and provides a close button.
  * 
  * @param {boolean} display - Controls whether the popup is visible or not.
- * @param {function} onClose - Callback to close the popup.
+ * @param {function} onClose - Function to close the popup.
  * @param {node} children - Elements or components to display inside the popup.
  * @param {string} size - The size of the popup; can be 'small', 'medium', or 'large'.
  */
@@ -25,6 +25,7 @@ const PopUpContainer = ({ display = false, onClose, children, size = "large" }) 
         return () => document.body.classList.remove('no-scroll');
     }, [display])
 
+    // Only renders pop-up as needed
     if(!display) return null;
 
     return ReactDOM.createPortal(
@@ -39,7 +40,7 @@ const PopUpContainer = ({ display = false, onClose, children, size = "large" }) 
     );
 };
 
-// PropTypes for type checking
+// PropTypes validation
 PopUpContainer.propTypes = {
     display: PropTypes.oneOfType([
         PropTypes.bool,

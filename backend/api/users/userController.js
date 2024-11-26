@@ -16,6 +16,7 @@ const { verify } = require('jsonwebtoken');
 const register = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+  // Checks if user already exists via email
   const existingEmail = await findUserByEmail(email);
   if (existingEmail) {
     throw createApiError('Email already in use', 409);

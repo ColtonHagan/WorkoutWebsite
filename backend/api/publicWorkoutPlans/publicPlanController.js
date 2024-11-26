@@ -32,7 +32,7 @@ const addPublicPlan = asyncHandler(async (req, res) => {
     res.status(201).json({ message: 'Workout plan added to public database successfully', id: plan_id });
 });
 
-// Remove a public plan
+// Delete a public plan
 const removePublicPlan = asyncHandler(async (req, res) => {
     const { id } = req.params;
 

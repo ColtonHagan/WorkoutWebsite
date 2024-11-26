@@ -1,7 +1,7 @@
 import handleApiError from "./handleApiError";
 
 /**
- * Handles an asynchronous request and returns the response data.
+ * Helper function to handle an asynchronous request and returns the response data.
  *
  * @param {Function} request - The asynchronous request function that returns a promise.
  * @returns {Object} The data from the response.

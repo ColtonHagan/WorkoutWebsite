@@ -3,9 +3,9 @@ import { FaTimes } from 'react-icons/fa';
 import './index.scss'; 
 
 /**
- * A button component that triggers a close action.
+ * Back button component for closing the current page/pop-up.
  * 
- * @param {function} onClick - The function to call when the button is clicked
+ * @param {function} onClick - Function to call when the button is clicked
  */
 const CloseButton = ({ onClick }) => {
   const handleClick = (e) => {

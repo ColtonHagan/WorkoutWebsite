@@ -3,7 +3,7 @@ import { TbError404Off } from 'react-icons/tb';
 import './index.scss';
 
 /**
- * Error component to display an error message & icon.
+ * Error component to display an error message & link to email.
  *
  * @param {string} message - The error message to display.
  */
@@ -20,7 +20,7 @@ const Error = ({ message = 'An unexpected error has occurred.' }) => {
     );
 };
 
-// PropTypes valclassNameation
+// PropTypes validation
 Error.propTypes = {
     message: PropTypes.string.isRequired,
 };

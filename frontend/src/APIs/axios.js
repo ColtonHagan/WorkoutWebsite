@@ -10,7 +10,7 @@ const BASE_OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
 
 /**
  * Create a default axios instance for workout API requests.
- * This instance can be used for non-authenticated requests.
+ * This instance can be used for non-authenticated requests to custom backend.
  */
 export default axios.create({
     baseURL: BASE_WORKOUT_URL
@@ -18,15 +18,15 @@ export default axios.create({
 
 /**
  * Create an axios instance for private, authenticated requests to the workout API.
- * This instance ensures credentials (cookies) are sent with each request.
+ * This instance can be used for authenticated requests to custom backend.
  */
 const axiosPrivate = axios.create({
     baseURL: BASE_WORKOUT_URL,
-    withCredentials: true, // Automatically send cookies for authentication
+    withCredentials: true,
 });
 
 /**
- * Create an axios instance to interact with the external exercise database API.
+ * Create an axios instance for the external exercise database API.
  */
 const axiosExerciseDB = (() => {
     return axios.create({

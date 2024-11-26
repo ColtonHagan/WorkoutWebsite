@@ -12,7 +12,7 @@ import "./index.scss";
  * and a popup to add selected exercises.
  *
  * @param {Object} exercises - List of exercise objects.
- * @param {Function} addExercise - Callback function to add selected exercise.
+ * @param {Function} addExercise - Function to add selected exercise.
  */
 const ExerciseList = ({ exercises, addExercise, searchQuery, selectedBodyPart }) => {
   const [selectedExercise, setSelectedExercise] = useState(null);
@@ -23,9 +23,8 @@ const ExerciseList = ({ exercises, addExercise, searchQuery, selectedBodyPart })
   useEffect(() => {
     setPageNumber(0);
   }, [searchQuery, selectedBodyPart]);
-  
 
-  // Calculate the number of exercises per page based on window width
+  // Calculates the number of exercises per page based on window width
   const exercisesPerPage = useMemo(() => {
     if (width > 1250) return 9;  // Desktop
     if (width > 600) return 6;   // Tablet
@@ -55,7 +54,7 @@ const ExerciseList = ({ exercises, addExercise, searchQuery, selectedBodyPart })
   )
 }
 
-// Prop Types validation
+// PropTypes validation
 ExerciseList.propTypes = {
   exercises: PropTypes.arrayOf(
     PropTypes.shape({

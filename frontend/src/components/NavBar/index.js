@@ -3,14 +3,13 @@ import { NavLink } from 'react-router-dom';
 import useLogout from '../../hooks/useLogout';
 import Logo from '../../assets/LogoUnderline.png';
 import EmptyProfile from '../../assets/EmptyProfile.png';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Importing icons from react-icons
+import { FaBars, FaTimes } from 'react-icons/fa';
 import './index.scss';
 
 /**
- * Navigation Bar component for the application.
- *
- * This component includes a logo, navigation links, and a profile section.
- * It toggles a mobile menu for smaller screens and provides a logout functionality.
+ * Navigation Bar includes logo, navigation links, and a profile logout.
+ * 
+ * It toggles a mobile hamburger menu for smaller screens.
  */
 const NavBar = () => {
     const [menu, setMenu] = useState(false);

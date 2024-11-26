@@ -6,7 +6,7 @@ const router = express.Router();
 // Route to register a new user
 router.post('/register', register);
 
-// Route to log in an existing user
+// Route to login an existing user
 router.post('/login', login);
 
 // Route to refresh access token

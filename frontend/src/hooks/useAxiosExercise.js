@@ -7,6 +7,8 @@ import useApiKeyService from '../services/useApiKeyService';
  * 
  * This hook manages Axios interceptors to dynamically set the authorization
  * header using the External Exercise API key fetched from hook.
+ *
+ * @returns {Object} The configured Axios instance for external exercise api requests.
  */
 const useAxiosExercise = () => {
     const { getExerciseApiKey } = useApiKeyService();

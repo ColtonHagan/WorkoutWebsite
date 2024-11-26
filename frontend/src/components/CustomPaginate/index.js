@@ -6,8 +6,8 @@ import "./index.scss";
 /**
  * CustomPaginate component for paginating through items.
  *
- * This component renders pagination controls with custom previous and next buttons.
- * It also handles scrolling to the bottom of the page when the page changes.
+ * This component contains pagination ands previous and next buttons.
+ * It also handles scrolling to the top of the page when the page changes.
  *
  * @param {number} pageCount - The total number of pages (must be an integer).
  * @param {function} changePage - Callback function to handle page changes.
@@ -20,12 +20,11 @@ const CustomPaginate = ({ pageCount, changePage, currentPage }) => {
     }, .1);
   };
 
-  // If there are 0 pages does not need paginate
+  // If there are no extra pages does not need to be rendered
   if (pageCount <= 0) {
     return null;
   }
 
-  //see which of the classnames are actually needed
   return (
     <Paginate
       previousLabel={<FaChevronLeft className="icon-custom" />}

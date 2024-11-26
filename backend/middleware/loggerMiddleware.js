@@ -5,7 +5,7 @@ const requestLogger = (req, res, next) => {
   const { method, url } = req;
   const start = new Date();
 
-  // Logs response details after request is completed
+  // Logs and formates response details after request is completed
   const originalSend = res.send;
   res.send = function (body) {
     const duration = new Date() - start;

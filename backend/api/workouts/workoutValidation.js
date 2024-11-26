@@ -1,6 +1,6 @@
 const { body, param } = require('express-validator');
 
-// Validation to check if the input is an array of strings
+// Validation for checking if the input is an array of strings
 const isArrayOfStrings = (value) => {
   if (!Array.isArray(value)) {
     throw new Error('Must be an array');

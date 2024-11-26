@@ -6,7 +6,7 @@ import './index.scss';
 /**
  * Component to display a card representing a body part.
  * @param {string} bodyPart - The name of the body part to display.
- * @param {function} onClick - Callback when the card is clicked.
+ * @param {function} onClick - Function when the card is clicked.
  * @param {boolean} isSelected - Indicates if the body part is currently selected.
  */
 const BodyPartCard = ({ bodyPart, onClick, isSelected }) => {

@@ -35,7 +35,7 @@ app.use('/public', publicPlansRoutes);
 // Global error handling middleware
 app.use(errorHandler);
 
-// Start server and listen on specified port
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);

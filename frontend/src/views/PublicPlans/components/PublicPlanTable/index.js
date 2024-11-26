@@ -7,10 +7,9 @@ import useWorkoutService from "../../../../services/useWorkoutService";
 import "./index.scss";
 
 /**
- * PublicPlanTable Component - Displays a table of public workout plans with sorting and pagination.
+ * PublicPlanTable Component displays a table of public workout plans with sorting and pagination.
  * Users can rate plans, view exercise details, and download plans.
  * 
- * @component
  * @param {Array} workoutPlans - List of workout plans to display.
  * @param {Function} setRating - Function to set the user's rating for a plan.
  * @param {Function} downloadPlan - Function to download the selected plan.
@@ -40,6 +39,7 @@ const PublicPlanTable = ({ workoutPlans, setRating, downloadPlan }) => {
     setSortConfig({ key, direction });
   };
 
+  // Sorts plans either accending or decending based on user input
   const sortedPlans = useMemo(() => {
     return [...workoutPlans].sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -133,7 +133,7 @@ const PublicPlanTable = ({ workoutPlans, setRating, downloadPlan }) => {
   );
 };
 
-// Required PropTypes
+// PropTypes validation
 PublicPlanTable.propTypes = {
   workoutPlans: PropTypes.arrayOf(
     PropTypes.shape({

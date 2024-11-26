@@ -9,6 +9,14 @@ import { removeTrailingAndTrim } from '../../util/removeTrailingAndTrim';
 import useChatGPTService from '../../services/useChatGPTService';
 import './index.scss';
 
+/**
+ * ExercisePopUp a popup for adding or editing exercise details.
+ *
+ * @param {Object} exercise - The exercise data to display or edit.
+ * @param {boolean} [isEditing] - Whether the popup is in editing or adding mode.
+ * @param {Function} onClose - Function to call when closing
+ * @param {Function} onSubmit - Function to call when exercise is added/updated
+ */
 const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
     const { getNickname } = useChatGPTService();
 
@@ -24,6 +32,7 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
     const [weight, setWeight] = useState(isEditing ? String(exercise.weight || "0") : "0");
     const [errorMessage, setErrorMessage] = useState('');
 
+    // Initial values for detecting changes
     const initialValues = {
         days: isEditing ? [...exercise.days] : [],
         dates: isEditing ? [...exercise.dates] : [],
@@ -49,6 +58,7 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
     useEffect(() => {
         const fetchAndSetNickname = async () => {
             let nameToUse = exercise.name;
+            // If the original name is less  then 15 charcters it is valid as the nickname as well.
             if (nameToUse.length > 15) {
                 nameToUse = (await fetchNickname(exercise.name)) || exercise.name;
             }
@@ -62,6 +72,11 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
         'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
     ].map(day => ({ value: day, label: day })), []);
 
+    /**
+     * Checks if any changes have been made to the exercise data.
+     *
+     * @returns {boolean} True if there are changes, otherwise false.
+     */
     const hasChanges = () => {
         const formatDate = (date) => date instanceof Date ? date.toISOString() : new Date(date).toISOString();
         return (
@@ -73,11 +88,23 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
         );
     };
 
+    /**
+     * Handles changes in number inputs for reps and sets.
+     *
+     * @param {Event} e - The input change event containing new value.
+     * @param {Function} setter - State setter function for the input.
+     */
     const handleNumberInputChange = (e, setter) => {
         const value = e.target.value;
         setter(value === '' || isNaN(value) ? "" : parseInt(value, 10));
     };
 
+    /**
+     * Handles changes in float inputs for weight.
+     *
+     * @param {Event} e - The input change event containing new value.
+     * @param {Function} setter - State setter function for the input.
+     */
     const handleWeightInputChange = (e) => {
         const value = e.target.value;
         setWeight(value === '' || isNaN(value) ? "" : parseFloat(value));
@@ -210,6 +237,7 @@ const ExercisePopUp = ({ exercise, isEditing = true, onClose, onSubmit }) => {
     );
 };
 
+// PropTypes validation
 ExercisePopUp.propTypes = {
     exercise: PropTypes.shape({
         name: PropTypes.string.isRequired,

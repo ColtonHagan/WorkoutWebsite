@@ -9,7 +9,7 @@ const createUser = async (user) => {
   return result;
 };
 
-// Get a user by email
+// Gets a user by email
 const findUserByEmail = async (email) => {
   const [rows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
   return rows[0];
@@ -24,19 +24,19 @@ const storeRefreshToken = async (userId, refreshToken) => {
   return result;
 };
 
-// Get refresh token from user id
+// Gets refresh token from user id
 const findRefreshToken = async (userId) => {
   const [rows] = await db.execute('SELECT * FROM refresh_tokens WHERE userId = ?', [userId]);
   return rows[0];
 };
 
-// Get user ID associated with a refresh token
+// Gets user ID associated with a refresh token
 const getUserByRefreshToken = async (refreshToken) => {
   const [rows] = await db.execute('SELECT userId FROM refresh_tokens WHERE refreshToken = ?', [refreshToken]);
   return rows[0];
 };
 
-// Remove a refresh token
+// Deletes a refresh token
 const removeRefreshToken = async (refreshToken) => {
   const [result] = await db.execute('DELETE FROM refresh_tokens WHERE refreshToken = ?', [refreshToken]);
   return result;

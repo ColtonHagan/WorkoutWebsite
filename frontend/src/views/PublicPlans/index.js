@@ -6,7 +6,7 @@ import useWorkoutPlans from "../../hooks/useWorkoutPlans";
 import "./index.scss";
 
 /**
- * Main page public plans and publishing, viewing, and downloading them.
+ * Main page for public plans and publishing, viewing, and downloading them.
  */
 const PublicPlans = () => {
     const [selectedPlan, setSelectedPlan] = useState(-1);

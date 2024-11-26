@@ -3,7 +3,7 @@ import { CapitalizeWords } from '../../util/CapitalizeWords';
 import './index.scss';
 
 /**
- * Tags component renders two text tags based on the body part and target muscle.
+ * Tags component contains two text tags based on the body part and target muscle.
  *
  * @param {string} bodyPart - The name of the body part to display.
  * @param {string} target - The target muscle group to display.
@@ -17,7 +17,7 @@ const Tags = ({bodyPart, target}) => {
     )
 }
 
-// PropTypes for input validation
+// PropTypes validation
 Tags.propTypes = {
     bodyPart: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired
